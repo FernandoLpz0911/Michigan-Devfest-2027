@@ -1,0 +1,6 @@
+{
+  "error": {
+    "message": "This file has no rows we could read.",
+    "fix": "Check that it is a CSV or Excel file and try again."
+  }
+}

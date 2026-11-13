@@ -1,0 +1,11 @@
+{
+  "question": "Press 3 stops last week",
+  "found": true,
+  "filters": {
+    "machine": "Press 3",
+    "stop": null,
+    "shift": null,
+    "date_from": "2021-05-03",
+    "date_to": "2021-05-09"
+  }
+}

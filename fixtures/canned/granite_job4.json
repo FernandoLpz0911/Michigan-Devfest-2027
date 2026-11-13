@@ -1,0 +1,17 @@
+{
+  "source": "granite",
+  "sections": [
+    {
+      "heading": "What we found",
+      "text": "Lot 4417 (part B-220) was stamped on Press 3 on May 4, 2021 at 4:15 PM, second shift, operator OP-121. During that run Press 3 logged machine stop code 101. The lot was deburred on Bench 2 on May 7 at 2:24 PM."
+    },
+    {
+      "heading": "Other lots that may be affected",
+      "text": "Lot 4418: same machine, 1 hour later, same operator and shift, same day. Lot 4416: same machine, 2 hours earlier, same machine stop, code 5, same operator and shift, same day. Lot 4419: same machine, 3 hours later, same operator and shift, same day."
+    },
+    {
+      "heading": "What we are doing now",
+      "text": ""
+    }
+  ]
+}

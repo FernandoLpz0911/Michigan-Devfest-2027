@@ -1,0 +1,43 @@
+{
+  "file_id": "f2",
+  "source_file": "shift2_export.csv",
+  "recognized": true,
+  "format_id": "fmt1",
+  "status": "ready",
+  "questions": [],
+  "matched": [],
+  "new_columns": [],
+  "steps": [
+    {
+      "step": "header",
+      "state": "done",
+      "title": "Found the header",
+      "detail": "Skipped 2 title rows."
+    },
+    {
+      "step": "granite",
+      "state": "not_needed",
+      "title": "Asked IBM Granite",
+      "detail": "Not needed"
+    },
+    {
+      "step": "cleaning",
+      "state": "done",
+      "title": "Cleaned the values",
+      "detail": "Cleaned 81 values."
+    },
+    {
+      "step": "records",
+      "state": "done",
+      "title": "Built the records",
+      "detail": "72 records. 1 row held back."
+    }
+  ],
+  "timings": {
+    "header": 0.03,
+    "granite": 0,
+    "cleaning": 0.02,
+    "records": 0.05
+  },
+  "fell_back": false
+}

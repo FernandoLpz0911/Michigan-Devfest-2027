@@ -1,0 +1,203 @@
+{
+  "reading": {
+    "found": true,
+    "lot": "4417",
+    "part": "B-220",
+    "problem": "burrs",
+    "source": "granite"
+  },
+  "history": {
+    "lot": "4417",
+    "part": "B-220",
+    "entries": [
+      {
+        "entry_id": "f2-r22",
+        "lot": "4417",
+        "part": "B-220",
+        "quantity": 7814,
+        "time": "2021-05-04T16:15",
+        "machine": "Press 3",
+        "operator": "OP-121",
+        "shift": "2nd",
+        "step": "Stamping",
+        "alarm": "A_101",
+        "extra": {
+          "NOTES": ""
+        },
+        "source_file": "shift2_export.csv",
+        "file_id": "f2",
+        "source_row": 22,
+        "original_row": {
+          "REF": "4417",
+          "PART": "B-220",
+          "QTY": "7814",
+          "PROD DT": "2021-05-04 16:15",
+          "MACH": "Press 3",
+          "OP": "OP-121",
+          "SHIFT": "2nd",
+          "STEP": "Stamping",
+          "ALARM": "A_101",
+          "NOTES": ""
+        },
+        "changed": [
+          "time"
+        ]
+      },
+      {
+        "entry_id": "f2-r53",
+        "lot": "4417",
+        "part": "B-220",
+        "quantity": 6300,
+        "time": "2021-05-07T14:24",
+        "machine": "Bench 2",
+        "operator": "OP-318",
+        "shift": "2nd",
+        "step": "Deburring",
+        "alarm": "A_005",
+        "extra": {
+          "NOTES": ""
+        },
+        "source_file": "shift2_export.csv",
+        "file_id": "f2",
+        "source_row": 53,
+        "original_row": {
+          "REF": "4417",
+          "PART": "B-220",
+          "QTY": "6300",
+          "PROD DT": "2021-05-07 14:24",
+          "MACH": "Bench 2",
+          "OP": "OP-318",
+          "SHIFT": "2nd",
+          "STEP": "Deburring",
+          "ALARM": "A_005",
+          "NOTES": ""
+        },
+        "changed": [
+          "time"
+        ]
+      }
+    ]
+  },
+  "links": [
+    {
+      "lot": "4418",
+      "part": "B-118",
+      "machine": "Press 1",
+      "time": "2021-05-04T16:20",
+      "rules": [
+        "same_machine_window",
+        "same_operator_shift"
+      ],
+      "reasons": [
+        "Same machine, 1 hour later",
+        "Same operator and shift, same day"
+      ],
+      "closeness_minutes": 5
+    },
+    {
+      "lot": "4416",
+      "part": "B-118",
+      "machine": "Bench 2",
+      "time": "2021-05-07T12:24",
+      "rules": [
+        "same_machine_window",
+        "same_stop",
+        "same_operator_shift"
+      ],
+      "reasons": [
+        "Same machine, 2 hours earlier",
+        "Same machine stop, code 5",
+        "Same operator and shift, same day"
+      ],
+      "closeness_minutes": 77
+    },
+    {
+      "lot": "4419",
+      "part": "B-118",
+      "machine": "Press 1",
+      "time": "2021-05-04T18:03",
+      "rules": [
+        "same_machine_window",
+        "same_operator_shift"
+      ],
+      "reasons": [
+        "Same machine, 3 hours later",
+        "Same operator and shift, same day"
+      ],
+      "closeness_minutes": 108
+    },
+    {
+      "lot": "4420",
+      "part": "B-220",
+      "machine": "Press 3",
+      "time": "2021-05-04T18:16",
+      "rules": [
+        "same_machine_window",
+        "same_stop",
+        "same_operator_shift"
+      ],
+      "reasons": [
+        "Same machine, 2 hours later",
+        "Same machine stop, code 101",
+        "Same operator and shift, same day"
+      ],
+      "closeness_minutes": 121
+    },
+    {
+      "lot": "4415",
+      "part": "B-220",
+      "machine": "Bench 2",
+      "time": "2021-05-07T11:42",
+      "rules": [
+        "same_machine_window",
+        "same_operator_shift"
+      ],
+      "reasons": [
+        "Same machine, 2 hours earlier",
+        "Same operator and shift, same day"
+      ],
+      "closeness_minutes": 133
+    },
+    {
+      "lot": "4412",
+      "part": "B-220",
+      "machine": "Press 3",
+      "time": "2021-05-04T12:11",
+      "rules": [
+        "same_stop"
+      ],
+      "reasons": [
+        "Same machine stop, code 101"
+      ],
+      "closeness_minutes": 244
+    },
+    {
+      "lot": "4421",
+      "part": "B-118",
+      "machine": "Press 1",
+      "time": "2021-05-04T20:44",
+      "rules": [
+        "same_operator_shift"
+      ],
+      "reasons": [
+        "Same operator and shift, same day"
+      ],
+      "closeness_minutes": 269
+    },
+    {
+      "lot": "4411",
+      "part": "B-220",
+      "machine": "Press 3",
+      "time": "2021-05-04T10:14",
+      "rules": [
+        "same_stop"
+      ],
+      "reasons": [
+        "Same machine stop, code 101"
+      ],
+      "closeness_minutes": 361
+    }
+  ],
+  "lots_in_week": 140,
+  "closest": []
+}

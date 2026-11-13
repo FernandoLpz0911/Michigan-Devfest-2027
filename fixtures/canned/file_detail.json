@@ -1,0 +1,47 @@
+{
+  "file_id": "f1",
+  "source_file": "shift1_log.csv",
+  "recognized": false,
+  "steps": [
+    {
+      "step": "header",
+      "state": "done",
+      "title": "Found the header",
+      "detail": "Skipped 3 title rows."
+    },
+    {
+      "step": "granite",
+      "state": "done",
+      "title": "Asked IBM Granite",
+      "detail": "What 11 columns mean."
+    },
+    {
+      "step": "cleaning",
+      "state": "done",
+      "title": "Cleaned the values",
+      "detail": "Cleaned 98 values. 1 spelling kept as it was."
+    },
+    {
+      "step": "records",
+      "state": "done",
+      "title": "Built the records",
+      "detail": "82 records. 1 row held back."
+    }
+  ],
+  "counters": {
+    "granite_calls": 2,
+    "files_total": 3,
+    "files_with_granite": 1,
+    "seconds_to_records": 4.2,
+    "columns_right": 10,
+    "columns_total": 11,
+    "values_cleaned": 98,
+    "unseen_values": [],
+    "rows_held": 1,
+    "entries": 82,
+    "data_rows": 83,
+    "tokens_in": 1650,
+    "tokens_out": 420,
+    "cost_usd": 0.000212
+  }
+}

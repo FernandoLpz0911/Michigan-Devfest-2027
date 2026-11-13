@@ -1,0 +1,1576 @@
+{
+  "file_id": "f1",
+  "source_file": "shift1_log.csv",
+  "columns": [
+    {
+      "position": 0,
+      "header": "Ref",
+      "field": "lot",
+      "decided_by": "person",
+      "rows_changed": 0
+    },
+    {
+      "position": 1,
+      "header": "Part",
+      "field": "part",
+      "decided_by": "granite",
+      "rows_changed": 0
+    },
+    {
+      "position": 2,
+      "header": "Qty",
+      "field": "quantity",
+      "decided_by": "granite",
+      "rows_changed": 0
+    },
+    {
+      "position": 3,
+      "header": "Prod Dt",
+      "field": "time",
+      "decided_by": "person",
+      "rows_changed": 82
+    },
+    {
+      "position": 4,
+      "header": "Logged",
+      "field": "extra",
+      "decided_by": "person",
+      "rows_changed": 0
+    },
+    {
+      "position": 5,
+      "header": "Mach",
+      "field": "machine",
+      "decided_by": "person",
+      "rows_changed": 15
+    },
+    {
+      "position": 6,
+      "header": "Op",
+      "field": "operator",
+      "decided_by": "granite",
+      "rows_changed": 0
+    },
+    {
+      "position": 7,
+      "header": "Shift",
+      "field": "shift",
+      "decided_by": "granite",
+      "rows_changed": 0
+    },
+    {
+      "position": 8,
+      "header": "Step",
+      "field": "step",
+      "decided_by": "granite",
+      "rows_changed": 0
+    },
+    {
+      "position": 9,
+      "header": "Alarm",
+      "field": "alarm",
+      "decided_by": "granite",
+      "rows_changed": 0
+    },
+    {
+      "position": 10,
+      "header": "Notes",
+      "field": "extra",
+      "decided_by": "granite",
+      "rows_changed": 0
+    }
+  ],
+  "rows": [
+    {
+      "source_row": 1,
+      "kind": "skipped",
+      "reason_text": "title row",
+      "raw": [
+        "DEMO SHOP SHIFT LOG",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+      ],
+      "clean": null
+    },
+    {
+      "source_row": 2,
+      "kind": "skipped",
+      "reason_text": "title row",
+      "raw": [
+        "printed 5/10/21",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+      ],
+      "clean": null
+    },
+    {
+      "source_row": 3,
+      "kind": "skipped",
+      "reason_text": "blank row",
+      "raw": [
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        ""
+      ],
+      "clean": null
+    },
+    {
+      "source_row": 4,
+      "kind": "header",
+      "reason_text": null,
+      "raw": [
+        "Ref",
+        "Part",
+        "Qty",
+        "Prod Dt",
+        "Logged",
+        "Mach",
+        "Op",
+        "Shift",
+        "Step",
+        "Alarm",
+        "Notes"
+      ],
+      "clean": null
+    },
+    {
+      "source_row": 5,
+      "kind": "entry",
+      "reason_text": null,
+      "raw": [
+        "4384",
+        "B-118",
+        "5699",
+        "5/3/21 6:01a",
+        "2021-05-03",
+        "Press 1",
+        "OP-114",
+        "1st",
+        "Stamping",
+        "A_065",
+        ""
+      ],
+      "clean": [
+        "4384",
+        "B-118",
+        "5699",
+        "2021-05-03T06:01",
+        "2021-05-03",
+        "Press 1",
+        "OP-114",
+        "1st",
+        "Stamping",
+        "A_065",
+        ""
+      ]
+    },
+    {
+      "source_row": 6,
+      "kind": "entry",
+      "reason_text": null,
+      "raw": [
+        "4385",
+        "B-305",
+        "3554",
+        "5/3/21 6:08a",
+        "2021-05-03",
+        "Press 2",
+        "OP-207",
+        "1st",
+        "Stamping",
+        "A_101",
+        ""
+      ],
+      "clean": [
+        "4385",
+        "B-305",
+        "3554",
+        "2021-05-03T06:08",
+        "2021-05-03",
+        "Press 2",
+        "OP-207",
+        "1st",
+        "Stamping",
+        "A_101",
+        ""
+      ]
+    },
+    {
+      "source_row": 7,
+      "kind": "entry",
+      "reason_text": null,
+      "raw": [
+        "4386",
+        "B-118",
+        "12007",
+        "5/3/21 8:00a",
+        "2021-05-03",
+        "Press 1",
+        "OP-114",
+        "1st",
+        "Stamping",
+        "A_065",
+        ""
+      ],
+      "clean": [
+        "4386",
+        "B-118",
+        "12007",
+        "2021-05-03T08:00",
+        "2021-05-03",
+        "Press 1",
+        "OP-114",
+        "1st",
+        "Stamping",
+        "A_065",
+        ""
+      ]
+    },
+    {
+      "source_row": 8,
+      "kind": "entry",
+      "reason_text": null,
+      "raw": [
+        "4387",
+        "B-220",
+        "5019",
+        "5/3/21 8:43a",
+        "2021-05-03",
+        "Press 3",
+        "OP-114",
+        "1st",
+        "Stamping",
+        "A_101",
+        ""
+      ],
+      "clean": [
+        "4387",
+        "B-220",
+        "5019",
+        "2021-05-03T08:43",
+        "2021-05-03",
+        "Press 3",
+        "OP-114",
+        "1st",
+        "Stamping",
+        "A_101",
+        ""
+      ]
+    },
+    {
+      "source_row": 9,
+      "kind": "entry",
+      "reason_text": null,
+      "raw": [
+        "4388",
+        "B-220",
+        "3372",
+        "5/3/21 10:36a",
+        "2021-05-03",
+        "P3",
+        "OP-114",
+        "1st",
+        "Stamping",
+        "A_010",
+        ""
+      ],
+      "clean": [
+        "4388",
+        "B-220",
+        "3372",
+        "2021-05-03T10:36",
+        "2021-05-03",
+        "Press 3",
+        "OP-114",
+        "1st",
+        "Stamping",
+        "A_010",
+        ""
+      ]
+    },
+    {
+      "source_row": 10,
+      "kind": "entry",
+      "reason_text": null,
+      "raw": [
+        "4379",
+        "B-118",
+        "828",
+        "5/3/21 11:30a",
+        "2021-05-03",
+        "Bench 2",
+        "OP-310",
+        "1st",
+        "Deburring",
+        "A_043",
+        "die change before run"
+      ],
+      "clean": [
+        "4379",
+        "B-118",
+        "828",
+        "2021-05-03T11:30",
+        "2021-05-03",
+        "Bench 2",
+        "OP-310",
+        "1st",
+        "Deburring",
+        "A_043",
+        "die change before run"
+      ]
+    },
+    {
+      "source_row": 11,
+      "kind": "entry",
+      "reason_text": null,
+      "raw": [
+        "4389",
+        "B-118",
+        "745",
+        "5/3/21 11:37a",
+        "2021-05-03",
+        "Press 1",
+        "OP-114",
+        "1st",
+        "Stamping",
+        "A_068",
+        ""
+      ],
+      "clean": [
+        "4389",
+        "B-118",
+        "745",
+        "2021-05-03T11:37",
+        "2021-05-03",
+        "Press 1",
+        "OP-114",
+        "1st",
+        "Stamping",
+        "A_068",
+        ""
+      ]
+    },
+    {
+      "source_row": 12,
+      "kind": "entry",
+      "reason_text": null,
+      "raw": [
+        "4380",
+        "B-118",
+        "4138",
+        "5/3/21 12:00p",
+        "2021-05-03",
+        "Bench 2",
+        "OP-310",
+        "1st",
+        "Deburring",
+        "A_043",
+        ""
+      ],
+      "clean": [
+        "4380",
+        "B-118",
+        "4138",
+        "2021-05-03T12:00",
+        "2021-05-03",
+        "Bench 2",
+        "OP-310",
+        "1st",
+        "Deburring",
+        "A_043",
+        ""
+      ]
+    },
+    {
+      "source_row": 13,
+      "kind": "entry",
+      "reason_text": null,
+      "raw": [
+        "4379",
+        "B-118",
+        "9120",
+        "5/3/21 12:11p",
+        "2021-05-03",
+        "Weld 1",
+        "OP-412",
+        "1st",
+        "Welding",
+        "A_005",
+        ""
+      ],
+      "clean": [
+        "4379",
+        "B-118",
+        "9120",
+        "2021-05-03T12:11",
+        "2021-05-03",
+        "Weld 1",
+        "OP-412",
+        "1st",
+        "Welding",
+        "A_005",
+        ""
+      ]
+    },
+    {
+      "source_row": 14,
+      "kind": "entry",
+      "reason_text": null,
+      "raw": [
+        "4390",
+        "B-220",
+        "10543",
+        "5/3/21 12:17p",
+        "2021-05-03",
+        "Press 3",
+        "OP-114",
+        "1st",
+        "Stamping",
+        "A_001",
+        ""
+      ],
+      "clean": [
+        "4390",
+        "B-220",
+        "10543",
+        "2021-05-03T12:17",
+        "2021-05-03",
+        "Press 3",
+        "OP-114",
+        "1st",
+        "Stamping",
+        "A_001",
+        ""
+      ]
+    },
+    {
+      "source_row": 15,
+      "kind": "entry",
+      "reason_text": null,
+      "raw": [
+        "4391",
+        "B-118",
+        "7722",
+        "5/3/21 12:39p",
+        "2021-05-03",
+        "Press 1",
+        "OP-114",
+        "1st",
+        "Stamping",
+        "A_068",
+        ""
+      ],
+      "clean": [
+        "4391",
+        "B-118",
+        "7722",
+        "2021-05-03T12:39",
+        "2021-05-03",
+        "Press 1",
+        "OP-114",
+        "1st",
+        "Stamping",
+        "A_068",
+        ""
+      ]
+    },
+    {
+      "source_row": 16,
+      "kind": "entry",
+      "reason_text": null,
+      "raw": [
+        "4385",
+        "B-305",
+        "5074",
+        "5/4/21 6:08a",
+        "2021-05-04",
+        "Weld 1",
+        "OP-412",
+        "1st",
+        "Welding",
+        "A_101",
+        ""
+      ],
+      "clean": [
+        "4385",
+        "B-305",
+        "5074",
+        "2021-05-04T06:08",
+        "2021-05-04",
+        "Weld 1",
+        "OP-412",
+        "1st",
+        "Welding",
+        "A_101",
+        ""
+      ]
+    },
+    {
+      "source_row": 17,
+      "kind": "entry",
+      "reason_text": null,
+      "raw": [
+        "4405",
+        "B-118",
+        "6029",
+        "5/4/21 6:32a",
+        "2021-05-04",
+        "Press 1",
+        "OP-114",
+        "1st",
+        "Stamping",
+        "A_065",
+        ""
+      ],
+      "clean": [
+        "4405",
+        "B-118",
+        "6029",
+        "2021-05-04T06:32",
+        "2021-05-04",
+        "Press 1",
+        "OP-114",
+        "1st",
+        "Stamping",
+        "A_065",
+        ""
+      ]
+    },
+    {
+      "source_row": 18,
+      "kind": "entry",
+      "reason_text": null,
+      "raw": [
+        "4406",
+        "B-118",
+        "6251",
+        "5/4/21 8:15a",
+        "2021-05-04",
+        "Press 1",
+        "OP-114",
+        "1st",
+        "Stamping",
+        "A_065",
+        ""
+      ],
+      "clean": [
+        "4406",
+        "B-118",
+        "6251",
+        "2021-05-04T08:15",
+        "2021-05-04",
+        "Press 1",
+        "OP-114",
+        "1st",
+        "Stamping",
+        "A_065",
+        ""
+      ]
+    },
+    {
+      "source_row": 19,
+      "kind": "entry",
+      "reason_text": null,
+      "raw": [
+        "4407",
+        "B-220",
+        "5734",
+        "5/4/21 8:20a",
+        "2021-05-04",
+        "PRESS-3",
+        "OP-114",
+        "1st",
+        "Stamping",
+        "A_028",
+        ""
+      ],
+      "clean": [
+        "4407",
+        "B-220",
+        "5734",
+        "2021-05-04T08:20",
+        "2021-05-04",
+        "Press 3",
+        "OP-114",
+        "1st",
+        "Stamping",
+        "A_028",
+        ""
+      ]
+    },
+    {
+      "source_row": 20,
+      "kind": "entry",
+      "reason_text": null,
+      "raw": [
+        "4386",
+        "B-118",
+        "1846",
+        "5/4/21 8:43a",
+        "2021-05-04",
+        "Weld 1",
+        "OP-412",
+        "1st",
+        "Welding",
+        "A_101",
+        ""
+      ],
+      "clean": [
+        "4386",
+        "B-118",
+        "1846",
+        "2021-05-04T08:43",
+        "2021-05-04",
+        "Weld 1",
+        "OP-412",
+        "1st",
+        "Welding",
+        "A_101",
+        ""
+      ]
+    },
+    {
+      "source_row": 21,
+      "kind": "entry",
+      "reason_text": null,
+      "raw": [
+        "4408",
+        "B-305",
+        "1450",
+        "5/4/21 9:41a",
+        "2021-05-04",
+        "Press 2",
+        "OP-207",
+        "1st",
+        "Stamping",
+        "",
+        ""
+      ],
+      "clean": [
+        "4408",
+        "B-305",
+        "1450",
+        "2021-05-04T09:41",
+        "2021-05-04",
+        "Press 2",
+        "OP-207",
+        "1st",
+        "Stamping",
+        "",
+        ""
+      ]
+    },
+    {
+      "source_row": 22,
+      "kind": "entry",
+      "reason_text": null,
+      "raw": [
+        "4409",
+        "B-305",
+        "8546",
+        "5/4/21 10:01a",
+        "2021-05-04",
+        "Press 2",
+        "OP-207",
+        "1st",
+        "Stamping",
+        "A_001",
+        ""
+      ],
+      "clean": [
+        "4409",
+        "B-305",
+        "8546",
+        "2021-05-04T10:01",
+        "2021-05-04",
+        "Press 2",
+        "OP-207",
+        "1st",
+        "Stamping",
+        "A_001",
+        ""
+      ]
+    },
+    {
+      "source_row": 23,
+      "kind": "entry",
+      "reason_text": null,
+      "raw": [
+        "4410",
+        "B-118",
+        "8346",
+        "5/4/21 10:03a",
+        "2021-05-04",
+        "Press 1",
+        "OP-114",
+        "1st",
+        "Stamping",
+        "A_067",
+        ""
+      ],
+      "clean": [
+        "4410",
+        "B-118",
+        "8346",
+        "2021-05-04T10:03",
+        "2021-05-04",
+        "Press 1",
+        "OP-114",
+        "1st",
+        "Stamping",
+        "A_067",
+        ""
+      ]
+    },
+    {
+      "source_row": 24,
+      "kind": "entry",
+      "reason_text": null,
+      "raw": [
+        "4411",
+        "B-220",
+        "5935",
+        "5/4/21 10:14a",
+        "2021-05-04",
+        "Press 3",
+        "OP-114",
+        "1st",
+        "Stamping",
+        "A_101",
+        ""
+      ],
+      "clean": [
+        "4411",
+        "B-220",
+        "5935",
+        "2021-05-04T10:14",
+        "2021-05-04",
+        "Press 3",
+        "OP-114",
+        "1st",
+        "Stamping",
+        "A_101",
+        ""
+      ]
+    },
+    {
+      "source_row": 25,
+      "kind": "entry",
+      "reason_text": null,
+      "raw": [
+        "4387",
+        "B-220",
+        "8",
+        "5/4/21 10:59a",
+        "2021-05-04",
+        "Weld 1",
+        "OP-412",
+        "1st",
+        "Welding",
+        "",
+        "first piece ok"
+      ],
+      "clean": [
+        "4387",
+        "B-220",
+        "8",
+        "2021-05-04T10:59",
+        "2021-05-04",
+        "Weld 1",
+        "OP-412",
+        "1st",
+        "Welding",
+        "",
+        "first piece ok"
+      ]
+    },
+    {
+      "source_row": 26,
+      "kind": "entry",
+      "reason_text": null,
+      "raw": [
+        "4388",
+        "B-220",
+        "1544",
+        "5/4/21 11:25a",
+        "2021-05-04",
+        "Bench 2",
+        "OP-310",
+        "1st",
+        "Deburring",
+        "A_034",
+        ""
+      ],
+      "clean": [
+        "4388",
+        "B-220",
+        "1544",
+        "2021-05-04T11:25",
+        "2021-05-04",
+        "Bench 2",
+        "OP-310",
+        "1st",
+        "Deburring",
+        "A_034",
+        ""
+      ]
+    },
+    {
+      "source_row": 27,
+      "kind": "entry",
+      "reason_text": null,
+      "raw": [
+        "4389",
+        "B-118",
+        "6302",
+        "5/4/21 12:04p",
+        "2021-05-04",
+        "Bench 2",
+        "OP-310",
+        "1st",
+        "Deburring",
+        "",
+        ""
+      ],
+      "clean": [
+        "4389",
+        "B-118",
+        "6302",
+        "2021-05-04T12:04",
+        "2021-05-04",
+        "Bench 2",
+        "OP-310",
+        "1st",
+        "Deburring",
+        "",
+        ""
+      ]
+    },
+    {
+      "source_row": 28,
+      "kind": "entry",
+      "reason_text": null,
+      "raw": [
+        "4412",
+        "B-220",
+        "5221",
+        "5/4/21 12:11p",
+        "2021-05-04",
+        "PRESS-3",
+        "OP-114",
+        "1st",
+        "Stamping",
+        "A_101",
+        ""
+      ],
+      "clean": [
+        "4412",
+        "B-220",
+        "5221",
+        "2021-05-04T12:11",
+        "2021-05-04",
+        "Press 3",
+        "OP-114",
+        "1st",
+        "Stamping",
+        "A_101",
+        ""
+      ]
+    },
+    {
+      "source_row": 29,
+      "kind": "entry",
+      "reason_text": null,
+      "raw": [
+        "4413",
+        "B-305",
+        "3850",
+        "5/4/21 12:11p",
+        "2021-05-04",
+        "Press 2",
+        "OP-207",
+        "1st",
+        "Stamping",
+        "A_101",
+        ""
+      ],
+      "clean": [
+        "4413",
+        "B-305",
+        "3850",
+        "2021-05-04T12:11",
+        "2021-05-04",
+        "Press 2",
+        "OP-207",
+        "1st",
+        "Stamping",
+        "A_101",
+        ""
+      ]
+    },
+    {
+      "source_row": 30,
+      "kind": "entry",
+      "reason_text": null,
+      "raw": [
+        "4414",
+        "B-118",
+        "6143",
+        "5/4/21 12:41p",
+        "2021-05-04",
+        "Press 1",
+        "OP-114",
+        "1st",
+        "Stamping",
+        "A_065",
+        ""
+      ],
+      "clean": [
+        "4414",
+        "B-118",
+        "6143",
+        "2021-05-04T12:41",
+        "2021-05-04",
+        "Press 1",
+        "OP-114",
+        "1st",
+        "Stamping",
+        "A_065",
+        ""
+      ]
+    },
+    {
+      "source_row": 31,
+      "kind": "entry",
+      "reason_text": null,
+      "raw": [
+        "4428",
+        "B-305",
+        "6238",
+        "5/5/21 6:10a",
+        "2021-05-05",
+        "Press 2",
+        "OP-207",
+        "1st",
+        "Stamping",
+        "A_101",
+        ""
+      ],
+      "clean": [
+        "4428",
+        "B-305",
+        "6238",
+        "2021-05-05T06:10",
+        "2021-05-05",
+        "Press 2",
+        "OP-207",
+        "1st",
+        "Stamping",
+        "A_101",
+        ""
+      ]
+    },
+    {
+      "source_row": 32,
+      "kind": "held",
+      "reason_text": "No lot number",
+      "raw": [
+        "",
+        "B-118",
+        "5544",
+        "5/5/21 6:13a",
+        "2021-05-05",
+        "Weld 1",
+        "OP-412",
+        "1st",
+        "Welding",
+        "A_101",
+        ""
+      ],
+      "clean": null
+    },
+    {
+      "source_row": 33,
+      "kind": "entry",
+      "reason_text": null,
+      "raw": [
+        "4429",
+        "B-118",
+        "6706",
+        "5/5/21 6:31a",
+        "2021-05-05",
+        "Press 1",
+        "OP-114",
+        "1st",
+        "Stamping",
+        "A_065",
+        ""
+      ],
+      "clean": [
+        "4429",
+        "B-118",
+        "6706",
+        "2021-05-05T06:31",
+        "2021-05-05",
+        "Press 1",
+        "OP-114",
+        "1st",
+        "Stamping",
+        "A_065",
+        ""
+      ]
+    },
+    {
+      "source_row": 34,
+      "kind": "entry",
+      "reason_text": null,
+      "raw": [
+        "4430",
+        "B-305",
+        "3652",
+        "5/5/21 8:00a",
+        "2021-05-05",
+        "Press 2",
+        "OP-207",
+        "1st",
+        "Stamping",
+        "A_101",
+        ""
+      ],
+      "clean": [
+        "4430",
+        "B-305",
+        "3652",
+        "2021-05-05T08:00",
+        "2021-05-05",
+        "Press 2",
+        "OP-207",
+        "1st",
+        "Stamping",
+        "A_101",
+        ""
+      ]
+    },
+    {
+      "source_row": 35,
+      "kind": "entry",
+      "reason_text": null,
+      "raw": [
+        "4431",
+        "B-118",
+        "6232",
+        "5/5/21 8:22a",
+        "2021-05-05",
+        "Press 1",
+        "OP-114",
+        "1st",
+        "Stamping",
+        "A_066",
+        ""
+      ],
+      "clean": [
+        "4431",
+        "B-118",
+        "6232",
+        "2021-05-05T08:22",
+        "2021-05-05",
+        "Press 1",
+        "OP-114",
+        "1st",
+        "Stamping",
+        "A_066",
+        ""
+      ]
+    },
+    {
+      "source_row": 36,
+      "kind": "entry",
+      "reason_text": null,
+      "raw": [
+        "4432",
+        "B-118",
+        "10",
+        "5/5/21 10:00a",
+        "2021-05-05",
+        "Press 1",
+        "OP-114",
+        "1st",
+        "Stamping",
+        "A_066",
+        ""
+      ],
+      "clean": [
+        "4432",
+        "B-118",
+        "10",
+        "2021-05-05T10:00",
+        "2021-05-05",
+        "Press 1",
+        "OP-114",
+        "1st",
+        "Stamping",
+        "A_066",
+        ""
+      ]
+    },
+    {
+      "source_row": 37,
+      "kind": "entry",
+      "reason_text": null,
+      "raw": [
+        "4433",
+        "B-305",
+        "8730",
+        "5/5/21 10:05a",
+        "2021-05-05",
+        "Press 2",
+        "OP-207",
+        "1st",
+        "Stamping",
+        "A_101",
+        ""
+      ],
+      "clean": [
+        "4433",
+        "B-305",
+        "8730",
+        "2021-05-05T10:05",
+        "2021-05-05",
+        "Press 2",
+        "OP-207",
+        "1st",
+        "Stamping",
+        "A_101",
+        ""
+      ]
+    },
+    {
+      "source_row": 38,
+      "kind": "entry",
+      "reason_text": null,
+      "raw": [
+        "4434",
+        "B-220",
+        "5668",
+        "5/5/21 10:06a",
+        "2021-05-05",
+        "PRESS-3",
+        "OP-114",
+        "1st",
+        "Stamping",
+        "A_001",
+        ""
+      ],
+      "clean": [
+        "4434",
+        "B-220",
+        "5668",
+        "2021-05-05T10:06",
+        "2021-05-05",
+        "Press 3",
+        "OP-114",
+        "1st",
+        "Stamping",
+        "A_001",
+        ""
+      ]
+    },
+    {
+      "source_row": 39,
+      "kind": "entry",
+      "reason_text": null,
+      "raw": [
+        "4397",
+        "B-220",
+        "1208",
+        "5/5/21 11:26a",
+        "2021-05-05",
+        "Bench 2",
+        "OP-310",
+        "1st",
+        "Deburring",
+        "A_020",
+        ""
+      ],
+      "clean": [
+        "4397",
+        "B-220",
+        "1208",
+        "2021-05-05T11:26",
+        "2021-05-05",
+        "Bench 2",
+        "OP-310",
+        "1st",
+        "Deburring",
+        "A_020",
+        ""
+      ]
+    },
+    {
+      "source_row": 40,
+      "kind": "entry",
+      "reason_text": null,
+      "raw": [
+        "4398",
+        "B-118",
+        "9648",
+        "5/5/21 12:03p",
+        "2021-05-05",
+        "Bench 2",
+        "OP-310",
+        "1st",
+        "Deburring",
+        "A_020",
+        ""
+      ],
+      "clean": [
+        "4398",
+        "B-118",
+        "9648",
+        "2021-05-05T12:03",
+        "2021-05-05",
+        "Bench 2",
+        "OP-310",
+        "1st",
+        "Deburring",
+        "A_020",
+        ""
+      ]
+    },
+    {
+      "source_row": 41,
+      "kind": "entry",
+      "reason_text": null,
+      "raw": [
+        "4435",
+        "B-220",
+        "9413",
+        "5/5/21 12:07p",
+        "2021-05-05",
+        "PRESS-3",
+        "OP-114",
+        "1st",
+        "Stamping",
+        "A_001",
+        ""
+      ],
+      "clean": [
+        "4435",
+        "B-220",
+        "9413",
+        "2021-05-05T12:07",
+        "2021-05-05",
+        "Press 3",
+        "OP-114",
+        "1st",
+        "Stamping",
+        "A_001",
+        ""
+      ]
+    },
+    {
+      "source_row": 42,
+      "kind": "entry",
+      "reason_text": null,
+      "raw": [
+        "4436",
+        "B-118",
+        "7049",
+        "5/5/21 12:15p",
+        "2021-05-05",
+        "Press 1",
+        "OP-114",
+        "1st",
+        "Stamping",
+        "A_065",
+        ""
+      ],
+      "clean": [
+        "4436",
+        "B-118",
+        "7049",
+        "2021-05-05T12:15",
+        "2021-05-05",
+        "Press 1",
+        "OP-114",
+        "1st",
+        "Stamping",
+        "A_065",
+        ""
+      ]
+    },
+    {
+      "source_row": 43,
+      "kind": "entry",
+      "reason_text": null,
+      "raw": [
+        "4437",
+        "B-305",
+        "2176",
+        "5/5/21 12:38p",
+        "2021-05-05",
+        "Press 2",
+        "OP-207",
+        "1st",
+        "Stamping",
+        "A_101",
+        ""
+      ],
+      "clean": [
+        "4437",
+        "B-305",
+        "2176",
+        "2021-05-05T12:38",
+        "2021-05-05",
+        "Press 2",
+        "OP-207",
+        "1st",
+        "Stamping",
+        "A_101",
+        ""
+      ]
+    },
+    {
+      "source_row": 44,
+      "kind": "entry",
+      "reason_text": null,
+      "raw": [
+        "4452",
+        "B-118",
+        "6117",
+        "5/6/21 6:32a",
+        "2021-05-06",
+        "Press 1",
+        "OP-114",
+        "1st",
+        "Stamping",
+        "A_067",
+        ""
+      ],
+      "clean": [
+        "4452",
+        "B-118",
+        "6117",
+        "2021-05-06T06:32",
+        "2021-05-06",
+        "Press 1",
+        "OP-114",
+        "1st",
+        "Stamping",
+        "A_067",
+        ""
+      ]
+    },
+    {
+      "source_row": 45,
+      "kind": "entry",
+      "reason_text": null,
+      "raw": [
+        "4453",
+        "B-220",
+        "9096",
+        "5/6/21 8:00a",
+        "2021-05-06",
+        "P3",
+        "OP-114",
+        "1st",
+        "Stamping",
+        "A_001",
+        ""
+      ],
+      "clean": [
+        "4453",
+        "B-220",
+        "9096",
+        "2021-05-06T08:00",
+        "2021-05-06",
+        "Press 3",
+        "OP-114",
+        "1st",
+        "Stamping",
+        "A_001",
+        ""
+      ]
+    },
+    {
+      "source_row": 46,
+      "kind": "entry",
+      "reason_text": null,
+      "raw": [
+        "4454",
+        "B-118",
+        "6290",
+        "5/6/21 8:14a",
+        "2021-05-06",
+        "Press 1",
+        "OP-114",
+        "1st",
+        "Stamping",
+        "A_065",
+        ""
+      ],
+      "clean": [
+        "4454",
+        "B-118",
+        "6290",
+        "2021-05-06T08:14",
+        "2021-05-06",
+        "Press 1",
+        "OP-114",
+        "1st",
+        "Stamping",
+        "A_065",
+        ""
+      ]
+    },
+    {
+      "source_row": 47,
+      "kind": "entry",
+      "reason_text": null,
+      "raw": [
+        "4455",
+        "B-305",
+        "3020",
+        "5/6/21 8:40a",
+        "2021-05-06",
+        "Press 2",
+        "OP-207",
+        "1st",
+        "Stamping",
+        "A_001",
+        ""
+      ],
+      "clean": [
+        "4455",
+        "B-305",
+        "3020",
+        "2021-05-06T08:40",
+        "2021-05-06",
+        "Press 2",
+        "OP-207",
+        "1st",
+        "Stamping",
+        "A_001",
+        ""
+      ]
+    },
+    {
+      "source_row": 48,
+      "kind": "entry",
+      "reason_text": null,
+      "raw": [
+        "4456",
+        "B-305",
+        "6601",
+        "5/6/21 10:20a",
+        "2021-05-06",
+        "Press 2",
+        "OP-207",
+        "1st",
+        "Stamping",
+        "A_006",
+        ""
+      ],
+      "clean": [
+        "4456",
+        "B-305",
+        "6601",
+        "2021-05-06T10:20",
+        "2021-05-06",
+        "Press 2",
+        "OP-207",
+        "1st",
+        "Stamping",
+        "A_006",
+        ""
+      ]
+    },
+    {
+      "source_row": 49,
+      "kind": "entry",
+      "reason_text": null,
+      "raw": [
+        "4457",
+        "B-118",
+        "7076",
+        "5/6/21 10:31a",
+        "2021-05-06",
+        "Press 1",
+        "OP-114",
+        "1st",
+        "Stamping",
+        "A_065",
+        ""
+      ],
+      "clean": [
+        "4457",
+        "B-118",
+        "7076",
+        "2021-05-06T10:31",
+        "2021-05-06",
+        "Press 1",
+        "OP-114",
+        "1st",
+        "Stamping",
+        "A_065",
+        ""
+      ]
+    },
+    {
+      "source_row": 50,
+      "kind": "entry",
+      "reason_text": null,
+      "raw": [
+        "4458",
+        "B-220",
+        "5550",
+        "5/6/21 10:59a",
+        "2021-05-06",
+        "PRESS-3",
+        "OP-114",
+        "1st",
+        "Stamping",
+        "A_006",
+        ""
+      ],
+      "clean": [
+        "4458",
+        "B-220",
+        "5550",
+        "2021-05-06T10:59",
+        "2021-05-06",
+        "Press 3",
+        "OP-114",
+        "1st",
+        "Stamping",
+        "A_006",
+        ""
+      ]
+    }
+  ],
+  "total_rows": 87
+}

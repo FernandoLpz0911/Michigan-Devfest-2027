@@ -1,0 +1,34 @@
+[
+  {
+    "exchange_id": "g1",
+    "file_id": "f1",
+    "job": 1,
+    "model_id": "ibm/granite-4-h-small",
+    "sent": "{\"columns\": [{\"header\": \"Ref\", \"type\": \"text\", \"samples\": []}, {\"header\": \"Part\", \"type\": \"text\", \"samples\": []}, {\"header\": \"Qty\", \"type\": \"text\", \"samples\": []}, {\"header\": \"Prod Dt\", \"type\": \"text\", \"samples\": []}, {\"header\": \"Logged\", \"type\": \"text\", \"samples\": []}, {\"header\": \"Mach\", \"type\": \"text\", \"samples\": []}, {\"header\": \"Op\", \"type\": \"text\", \"samples\": []}, {\"header\": \"Shift\", \"type\": \"text\", \"samples\": []}, {\"header\": \"Step\", \"type\": \"text\", \"samples\": []}, {\"header\": \"Alarm\", \"type\": \"text\", \"samples\": []}, {\"header\": \"Notes\", \"type\": \"text\", \"samples\": []}]}",
+    "answer": "[{\"position\": 0, \"field\": \"lot\", \"alternatives\": [\"part\", \"quantity\"], \"reason\": \"Short number IDs that repeat across steps; could be a lot or a job number.\", \"sure\": false}, {\"position\": 1, \"field\": \"part\", \"alternatives\": [], \"reason\": \"Codes like B-118 look like part numbers.\", \"sure\": true}, {\"position\": 2, \"field\": \"quantity\", \"alternatives\": [], \"reason\": \"Whole numbers in the thousands look like counts made.\", \"sure\": true}, {\"position\": 3, \"field\": \"time\", \"alternatives\": [], \"reason\": \"Dates with times of day.\", \"sure\": true}, {\"position\": 4, \"field\": \"time\", \"alternatives\": [\"extra\"], \"reason\": \"Dates without times.\", \"sure\": true}, {\"position\": 5, \"field\": \"machine\", \"alternatives\": [], \"reason\": \"Names of presses and benches.\", \"sure\": true}, {\"position\": 6, \"field\": \"operator\", \"alternatives\": [], \"reason\": \"IDs starting with OP look like operator IDs.\", \"sure\": true}, {\"position\": 7, \"field\": \"shift\", \"alternatives\": [], \"reason\": \"Values like 1st look like shift names.\", \"sure\": true}, {\"position\": 8, \"field\": \"step\", \"alternatives\": [], \"reason\": \"Words like Stamping describe the operation.\", \"sure\": true}, {\"position\": 9, \"field\": \"alarm\", \"alternatives\": [], \"reason\": \"Codes like A_065 look like machine stop codes.\", \"sure\": true}, {\"position\": 10, \"field\": \"extra\", \"alternatives\": [], \"reason\": \"Mostly empty free text.\", \"sure\": true}]",
+    "parsed": true,
+    "retried": false,
+    "fell_back": false,
+    "output_mode": "json_schema",
+    "tokens_in": 1200,
+    "tokens_out": 330,
+    "seconds": 2.4,
+    "at": "2026-11-13T11:02"
+  },
+  {
+    "exchange_id": "g2",
+    "file_id": "f1",
+    "job": 2,
+    "model_id": "ibm/granite-4-h-small",
+    "sent": "{\"column\": \"Mach\", \"values\": [\"Press 1\", \"Press 2\", \"Press 3\", \"PRESS-3\", \"P3\", \"Bench 2\", \"Weld 1\"]}",
+    "answer": "[{\"position\": 5, \"values\": [\"Press 3\", \"PRESS-3\", \"P3\"], \"name\": \"Press 3\"}]",
+    "parsed": true,
+    "retried": false,
+    "fell_back": false,
+    "output_mode": "json_schema",
+    "tokens_in": 450,
+    "tokens_out": 90,
+    "seconds": 0.7,
+    "at": "2026-11-13T11:02"
+  }
+]

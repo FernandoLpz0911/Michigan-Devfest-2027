@@ -1,0 +1,84 @@
+[
+  {
+    "position": 0,
+    "field": "lot",
+    "alternatives": [
+      "part",
+      "quantity"
+    ],
+    "reason": "Short number IDs that repeat across steps; could be a lot or a job number.",
+    "sure": false
+  },
+  {
+    "position": 1,
+    "field": "part",
+    "alternatives": [],
+    "reason": "Codes like B-118 look like part numbers.",
+    "sure": true
+  },
+  {
+    "position": 2,
+    "field": "quantity",
+    "alternatives": [],
+    "reason": "Whole numbers in the thousands look like counts made.",
+    "sure": true
+  },
+  {
+    "position": 3,
+    "field": "time",
+    "alternatives": [],
+    "reason": "Dates with times of day.",
+    "sure": true
+  },
+  {
+    "position": 4,
+    "field": "time",
+    "alternatives": [
+      "extra"
+    ],
+    "reason": "Dates without times.",
+    "sure": true
+  },
+  {
+    "position": 5,
+    "field": "machine",
+    "alternatives": [],
+    "reason": "Names of presses and benches.",
+    "sure": true
+  },
+  {
+    "position": 6,
+    "field": "operator",
+    "alternatives": [],
+    "reason": "IDs starting with OP look like operator IDs.",
+    "sure": true
+  },
+  {
+    "position": 7,
+    "field": "shift",
+    "alternatives": [],
+    "reason": "Values like 1st look like shift names.",
+    "sure": true
+  },
+  {
+    "position": 8,
+    "field": "step",
+    "alternatives": [],
+    "reason": "Words like Stamping describe the operation.",
+    "sure": true
+  },
+  {
+    "position": 9,
+    "field": "alarm",
+    "alternatives": [],
+    "reason": "Codes like A_065 look like machine stop codes.",
+    "sure": true
+  },
+  {
+    "position": 10,
+    "field": "extra",
+    "alternatives": [],
+    "reason": "Mostly empty free text.",
+    "sure": true
+  }
+]

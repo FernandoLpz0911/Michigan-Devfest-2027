@@ -1,0 +1,676 @@
+{
+  "filters": {
+    "q": null,
+    "machine": "Press 3",
+    "shift": null,
+    "date_from": null,
+    "date_to": null,
+    "stop": "A_101",
+    "only_cleaned": false,
+    "only_held": false
+  },
+  "page": 1,
+  "page_size": 50,
+  "total": 217,
+  "matching": 18,
+  "rows": [
+    {
+      "entry_id": "f1-r8",
+      "lot": "4387",
+      "part": "B-220",
+      "quantity": 5019,
+      "time": "2021-05-03T08:43",
+      "machine": "Press 3",
+      "operator": "OP-114",
+      "shift": "1st",
+      "step": "Stamping",
+      "alarm": "A_101",
+      "extra": {
+        "Logged": "2021-05-03",
+        "Notes": ""
+      },
+      "source_file": "shift1_log.csv",
+      "file_id": "f1",
+      "source_row": 8,
+      "original_row": {
+        "Ref": "4387",
+        "Part": "B-220",
+        "Qty": "5019",
+        "Prod Dt": "5/3/21 8:43a",
+        "Logged": "2021-05-03",
+        "Mach": "Press 3",
+        "Op": "OP-114",
+        "Shift": "1st",
+        "Step": "Stamping",
+        "Alarm": "A_101",
+        "Notes": ""
+      },
+      "changed": [
+        "time"
+      ]
+    },
+    {
+      "entry_id": "f1-r24",
+      "lot": "4411",
+      "part": "B-220",
+      "quantity": 5935,
+      "time": "2021-05-04T10:14",
+      "machine": "Press 3",
+      "operator": "OP-114",
+      "shift": "1st",
+      "step": "Stamping",
+      "alarm": "A_101",
+      "extra": {
+        "Logged": "2021-05-04",
+        "Notes": ""
+      },
+      "source_file": "shift1_log.csv",
+      "file_id": "f1",
+      "source_row": 24,
+      "original_row": {
+        "Ref": "4411",
+        "Part": "B-220",
+        "Qty": "5935",
+        "Prod Dt": "5/4/21 10:14a",
+        "Logged": "2021-05-04",
+        "Mach": "Press 3",
+        "Op": "OP-114",
+        "Shift": "1st",
+        "Step": "Stamping",
+        "Alarm": "A_101",
+        "Notes": ""
+      },
+      "changed": [
+        "time"
+      ]
+    },
+    {
+      "entry_id": "f1-r28",
+      "lot": "4412",
+      "part": "B-220",
+      "quantity": 5221,
+      "time": "2021-05-04T12:11",
+      "machine": "Press 3",
+      "operator": "OP-114",
+      "shift": "1st",
+      "step": "Stamping",
+      "alarm": "A_101",
+      "extra": {
+        "Logged": "2021-05-04",
+        "Notes": ""
+      },
+      "source_file": "shift1_log.csv",
+      "file_id": "f1",
+      "source_row": 28,
+      "original_row": {
+        "Ref": "4412",
+        "Part": "B-220",
+        "Qty": "5221",
+        "Prod Dt": "5/4/21 12:11p",
+        "Logged": "2021-05-04",
+        "Mach": "PRESS-3",
+        "Op": "OP-114",
+        "Shift": "1st",
+        "Step": "Stamping",
+        "Alarm": "A_101",
+        "Notes": ""
+      },
+      "changed": [
+        "time",
+        "machine"
+      ]
+    },
+    {
+      "entry_id": "f1-r55",
+      "lot": "4461",
+      "part": "B-220",
+      "quantity": 9067,
+      "time": "2021-05-06T12:38",
+      "machine": "Press 3",
+      "operator": "OP-114",
+      "shift": "1st",
+      "step": "Stamping",
+      "alarm": "A_101",
+      "extra": {
+        "Logged": "2021-05-06",
+        "Notes": ""
+      },
+      "source_file": "shift1_log.csv",
+      "file_id": "f1",
+      "source_row": 55,
+      "original_row": {
+        "Ref": "4461",
+        "Part": "B-220",
+        "Qty": "9067",
+        "Prod Dt": "5/6/21 12:38p",
+        "Logged": "2021-05-06",
+        "Mach": "Press 3",
+        "Op": "OP-114",
+        "Shift": "1st",
+        "Step": "Stamping",
+        "Alarm": "A_101",
+        "Notes": ""
+      },
+      "changed": [
+        "time"
+      ]
+    },
+    {
+      "entry_id": "f1-r81",
+      "lot": "4507",
+      "part": "B-220",
+      "quantity": 2617,
+      "time": "2021-05-09T07:09",
+      "machine": "Press 3",
+      "operator": "OP-114",
+      "shift": "1st",
+      "step": "Stamping",
+      "alarm": "A_101",
+      "extra": {
+        "Logged": "2021-05-09",
+        "Notes": ""
+      },
+      "source_file": "shift1_log.csv",
+      "file_id": "f1",
+      "source_row": 81,
+      "original_row": {
+        "Ref": "4507",
+        "Part": "B-220",
+        "Qty": "2617",
+        "Prod Dt": "5/9/21 7:09a",
+        "Logged": "2021-05-09",
+        "Mach": "PRESS-3",
+        "Op": "OP-114",
+        "Shift": "1st",
+        "Step": "Stamping",
+        "Alarm": "A_101",
+        "Notes": ""
+      },
+      "changed": [
+        "time",
+        "machine"
+      ]
+    },
+    {
+      "entry_id": "f1-r82",
+      "lot": "4508",
+      "part": "B-220",
+      "quantity": 8348,
+      "time": "2021-05-09T08:12",
+      "machine": "Press 3",
+      "operator": "OP-114",
+      "shift": "1st",
+      "step": "Stamping",
+      "alarm": "A_101",
+      "extra": {
+        "Logged": "2021-05-09",
+        "Notes": ""
+      },
+      "source_file": "shift1_log.csv",
+      "file_id": "f1",
+      "source_row": 82,
+      "original_row": {
+        "Ref": "4508",
+        "Part": "B-220",
+        "Qty": "8348",
+        "Prod Dt": "5/9/21 8:12a",
+        "Logged": "2021-05-09",
+        "Mach": "PRESS-3",
+        "Op": "OP-114",
+        "Shift": "1st",
+        "Step": "Stamping",
+        "Alarm": "A_101",
+        "Notes": ""
+      },
+      "changed": [
+        "time",
+        "machine"
+      ]
+    },
+    {
+      "entry_id": "f1-r85",
+      "lot": "4509",
+      "part": "B-220",
+      "quantity": 4149,
+      "time": "2021-05-09T10:55",
+      "machine": "Press 3",
+      "operator": "OP-114",
+      "shift": "1st",
+      "step": "Stamping",
+      "alarm": "A_101",
+      "extra": {
+        "Logged": "2021-05-09",
+        "Notes": ""
+      },
+      "source_file": "shift1_log.csv",
+      "file_id": "f1",
+      "source_row": 85,
+      "original_row": {
+        "Ref": "4509",
+        "Part": "B-220",
+        "Qty": "4149",
+        "Prod Dt": "5/9/21 10:55a",
+        "Logged": "2021-05-09",
+        "Mach": "P3",
+        "Op": "OP-114",
+        "Shift": "1st",
+        "Step": "Stamping",
+        "Alarm": "A_101",
+        "Notes": ""
+      },
+      "changed": [
+        "time",
+        "machine"
+      ]
+    },
+    {
+      "entry_id": "f2-r7",
+      "lot": "4393",
+      "part": "B-220",
+      "quantity": 3216,
+      "time": "2021-05-03T15:10",
+      "machine": "Press 3",
+      "operator": "OP-121",
+      "shift": "2nd",
+      "step": "Stamping",
+      "alarm": "A_101",
+      "extra": {
+        "NOTES": ""
+      },
+      "source_file": "shift2_export.csv",
+      "file_id": "f2",
+      "source_row": 7,
+      "original_row": {
+        "REF": "4393",
+        "PART": "B-220",
+        "QTY": "3216",
+        "PROD DT": "2021-05-03 15:10",
+        "MACH": "Press 3",
+        "OP": "OP-121",
+        "SHIFT": "2nd",
+        "STEP": "Stamping",
+        "ALARM": "A_101",
+        "NOTES": ""
+      },
+      "changed": [
+        "time"
+      ]
+    },
+    {
+      "entry_id": "f2-r9",
+      "lot": "4394",
+      "part": "B-220",
+      "quantity": 10742,
+      "time": "2021-05-03T16:14",
+      "machine": "Press 3",
+      "operator": "OP-121",
+      "shift": "2nd",
+      "step": "Stamping",
+      "alarm": "A_101",
+      "extra": {
+        "NOTES": ""
+      },
+      "source_file": "shift2_export.csv",
+      "file_id": "f2",
+      "source_row": 9,
+      "original_row": {
+        "REF": "4394",
+        "PART": "B-220",
+        "QTY": "10742",
+        "PROD DT": "2021-05-03 16:14",
+        "MACH": "Press 3",
+        "OP": "OP-121",
+        "SHIFT": "2nd",
+        "STEP": "Stamping",
+        "ALARM": "A_101",
+        "NOTES": ""
+      },
+      "changed": [
+        "time"
+      ]
+    },
+    {
+      "entry_id": "f2-r13",
+      "lot": "4397",
+      "part": "B-220",
+      "quantity": 1797,
+      "time": "2021-05-03T19:24",
+      "machine": "Press 3",
+      "operator": "OP-121",
+      "shift": "2nd",
+      "step": "Stamping",
+      "alarm": "A_101",
+      "extra": {
+        "NOTES": ""
+      },
+      "source_file": "shift2_export.csv",
+      "file_id": "f2",
+      "source_row": 13,
+      "original_row": {
+        "REF": "4397",
+        "PART": "B-220",
+        "QTY": "1797",
+        "PROD DT": "2021-05-03 19:24",
+        "MACH": "Press 3",
+        "OP": "OP-121",
+        "SHIFT": "2nd",
+        "STEP": "Stamping",
+        "ALARM": "A_101",
+        "NOTES": ""
+      },
+      "changed": [
+        "time"
+      ]
+    },
+    {
+      "entry_id": "f2-r22",
+      "lot": "4417",
+      "part": "B-220",
+      "quantity": 7814,
+      "time": "2021-05-04T16:15",
+      "machine": "Press 3",
+      "operator": "OP-121",
+      "shift": "2nd",
+      "step": "Stamping",
+      "alarm": "A_101",
+      "extra": {
+        "NOTES": ""
+      },
+      "source_file": "shift2_export.csv",
+      "file_id": "f2",
+      "source_row": 22,
+      "original_row": {
+        "REF": "4417",
+        "PART": "B-220",
+        "QTY": "7814",
+        "PROD DT": "2021-05-04 16:15",
+        "MACH": "Press 3",
+        "OP": "OP-121",
+        "SHIFT": "2nd",
+        "STEP": "Stamping",
+        "ALARM": "A_101",
+        "NOTES": ""
+      },
+      "changed": [
+        "time"
+      ]
+    },
+    {
+      "entry_id": "f2-r26",
+      "lot": "4420",
+      "part": "B-220",
+      "quantity": 4223,
+      "time": "2021-05-04T18:16",
+      "machine": "Press 3",
+      "operator": "OP-121",
+      "shift": "2nd",
+      "step": "Stamping",
+      "alarm": "A_101",
+      "extra": {
+        "NOTES": ""
+      },
+      "source_file": "shift2_export.csv",
+      "file_id": "f2",
+      "source_row": 26,
+      "original_row": {
+        "REF": "4420",
+        "PART": "B-220",
+        "QTY": "4223",
+        "PROD DT": "2021-05-04 18:16",
+        "MACH": "PRESS-3",
+        "OP": "OP-121",
+        "SHIFT": "2nd",
+        "STEP": "Stamping",
+        "ALARM": "A_101",
+        "NOTES": ""
+      },
+      "changed": [
+        "time",
+        "machine"
+      ]
+    },
+    {
+      "entry_id": "f2-r36",
+      "lot": "4441",
+      "part": "B-220",
+      "quantity": 4475,
+      "time": "2021-05-05T17:49",
+      "machine": "Press 3",
+      "operator": "OP-121",
+      "shift": "2nd",
+      "step": "Stamping",
+      "alarm": "A_101",
+      "extra": {
+        "NOTES": ""
+      },
+      "source_file": "shift2_export.csv",
+      "file_id": "f2",
+      "source_row": 36,
+      "original_row": {
+        "REF": "4441",
+        "PART": "B-220",
+        "QTY": "4475",
+        "PROD DT": "2021-05-05 17:49",
+        "MACH": "Press 3",
+        "OP": "OP-121",
+        "SHIFT": "2nd",
+        "STEP": "Stamping",
+        "ALARM": "A_101",
+        "NOTES": ""
+      },
+      "changed": [
+        "time"
+      ]
+    },
+    {
+      "entry_id": "f2-r39",
+      "lot": "4443",
+      "part": "B-220",
+      "quantity": 3801,
+      "time": "2021-05-05T18:58",
+      "machine": "Press 3",
+      "operator": "OP-121",
+      "shift": "2nd",
+      "step": "Stamping",
+      "alarm": "A_101",
+      "extra": {
+        "NOTES": ""
+      },
+      "source_file": "shift2_export.csv",
+      "file_id": "f2",
+      "source_row": 39,
+      "original_row": {
+        "REF": "4443",
+        "PART": "B-220",
+        "QTY": "3801",
+        "PROD DT": "2021-05-05 18:58",
+        "MACH": "Press 3",
+        "OP": "OP-121",
+        "SHIFT": "2nd",
+        "STEP": "Stamping",
+        "ALARM": "A_101",
+        "NOTES": ""
+      },
+      "changed": [
+        "time"
+      ]
+    },
+    {
+      "entry_id": "f2-r42",
+      "lot": "4445",
+      "part": "B-220",
+      "quantity": 3482,
+      "time": "2021-05-05T20:12",
+      "machine": "Press 3",
+      "operator": "OP-121",
+      "shift": "2nd",
+      "step": "Stamping",
+      "alarm": "A_101",
+      "extra": {
+        "NOTES": ""
+      },
+      "source_file": "shift2_export.csv",
+      "file_id": "f2",
+      "source_row": 42,
+      "original_row": {
+        "REF": "4445",
+        "PART": "B-220",
+        "QTY": "3482",
+        "PROD DT": "2021-05-05 20:12",
+        "MACH": "Press 3",
+        "OP": "OP-121",
+        "SHIFT": "2nd",
+        "STEP": "Stamping",
+        "ALARM": "A_101",
+        "NOTES": ""
+      },
+      "changed": [
+        "time"
+      ]
+    },
+    {
+      "entry_id": "f2-r56",
+      "lot": "4486",
+      "part": "B-220",
+      "quantity": 2533,
+      "time": "2021-05-07T16:12",
+      "machine": "Press 3",
+      "operator": "OP-121",
+      "shift": "2nd",
+      "step": "Stamping",
+      "alarm": "A_101",
+      "extra": {
+        "NOTES": ""
+      },
+      "source_file": "shift2_export.csv",
+      "file_id": "f2",
+      "source_row": 56,
+      "original_row": {
+        "REF": "4486",
+        "PART": "B-220",
+        "QTY": "2533",
+        "PROD DT": "2021-05-07 16:12",
+        "MACH": "PRESS-3",
+        "OP": "OP-121",
+        "SHIFT": "2nd",
+        "STEP": "Stamping",
+        "ALARM": "A_101",
+        "NOTES": ""
+      },
+      "changed": [
+        "time",
+        "machine"
+      ]
+    },
+    {
+      "entry_id": "f2-r69",
+      "lot": "4513",
+      "part": "B-220",
+      "quantity": 4588,
+      "time": "2021-05-09T16:14",
+      "machine": "Press 3",
+      "operator": "OP-121",
+      "shift": "2nd",
+      "step": "Stamping",
+      "alarm": "A_101",
+      "extra": {
+        "NOTES": ""
+      },
+      "source_file": "shift2_export.csv",
+      "file_id": "f2",
+      "source_row": 69,
+      "original_row": {
+        "REF": "4513",
+        "PART": "B-220",
+        "QTY": "4588",
+        "PROD DT": "2021-05-09 16:14",
+        "MACH": "Press 3",
+        "OP": "OP-121",
+        "SHIFT": "2nd",
+        "STEP": "Stamping",
+        "ALARM": "A_101",
+        "NOTES": ""
+      },
+      "changed": [
+        "time"
+      ]
+    },
+    {
+      "entry_id": "f2-r72",
+      "lot": "4515",
+      "part": "B-220",
+      "quantity": 4010,
+      "time": "2021-05-09T18:03",
+      "machine": "Press 3",
+      "operator": "OP-121",
+      "shift": "2nd",
+      "step": "Stamping",
+      "alarm": "A_101",
+      "extra": {
+        "NOTES": ""
+      },
+      "source_file": "shift2_export.csv",
+      "file_id": "f2",
+      "source_row": 72,
+      "original_row": {
+        "REF": "4515",
+        "PART": "B-220",
+        "QTY": "4010",
+        "PROD DT": "2021-05-09 18:03",
+        "MACH": "PRESS-3",
+        "OP": "OP-121",
+        "SHIFT": "2nd",
+        "STEP": "Stamping",
+        "ALARM": "A_101",
+        "NOTES": ""
+      },
+      "changed": [
+        "time",
+        "machine"
+      ]
+    }
+  ],
+  "options": {
+    "machine": [
+      "Bench 2",
+      "Press 1",
+      "Press 2",
+      "Press 3",
+      "Press1",
+      "Weld 1"
+    ],
+    "shift": [
+      "1st",
+      "2nd",
+      "3"
+    ],
+    "stop": [
+      "A_001",
+      "A_002",
+      "A_003",
+      "A_004",
+      "A_005",
+      "A_006",
+      "A_009",
+      "A_010",
+      "A_011",
+      "A_012",
+      "A_020",
+      "A_021",
+      "A_023",
+      "A_028",
+      "A_032",
+      "A_034",
+      "A_035",
+      "A_043",
+      "A_049",
+      "A_065",
+      "A_066",
+      "A_067",
+      "A_068",
+      "A_101"
+    ],
+    "date_min": "2021-05-03",
+    "date_max": "2021-05-09"
+  }
+}

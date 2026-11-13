@@ -1,0 +1,190 @@
+{
+  "file_id": "f1",
+  "source_file": "shift1_log.csv",
+  "recognized": false,
+  "format_id": null,
+  "status": "needs_check",
+  "questions": [
+    {
+      "question_id": "q1",
+      "kind": "duplicate",
+      "positions": [
+        3,
+        4
+      ],
+      "title": "Which one is the time?",
+      "sentence": "Two columns look like the time. Pick the one that says when the step was done.",
+      "choices": [
+        {
+          "value": "3",
+          "text": "Prod Dt",
+          "samples": [
+            "5/3/21 6:01a",
+            "5/4/21 8:12a",
+            "5/6/21 10:05a"
+          ],
+          "granite_guess": false
+        },
+        {
+          "value": "4",
+          "text": "Logged",
+          "samples": [
+            "2021-05-03",
+            "2021-05-04",
+            "2021-05-06"
+          ],
+          "granite_guess": false
+        }
+      ],
+      "preselected": null
+    },
+    {
+      "question_id": "q2",
+      "kind": "unsure",
+      "positions": [
+        0
+      ],
+      "title": "What is this column?",
+      "sentence": "Granite thinks this is the lot number but isn't sure.",
+      "choices": [
+        {
+          "value": "lot",
+          "text": "Lot number",
+          "samples": [
+            "4384",
+            "4395",
+            "4406",
+            "4428",
+            "4452"
+          ],
+          "granite_guess": true
+        },
+        {
+          "value": "part",
+          "text": "Part number",
+          "samples": [],
+          "granite_guess": false
+        },
+        {
+          "value": "quantity",
+          "text": "Quantity",
+          "samples": [],
+          "granite_guess": false
+        },
+        {
+          "value": "extra",
+          "text": "Something else",
+          "samples": [],
+          "granite_guess": false
+        }
+      ],
+      "preselected": "lot"
+    },
+    {
+      "question_id": "q3",
+      "kind": "merge",
+      "positions": [
+        5
+      ],
+      "title": "Are these the same?",
+      "sentence": "Granite thinks these spellings are the same machine.",
+      "choices": [
+        {
+          "value": "yes",
+          "text": "Yes, all are \"Press 3\"",
+          "samples": [
+            "Press 3",
+            "PRESS-3",
+            "P3"
+          ],
+          "granite_guess": true
+        },
+        {
+          "value": "no",
+          "text": "No, keep them apart",
+          "samples": [],
+          "granite_guess": false
+        }
+      ],
+      "preselected": "yes"
+    }
+  ],
+  "matched": [
+    {
+      "position": 1,
+      "header": "Part",
+      "field": "part",
+      "decided_by": "granite"
+    },
+    {
+      "position": 2,
+      "header": "Qty",
+      "field": "quantity",
+      "decided_by": "granite"
+    },
+    {
+      "position": 6,
+      "header": "Op",
+      "field": "operator",
+      "decided_by": "granite"
+    },
+    {
+      "position": 7,
+      "header": "Shift",
+      "field": "shift",
+      "decided_by": "granite"
+    },
+    {
+      "position": 8,
+      "header": "Step",
+      "field": "step",
+      "decided_by": "granite"
+    },
+    {
+      "position": 9,
+      "header": "Alarm",
+      "field": "alarm",
+      "decided_by": "granite"
+    },
+    {
+      "position": 10,
+      "header": "Notes",
+      "field": "extra",
+      "decided_by": "granite"
+    }
+  ],
+  "new_columns": [],
+  "steps": [
+    {
+      "step": "header",
+      "state": "done",
+      "title": "Found the header",
+      "detail": "Skipped 3 title rows."
+    },
+    {
+      "step": "granite",
+      "state": "done",
+      "title": "Asked IBM Granite",
+      "detail": "What 11 columns mean."
+    },
+    {
+      "step": "cleaning",
+      "state": "waiting",
+      "title": "Cleaned the values",
+      "detail": ""
+    },
+    {
+      "step": "records",
+      "state": "waiting",
+      "title": "Built the records",
+      "detail": ""
+    }
+  ],
+  "timings": {
+    "header": 0.04,
+    "granite": 3.1,
+    "cleaning": 0,
+    "records": 0
+  },
+  "fell_back": false
+}

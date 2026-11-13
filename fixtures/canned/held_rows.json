@@ -1,0 +1,41 @@
+[
+  {
+    "file_id": "f1",
+    "source_file": "shift1_log.csv",
+    "source_row": 32,
+    "original_row": {
+      "Ref": "",
+      "Part": "B-118",
+      "Qty": "5544",
+      "Prod Dt": "5/5/21 6:13a",
+      "Logged": "2021-05-05",
+      "Mach": "Weld 1",
+      "Op": "OP-412",
+      "Shift": "1st",
+      "Step": "Welding",
+      "Alarm": "A_101",
+      "Notes": ""
+    },
+    "reason": "no_lot",
+    "reason_text": "No lot number"
+  },
+  {
+    "file_id": "f2",
+    "source_file": "shift2_export.csv",
+    "source_row": 40,
+    "original_row": {
+      "REF": "4402",
+      "PART": "B-305",
+      "QTY": "8918",
+      "PROD DT": "??",
+      "MACH": "Bench 2",
+      "OP": "OP-318",
+      "SHIFT": "2nd",
+      "STEP": "Deburring",
+      "ALARM": "A_012",
+      "NOTES": ""
+    },
+    "reason": "bad_time",
+    "reason_text": "Time unreadable"
+  }
+]

@@ -1,0 +1,13 @@
+@use '@carbon/react';
+
+// Body text is at least 16 px (design doc 9.5 rule 9).
+body {
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.app-main {
+  max-width: 72rem;
+  margin: 0 auto;
+  padding: 4rem 1rem 2rem;
+}

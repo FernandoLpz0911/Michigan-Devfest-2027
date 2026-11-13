@@ -1,0 +1,23 @@
+# Secrets: the watsonx API key lives only in .env
+.env
+.env.*
+!.env.example
+
+# Python
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Local data
+*.db
+*.sqlite
+data/
+
+# Front end
+node_modules/
+dist/
+test-results/
+playwright-report/
+
+# Tools
