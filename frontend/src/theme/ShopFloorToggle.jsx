@@ -18,7 +18,7 @@ export function useShopFloor() {
 export default function ShopFloorToggle({ on, onChange }) {
   return (
     <div className="shopfloor-toggle">
-      <Toggle id="shop-floor" size="sm" labelText="Shop-floor mode" labelA="Off" labelB="On"
+      <Toggle id="shop-floor" size="sm" labelText="Shop-floor mode" hideLabel
         toggled={!!on} onToggle={(checked) => onChange(checked)} />
     </div>
   )

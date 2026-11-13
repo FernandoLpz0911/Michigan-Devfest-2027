@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { Button, TextArea } from '@carbon/react'
 import { api } from '../api.js'
 import TimeSavedLine from '../parts/TimeSavedLine.jsx'
 import TimelineStrip from '../parts/TimelineStrip.jsx'
@@ -8,23 +9,43 @@ function stopText(alarm) {
   return `Machine stop, code ${n}`
 }
 
+const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+
+// "2021-05-04T16:15" -> ["May 4, 2021", "4:15 PM"], read as written (no time zone shift).
+export function whenText(time) {
+  const m = /^(\d{4})-(\d{2})-(\d{2})(?:[T ](\d{2}):(\d{2}))?/.exec(time || '')
+  if (!m) return [time || '', '']
+  const day = `${MONTHS[Number(m[2]) - 1]} ${Number(m[3])}, ${m[1]}`
+  if (m[4] === undefined) return [day, '']
+  const h = Number(m[4])
+  return [day, `${h % 12 || 12}:${m[5]} ${h < 12 ? 'AM' : 'PM'}`]
+}
+
 function Step({ e }) {
   const [open, setOpen] = useState(false)
-  const when = e.time.replace('T', ' ')
+  const [day, clock] = whenText(e.time)
   return (
-    <li>
-      <p>
-        <strong>{when}</strong>: {e.step || 'Step'} on {e.machine || 'unknown machine'}
-        {e.operator ? `, operator ${e.operator}` : ''}{e.shift ? `, ${e.shift} shift` : ''}
-        {e.quantity != null ? `, ${e.quantity} parts` : ''}. From {e.source_file}, row {e.source_row}.
-      </p>
-      {e.alarm && <p className="stop"><span aria-hidden="true">▲</span> {stopText(e.alarm)}</p>}
-      <button type="button" aria-expanded={open} onClick={() => setOpen(!open)}>
-        {open ? 'Hide the original row' : 'See the original row'}
-      </button>
-      {open && (
-        <dl>{Object.entries(e.original_row).map(([k, v]) => <div key={k}><dt>{k}</dt><dd>{v}</dd></div>)}</dl>
-      )}
+    <li className="lot-step">
+      <div className="when"><strong>{day}</strong><span className="subtle">{clock}</span></div>
+      <div>
+        <p>
+          {e.step || 'Step'} on {e.machine || 'an unknown machine'}
+          {e.operator ? ` by operator ${e.operator}` : ''}{e.shift ? `, ${e.shift} shift` : ''}.
+          {e.quantity != null ? ` ${e.quantity} parts.` : ''}
+        </p>
+        {e.alarm && <p className="stop"><span className="stop-icon" aria-hidden="true">▲</span>{stopText(e.alarm)}</p>}
+        <p className="source">
+          {e.source_file}, row {e.source_row} ·{' '}
+          <button type="button" className="link-btn" aria-expanded={open} onClick={() => setOpen(!open)}>
+            {open ? 'Hide original row' : 'See original row'}
+          </button>
+        </p>
+        {open && (
+          <code className="raw-row" aria-label={`Original row ${e.source_row}`}>
+            {Object.values(e.original_row).join(', ')}
+          </code>
+        )}
+      </div>
     </li>
   )
 }
@@ -56,9 +77,9 @@ function Reply({ draft }) {
           </div>
         ))}
       </div>
-      <p>{label}</p>
-      <button type="button" className="cds--btn cds--btn--primary" onClick={copy}>Copy reply</button>{' '}
-      <button type="button" onClick={() => setEditing(!editing)}>{editing ? 'Done editing' : 'Edit'}</button>
+      <p className="subtle">{label}</p>
+      <Button kind="primary" onClick={copy}>Copy reply</Button>{' '}
+      <Button kind="ghost" onClick={() => setEditing(!editing)}>{editing ? 'Done editing' : 'Edit'}</Button>
       {copied && <span role="status"> Copied.</span>}
     </section>
   )
@@ -105,26 +126,29 @@ export default function FindRecord({ go, params }) {
   const typed = r?.source === 'typed'
   return (
     <div className="find-record">
+      <h1>Find a record</h1>
       {searched === null ? (
-        <form onSubmit={(e) => { e.preventDefault(); search(text) }}>
-          <h1>Find a record</h1>
-          <label htmlFor="find-box">Paste the message or type a lot number</label>
-          <textarea id="find-box" rows={4} value={text} onChange={(e) => setText(e.target.value)} />
-          <button type="submit" className="cds--btn cds--btn--primary">Find</button>
+        <form className="find-form" onSubmit={(e) => { e.preventDefault(); search(text) }}>
+          <TextArea id="find-box" rows={5} labelText="Paste the message or type a lot number"
+            value={text} onChange={(e) => setText(e.target.value)} />
+          <Button type="submit" kind="primary">Find</Button>
         </form>
       ) : (
-        <p>
-          <span>{searched}</span> <button type="button" onClick={reset}>New search</button>
+        <p className="find-searched">
+          <span>{/^\S+$/.test(searched) ? `Lot ${searched}` : `"${searched}"`}</span>
+          <button type="button" className="link-btn" onClick={reset}>New search</button>
         </p>
       )}
       {busy && <p role="status">{/^\S+$/.test(searched) ? 'Looking up the lot...' : 'Sending this message to IBM Granite...'}</p>}
       {error && <p role="alert">{error.message} {error.fix}</p>}
       {answer && !typed && (
-        <p>
+        <p className="find-reading">
           {r?.found
-            ? `Granite read this as: lot ${r.lot}${r.part ? `, part ${r.part}` : ''}${r.problem ? `, problem: ${r.problem}` : ''}.`
+            ? <>Granite read this as <strong>lot {r.lot}</strong>
+              {r.part && <>, <strong>part {r.part}</strong></>}
+              {r.problem && <>, problem: <strong>{r.problem}</strong></>}.</>
             : 'No lot number found in this message.'}{' '}
-          <button type="button" onClick={reset}>Change</button>
+          <button type="button" className="link-btn" onClick={reset}>Change</button>
         </p>
       )}
       {answer && !answer.history && r?.found !== false && (
@@ -134,24 +158,30 @@ export default function FindRecord({ go, params }) {
           {answer.closest.length > 0 && (
             <>
               <p>Closest lot numbers:</p>
-              <ul>{answer.closest.map((l) => <li key={l}><button type="button" onClick={() => go('find', { lot: l })}>{l}</button></li>)}</ul>
+              <ul>{answer.closest.map((l) => <li key={l}><button type="button" className="link-btn" onClick={() => go('find', { lot: l })}>{l}</button></li>)}</ul>
             </>
           )}
         </section>
       )}
       {answer?.history && (
         <>
-          <h2>Lot {answer.history.lot} history</h2>
-          <ol>{answer.history.entries.map((e) => <Step key={e.entry_id} e={e} />)}</ol>
+          <div className="lot-head">
+            <h2>Lot {answer.history.lot}</h2>
+            {answer.history.part && <span className="subtle">Part {answer.history.part}</span>}
+            <button type="button" className="link-btn" onClick={() => window.print()}>Print</button>
+          </div>
+          <ol className="lot-steps" aria-label={`Lot ${answer.history.lot} history`}>
+            {answer.history.entries.map((e) => <Step key={e.entry_id} e={e} />)}
+          </ol>
           {timeline && <TimelineStrip timeline={timeline} />}
           <section aria-labelledby="worth-h">
             <h2 id="worth-h">Worth checking: {answer.links.length} of {answer.lots_in_week} lots that week</h2>
             <p>Not a verdict. Each one shares something with lot {answer.history.lot}.</p>
-            <ul>
+            <ul className="worth-list">
               {answer.links.map((l) => (
                 <li key={l.lot}>
                   <strong>Lot {l.lot}</strong> {l.reasons.join(', ')}{' '}
-                  <button type="button" aria-label={`See lot ${l.lot}`} onClick={() => go('find', { lot: l.lot })}>See</button>
+                  <button type="button" className="link-btn" aria-label={`See lot ${l.lot}`} onClick={() => go('find', { lot: l.lot })}>See</button>
                 </li>
               ))}
             </ul>

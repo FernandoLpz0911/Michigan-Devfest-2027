@@ -1,6 +1,4 @@
-.shopfloor-toggle { display: flex; align-items: center; padding: 0 1rem; height: 100%; color: #f4f4f4; }
-.shopfloor-toggle .cds--toggle__label-text { color: #f4f4f4; }
-.shopfloor-toggle .cds--toggle__text { color: #f4f4f4; }
+.shop-floor .lot-step .stop-icon { color: #f1c21b; }
 /* Shop-floor mode: Carbon g100 plus 20 px body text */
 body:has(.shop-floor) { background: #161616; }
 .shop-floor { background: #161616; color: #f4f4f4; font-size: 1.25rem; min-height: 100vh; }

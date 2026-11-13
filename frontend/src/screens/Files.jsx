@@ -42,12 +42,12 @@ export default function Files({ go, params }) {
 
   const anyReady = rows.some((r) => r.status === 'ready')
   return (
-    <div style={{ maxWidth: 800, margin: '0 auto' }}>
+    <div className="files-screen">
       <h1>Add your shift logs</h1>
-      <p>Any spreadsheet works, even a messy one.</p>
+      <p className="subtle">Any spreadsheet works, even a messy one.</p>
       {params?.saved && <div role="status">Saved. Files like {params.saved} are automatic from now on.</div>}
       <div onDragOver={(e) => e.preventDefault()} onDrop={(e) => { e.preventDefault(); upload([...e.dataTransfer.files]) }}
-        style={{ border: '1px dashed #8d8d8d', padding: '3rem', textAlign: 'center' }}>
+        style={{ border: '1px dashed var(--cds-border-strong)', padding: '3rem', textAlign: 'center', margin: '2rem 0' }}>
         Drop files here, or{' '}
         <a href="#" onClick={(e) => { e.preventDefault(); input.current.click() }}>choose files</a>
         <input ref={input} type="file" multiple hidden aria-label="Choose files" accept=".csv,.xlsx,.xls"
@@ -63,7 +63,7 @@ export default function Files({ go, params }) {
         {busy && <FileRow file={busy} />}
       </ul>
       {error && <p role="alert">{error.message} {error.fix}</p>}
-      <p>Only column names and a few sample values are sent to Granite.</p>
+      <p className="subtle">Only column names and a few sample values are sent to Granite.</p>
       <Button kind="primary" disabled={!anyReady} onClick={() => go('find')}>Find a record</Button>
     </div>
   )

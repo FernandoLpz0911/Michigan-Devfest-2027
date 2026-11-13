@@ -9,6 +9,8 @@ import ShopFloorToggle, { useShopFloor } from './theme/ShopFloorToggle.jsx'
 
 // Screens are chosen by plain state, no router. Every screen gets { go, params }.
 // go('files') | go('check', { fileId, result }) | go('find', { lot }) | go('seefile', { fileId }) | go('records')
+// Grid screens need more room than the reading column.
+const WIDE = new Set(['seefile', 'records'])
 const SCREENS = { files: Files, check: Check, find: FindRecord, seefile: SeeFile, records: AllRecords }
 
 export default function App() {
@@ -20,10 +22,13 @@ export default function App() {
 
   return (
     <Theme theme={shopFloor ? 'g100' : 'white'} className={shopFloor ? 'shop-floor' : ''}>
-      <Header aria-label="Data Wrapper">
+      <Header aria-label="Data Wrapper" className="app-header">
         <HeaderName prefix="" href="#" onClick={(e) => { e.preventDefault(); go('files') }}>
           Data Wrapper
         </HeaderName>
+        <HeaderGlobalBar>
+          <ShopFloorToggle on={shopFloor} onChange={setShopFloor} />
+        </HeaderGlobalBar>
         <HeaderNavigation aria-label="Screens">
           <HeaderMenuItem href="#" isActive={!onFind} onClick={(e) => { e.preventDefault(); go('files') }}>
             Files
@@ -32,11 +37,8 @@ export default function App() {
             Find a record
           </HeaderMenuItem>
         </HeaderNavigation>
-        <HeaderGlobalBar>
-          <ShopFloorToggle on={shopFloor} onChange={setShopFloor} />
-        </HeaderGlobalBar>
       </Header>
-      <main className="app-main" id="main">
+      <main className={`app-main${WIDE.has(view.screen) ? ' wide' : ''}`} id="main">
         <Screen go={go} params={view.params} />
       </main>
     </Theme>

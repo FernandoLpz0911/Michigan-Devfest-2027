@@ -1,13 +1,173 @@
-@use '@carbon/react';
+// Carbon's own @font-face rules point at '~@ibm/plex', which Vite can't resolve.
+// Turn them off; main.jsx imports the IBM Plex CSS from @ibm/plex-sans and @ibm/plex-mono.
+@use '@carbon/react' with ($css--font-face: false);
 
-// Body text is at least 16 px (design doc 9.5 rule 9).
+// Body text is at least 16 px (design doc 9.5 rule 9); the mockups use 18 px.
 body {
-  font-size: 1rem;
+  font-family: 'IBM Plex Sans', 'Helvetica Neue', Arial, sans-serif;
+  font-size: 1.125rem;
   line-height: 1.5;
+  background: var(--cds-background, #ffffff);
 }
 
-.app-main {
-  max-width: 72rem;
-  margin: 0 auto;
-  padding: 4rem 1rem 2rem;
+code, pre, .mono {
+  font-family: 'IBM Plex Mono', Menlo, monospace;
 }
+
+// Header, as in the mockups: name on the left; shop-floor switch, Files and Find a record on the right.
+.app-header.cds--header {
+  height: 3.5rem;
+  background: var(--cds-background);
+  border-bottom: 1px solid var(--cds-border-subtle);
+}
+.app-header .cds--header__name {
+  padding: 0 2rem;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--cds-text-primary);
+}
+.app-header .cds--header__global {
+  flex: 1 1 auto;
+  justify-content: flex-end;
+}
+.app-header .cds--header__nav {
+  padding-left: 0;
+  padding-right: 1.5rem;
+}
+.app-header .cds--header__nav::before { display: none; }
+.app-header a.cds--header__menu-item {
+  height: 3.5rem;
+  font-size: 1.125rem;
+  color: var(--cds-text-secondary);
+  background: transparent;
+}
+.app-header a.cds--header__menu-item:hover {
+  color: var(--cds-text-primary);
+  background: transparent;
+}
+.app-header a.cds--header__menu-item[aria-current='page'],
+.app-header a.cds--header__menu-item--current {
+  color: var(--cds-text-primary);
+  font-weight: 600;
+}
+.app-header a.cds--header__menu-item[aria-current='page']::after,
+.app-header a.cds--header__menu-item--current::after {
+  border-bottom: 3px solid var(--cds-text-primary);
+  inset-inline: 1rem;
+}
+.shopfloor-toggle {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  padding: 0 1rem;
+}
+.shopfloor-toggle .cds--toggle__text {
+  font-size: 1rem;
+  color: var(--cds-text-secondary);
+}
+
+// One centred reading column.
+.app-main {
+  max-width: 48rem;
+  margin: 0 auto;
+  padding: 6rem 1rem 4rem;
+}
+.app-main h1 {
+  font-size: 2.625rem;
+  font-weight: 400;
+  line-height: 1.2;
+  margin-bottom: 1.5rem;
+}
+.app-main h2 {
+  font-size: 1.75rem;
+  font-weight: 400;
+  margin: 2.5rem 0 1rem;
+}
+.app-main h3 {
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+.app-main p { margin-bottom: 1rem; }
+.subtle { color: var(--cds-text-secondary); }
+
+// A button that looks like a Carbon link (used for small actions next to text).
+.link-btn {
+  background: none;
+  border: 0;
+  padding: 0;
+  font: inherit;
+  color: var(--cds-link-primary);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+.link-btn:hover { color: var(--cds-link-primary-hover); }
+.link-btn:focus { outline: 2px solid var(--cds-focus); outline-offset: 2px; }
+
+// Find a record (mockups 3a to 3c)
+.find-form .cds--text-area__wrapper { margin-bottom: 1.5rem; }
+.find-form .cds--label { font-size: 1rem; }
+.find-form textarea { font-size: 1.125rem; }
+.find-searched {
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid var(--cds-border-subtle);
+  margin-bottom: 1.25rem;
+}
+.find-searched span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.find-reading { margin-bottom: 3rem; }
+.lot-head {
+  display: flex;
+  align-items: baseline;
+  gap: 1.25rem;
+  border-bottom: 1px solid var(--cds-border-subtle);
+  padding-bottom: 0.25rem;
+}
+.lot-head h2 { margin: 0; font-size: 2.25rem; }
+.lot-head .link-btn { margin-left: auto; }
+.lot-steps { list-style: none; padding: 0; margin: 0 0 2rem; }
+.lot-step {
+  display: grid;
+  grid-template-columns: 12.5rem 1fr;
+  gap: 1rem;
+  padding: 1.5rem 0;
+  border-bottom: 1px solid var(--cds-border-subtle);
+}
+.lot-step .when strong { display: block; }
+.lot-step p { margin-bottom: 0.5rem; }
+.lot-step .stop { font-weight: 600; }
+.lot-step .stop-icon { color: #8e6a00; margin-right: 0.5rem; }
+.lot-step .source { font-size: 1rem; color: var(--cds-text-secondary); }
+.raw-row {
+  display: block;
+  margin-top: 1rem;
+  padding: 1rem;
+  background: var(--cds-layer-01);
+  font-size: 0.875rem;
+  overflow-wrap: anywhere;
+}
+.worth-list { list-style: none; padding: 0; }
+.worth-list li {
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--cds-border-subtle);
+}
+.reply-card {
+  border: 1px solid var(--cds-border-subtle);
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+}
+.reply-card h3 { margin-top: 0.5rem; }
+.reply-card textarea { width: 100%; min-height: 6rem; font: inherit; }
+
+@media (max-width: 40rem) {
+  .lot-step { grid-template-columns: 1fr; }
+  .app-main { padding-top: 4.5rem; }
+}
+
+.app-main.wide { max-width: 80rem; }
