@@ -45,3 +45,7 @@ this repo. Run `python fixtures/make_fixtures.py path/to/raw_data.csv` to rebuil
   code 101; deburred on Bench 2 on Fri May 7.
 - Lot 4420 ran on Press 3 two hours later with the same stop code 101.
 - Lot 4415 ran on Press 3 two hours earlier with stop code 1.
+
+## piade_machine_sample.csv (for judges' questions, added Nov 13, 2026)
+
+This file is 300 rows of the PIADE dataset (Beghi et al., Zenodo, DOI 10.5281/zenodo.7071747, licensed CC BY 4.0), cut from the demo week of Mon May 3 to Sun May 9, 2021. It has the same ten columns as the raw file (`interval_start`, `equipment_ID`, `alarm`, `type`, `start`, `end`, `elapsed`, `pi`, `po`, `speed`), sorted by time, with 60 rows from each of machines `s_1` to `s_5`. Every row is copied unchanged from PIADE; no value was edited or reformatted. It has no lot number, so when a judge uploads it the app asks which column is the lot, and the presenter picks "None of these" for the lot. The rows are then held, because a machine export carries no lot. The 20-second answer for a judge: "This is a real machine export from a packaging line, taken from one week of a public research dataset. It has the machine, the stop code and the counts, but no lot number, so the app will not guess one. It holds these rows for a person to check, and that is the honest answer."
