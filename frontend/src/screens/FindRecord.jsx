@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { api } from '../api.js'
 import TimeSavedLine from '../parts/TimeSavedLine.jsx'
+import TimelineStrip from '../parts/TimelineStrip.jsx'
 
 function stopText(alarm) {
   const n = String(alarm).replace(/\D/g, '').replace(/^0+(?=\d)/, '')
@@ -72,17 +73,19 @@ export default function FindRecord({ go, params }) {
   const [error, setError] = useState(null)
   const [seconds, setSeconds] = useState(null)
   const [handTime, setHandTime] = useState(null)
+  const [timeline, setTimeline] = useState(null)
 
   async function search(value) {
     const q = value.trim()
     if (!q) return
-    setBusy(true); setError(null); setAnswer(null); setDraft(null); setSearched(q); setSeconds(null)
+    setBusy(true); setError(null); setAnswer(null); setDraft(null); setSearched(q); setSeconds(null); setTimeline(null)
     const started = Date.now()
     try {
       const a = await api.find(q)
       setAnswer(a)
       setBusy(false)
       if (a.history) {
+        api.timeline(a.history.lot).then(setTimeline).catch(() => setTimeline(null))
         api.draft(a.history.lot, a.reading).then((d) => {
           setDraft(d)
           setSeconds(Math.max(1, Math.round((Date.now() - started) / 1000)))
@@ -140,6 +143,7 @@ export default function FindRecord({ go, params }) {
         <>
           <h2>Lot {answer.history.lot} history</h2>
           <ol>{answer.history.entries.map((e) => <Step key={e.entry_id} e={e} />)}</ol>
+          {timeline && <TimelineStrip timeline={timeline} />}
           <section aria-labelledby="worth-h">
             <h2 id="worth-h">Worth checking: {answer.links.length} of {answer.lots_in_week} lots that week</h2>
             <p>Not a verdict. Each one shares something with lot {answer.history.lot}.</p>

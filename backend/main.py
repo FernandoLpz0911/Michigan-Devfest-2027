@@ -1,6 +1,6 @@
 """Routes. Each route calls the pipeline, which returns the contract shapes.
 
-Lot timeline and Ask your records still return canned shapes (cards T and G3).
+Ask your records still returns a canned shape (card G3 is cut).
 """
 import json
 import os
@@ -11,6 +11,7 @@ from fastapi.responses import JSONResponse, Response
 
 from backend import fileview, pipeline, records
 from backend.pipeline import UserError
+from backend.timeline import lot_timeline
 
 ROOT = Path(__file__).resolve().parent.parent
 CANNED = ROOT / "fixtures" / "canned"
@@ -124,7 +125,7 @@ def records_csv(request: Request):
 
 @app.get("/api/timeline/{lot}")
 def timeline(lot: str):
-    return canned("timeline.json")
+    return lot_timeline(pipeline.con(), lot, pipeline.settings()["window_hours"])
 
 
 @app.post("/api/records/ask")

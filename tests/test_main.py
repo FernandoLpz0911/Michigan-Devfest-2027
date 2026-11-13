@@ -67,6 +67,10 @@ def test_full_demo_flow(client):
     miss = client.post("/api/find", json={"text": "4471x"}).json()
     assert miss["history"] is None and len(miss["closest"]) == 3
 
+    tl = client.get("/api/timeline/4417").json()
+    assert tl["machine"] == "Press 3" and len(tl["lots"]) == 6
+    assert client.get("/api/timeline/9999").status_code == 404
+
     assert len(client.get("/api/held").json()) == 2
     page = client.get("/api/records", params={"machine": "Press 3", "stop": "A_101"}).json()
     assert page["matching"] >= 2

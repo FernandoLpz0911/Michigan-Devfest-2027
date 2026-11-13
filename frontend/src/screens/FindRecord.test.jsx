@@ -5,7 +5,7 @@ import noMatch from '../../../fixtures/canned/answer_no_match.json'
 import draft from '../../../fixtures/canned/granite_job4.json'
 import FindRecord from './FindRecord.jsx'
 
-vi.mock('../api.js', () => ({ api: { find: vi.fn(), draft: vi.fn(), settings: vi.fn(() => Promise.resolve({ window_hours: 4, hand_time_minutes: 45 })) } }))
+vi.mock('../api.js', () => ({ api: { find: vi.fn(), draft: vi.fn(), timeline: vi.fn(() => Promise.resolve(null)), settings: vi.fn(() => Promise.resolve({ window_hours: 4, hand_time_minutes: 45 })) } }))
 import { api } from '../api.js'
 
 beforeEach(() => { vi.clearAllMocks(); api.draft.mockResolvedValue(draft) })
