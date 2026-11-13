@@ -64,8 +64,15 @@ def test_duplicate():
                         [lab(0, "lot"), lab(1, "time"), lab(2, "time")], [], False)
     q = r["questions"][0]
     assert kinds(r) == ["duplicate"] and q["title"] == "Which one is the time?"
-    assert [c["value"] for c in q["choices"]] == ["1", "2"] and q["choices"][0]["samples"] == ["s1"]
+    assert [c["value"] for c in q["choices"]] == ["1", "2", "none"] and q["choices"][0]["samples"] == ["s1"]
+    assert q["choices"][-1]["text"] == "None of these"
     assert q["preselected"] is None and [m["position"] for m in r["matched"]] == [0]
+
+
+def test_duplicate_of_four_stays_within_four_choices():
+    r = build_questions(profiles(["L", "A", "B", "C", "D"], ["number"] + ["text"] * 4),
+                        [lab(0, "lot")] + [lab(i, "part") for i in range(1, 5)], [], False)
+    assert len(r["questions"][0]["choices"]) <= 4
 
 
 def test_two_extra_columns_are_fine():

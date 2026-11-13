@@ -69,7 +69,9 @@ def build_questions(profiles, labels, merges, fell_back):
                 "kind": "duplicate", "positions": cols, "title": "Which one is %s?" % NAMED[field]
                 if field != "time" else "Which one is the time?",
                 "sentence": "Two columns look like %s. Pick the one that fits." % NAMED[field],
-                "choices": [_choice(str(c), prof[c]["header"], prof[c]["samples"]) for c in cols],
+                # "None of these" lets the user say no column fits; every listed column then becomes extra.
+                "choices": [_choice(str(c), prof[c]["header"], prof[c]["samples"]) for c in cols[:3]]
+                           + [_choice("none", "None of these")],
                 "preselected": None})
 
     # type conflict, then unsure
