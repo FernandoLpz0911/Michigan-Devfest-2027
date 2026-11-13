@@ -94,7 +94,7 @@ def test_missing_lot_and_time():
                         [lab(0, "part"), lab(1, "extra"), lab(2, "quantity")], [], False)
     assert kinds(r) == ["missing", "missing"]
     lot_q, time_q = r["questions"]
-    assert lot_q["title"] == "Which column is the lot number?" and lot_q["sentence"] == "None was found."
+    assert lot_q["title"] == "Which column is the lot number?" and lot_q["sentence"].startswith("None was found.")
     assert time_q["title"] == "Which column is the time?"
     assert time_q["choices"][0]["value"] == "1"
     assert lot_q["choices"][-1] == {"value": "none", "text": "None of these", "samples": [], "granite_guess": False}

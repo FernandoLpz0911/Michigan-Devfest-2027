@@ -33,7 +33,7 @@ def _field_choices(guess, alternatives, samples, detected_type="text"):
 
 def _fallback_question(profile):
     keys = NO_GUESS[profile["detected_type"]][:4]
-    return {"kind": "unsure", "positions": [profile["position"]], "title": "What is this column?",
+    return {"kind": "unsure", "positions": [profile["position"]], "title": 'What is the column "%s"?' % profile["header"],
             "sentence": "Granite could not read this column. Pick what it is.",
             "choices": [_choice(k, SHOWN[k], profile["samples"] if i == 0 else []) for i, k in enumerate(keys)],
             "preselected": None}
@@ -46,7 +46,9 @@ def _missing_question(field, profiles, by_pos):
     choices = [_choice(str(p["position"]), p["header"], p["samples"]) for p in free[:3]]
     choices.append(_choice("none", "None of these"))
     return {"kind": "missing", "positions": [p["position"] for p in free[:3]],
-            "title": "Which column is %s?" % NAMED[field], "sentence": "None was found.",
+            "title": "Which column is %s?" % NAMED[field],
+            "sentence": "None was found." + (" A machine log often has none; then pick None of these."
+                                             if field == "lot" else ""),
             "choices": choices, "preselected": None}
 
 
@@ -99,7 +101,7 @@ def build_questions(profiles, labels, merges, fell_back):
             else:
                 continue
             consumed.add(l["position"])
-            questions.append({"kind": kind, "positions": [l["position"]], "title": "What is this column?",
+            questions.append({"kind": kind, "positions": [l["position"]], "title": 'What is the column "%s"?' % p["header"],
                               "sentence": sentence,
                               "choices": _field_choices(f, l["alternatives"], p["samples"], t),
                               "preselected": pre})
