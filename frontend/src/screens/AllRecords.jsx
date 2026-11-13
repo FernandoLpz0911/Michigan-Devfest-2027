@@ -114,6 +114,8 @@ export default function AllRecords({ go, params }) {
               <TableBody>
                 {tableRows.map((tr, i) => {
                   const entry = data.rows[Number(tr.id)]
+                  // DataTable keeps the previous rows for one render after a filter shrinks the list.
+                  if (!entry) return null
                   const values = cells(entry, raw)
                   return (
                     <TableRow {...getRowProps({ row: tr })} key={tr.id} className="records-row"
