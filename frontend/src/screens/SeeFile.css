@@ -1,0 +1,18 @@
+.seefile-top { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 1.5rem; }
+.seefile-scroll { overflow-x: auto; border: 1px solid #8d8d8d; }
+.seefile-grid { border-collapse: collapse; width: 100%; font-size: 1rem; }
+.seefile-grid th, .seefile-grid td { padding: 0.5rem 0.75rem; text-align: left; border: 1px solid #c6c6c6; vertical-align: top; }
+.seefile-num { color: #525252; font-weight: 400; }
+.seefile-skipped td { background: #f4f4f4; color: #525252; font-style: italic; }
+.seefile-header th, .seefile-header td { background: #e0e0e0; font-weight: 600; }
+.seefile-header button { background: none; border: 0; font: inherit; cursor: pointer; padding: 0.5rem 0; min-height: 2.5rem; }
+.seefile-header button:focus { outline: 2px solid #0f62fe; }
+.seefile-picked { background: #edf5ff !important; border-left: 2px solid #0f62fe !important; border-right: 2px solid #0f62fe !important; }
+.seefile-tag { display: inline-block; border: 1px solid #161616; border-radius: 1rem; padding: 0 0.75rem; white-space: nowrap; }
+.seefile-tag-extra { border-style: dashed; }
+.seefile-tags td { border-bottom: 0; }
+.seefile-held td { background: #fcf4d6; }
+.seefile-reason { display: inline-flex; align-items: center; gap: 0.25rem; color: #5e4b00; margin-right: 1.5rem; }
+.seefile-old { display: block; font-size: 0.875rem; color: #525252; }
+.seefile-summary { display: flex; justify-content: space-between; gap: 1rem; margin-top: 1rem; padding: 1rem; background: #edf5ff; border-left: 4px solid #0f62fe; }
+.seefile-foot { display: flex; justify-content: space-between; margin-top: 1rem; }
