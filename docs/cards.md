@@ -182,6 +182,34 @@ The lead adds the two routes for V and L to backend/main during swap-in.
 - **Do:** send the question and the allowed filter values. Force the answer to choose from those values only (guided choice or JSON schema). Apply the result as chips through Card L's filters, with "Granite read this as" and Change.
 - **Done when:** five test questions give the expected filters; a question with no match shows "Couldn't read that. Use the filters below." and changes nothing; Granite never receives record rows; a bad answer gets one retry and then the fallback.
 
+## Live demo cards (added Nov 13, 12:40 ET, after we were told the demo is also live)
+
+The judges will watch the app run live and may ask to try things. These cards make a live run repeatable, safe to recover, and honest when a judge hands it an odd file. The user is a shop's paperwork person, not a data person: every message stays in plain words.
+
+### Card L1. Demo reset and start script (small tier, 30 minutes)
+
+- **Owns:** scripts/demo.sh (new)
+- **Do:** one command a nervous presenter can run before every demo. `scripts/demo.sh` empties the data folder (`DATA_DIR`, default `data/`: the SQLite file, `formats/`, `uploads/`, `files/`), then starts the backend with real Granite on `API_PORT` (default 8000). `scripts/demo.sh --mock` does the same with `MOCK_GRANITE=1`, the fallback if the venue network or watsonx stalls. Refuse to delete anything unless the resolved data folder is inside the repo. Print one plain line saying which mode is running and how to start the frontend.
+- **Done when:** after upload of a demo file, running the script leaves `GET /api/files` returning an empty list; `--mock` answers uploads with no network; pointing `DATA_DIR` outside the repo makes it refuse and delete nothing.
+
+### Card L2. Keep the Check screen through a page reload (mid tier, 45 minutes)
+
+- **Owns:** frontend/src/api.js, frontend/src/App.jsx, and their tests
+- **Do:** today a reload (or a judge pressing F5) loses the questions and shows "Nothing to check". There is no route to fetch the questions again, and the contract must not change, so keep them in the browser: store each FileResult in `sessionStorage` by `file_id`, and store the current screen and its params in `sessionStorage` so a reload returns to the same screen. Wrap every storage call in try/catch; with storage blocked the app works as today. Results answered and saved can be dropped.
+- **Done when:** a test renders App, goes to Check with a result, simulates a reload (new render with the same storage), and sees the same questions; blocked storage does not throw.
+
+### Card L3. Ask, don't guess, on machine-style columns (lead, strongest model, 45 minutes)
+
+- **Owns:** backend/granite.py (job 1 prompt and the mock guess only), tests/test_granite.py
+- **Do:** on the raw PIADE export, job 1 matched `elapsed` (a duration in milliseconds) as Quantity with no question, and offered `pi`/`po` (running package counters) as the part number. For a shop's paperwork person a silent wrong match is the worst outcome. Tune the job 1 prompt so durations, speeds, rates, running counters and Unix timestamps are marked unsure or extra, never confidently quantity, part or time. Make the mock guess follow the same rule. The three demo files must still give exactly the questions in status.md (Shift 1 asks 3; Shifts 2 and 3 ask none).
+- **Done when:** with the mock, a PIADE-style header set gives no confident quantity, part or time label on `elapsed`, `speed`, `pi`, `po`, `start` or `end`; the demo-file tests still pass; one real Granite run on the PIADE sample and on Shift 1 is reported (key read from the repo's `.env`, never printed).
+
+### Card L4. A small real PIADE file for questions from judges (small tier, 20 minutes)
+
+- **Owns:** fixtures/piade_machine_sample.csv (new), fixtures/NOTE.md (one added section)
+- **Do:** cut about 300 rows from the raw PIADE file (`/home/fez/Documents/ProgrammingProjects/piade-raw/raw_data.csv`), unchanged, all ten columns, from the demo week (Mon May 3 to Sun May 9, 2021), across the five machines. It answers "does it work on real machine data?": the app asks, the presenter picks None of these for the lot, and rows are held because a machine export has no lot number. Add a NOTE.md section saying what the file is, that it is unmodified PIADE data (CC BY 4.0, cite as the note already does), and the 20-second answer to give a judge.
+- **Done when:** the file has a header plus 250 to 350 rows, every value matches the raw file, and uploading it with `MOCK_GRANITE=1` gives a Check screen with a lot question that offers None of these.
+
 
 ## Lead's review checklist for every returned card
 
