@@ -5,6 +5,7 @@ Ask your records still returns a canned shape (card G3 is cut).
 import json
 import os
 import mimetypes
+from urllib.parse import quote
 from pathlib import Path
 
 from fastapi import FastAPI, File, Request, UploadFile
@@ -107,7 +108,15 @@ def download(file_id: str, version: str = "cleaned", format: str = "csv", dates:
                    "value": value, "kind": kind}
         data, name, kind_ = export.cleaned_file(table, fmt, matched, entries, held_rows, file_id, options)
     return Response(data, media_type=kind_,
-                    headers={"Content-Disposition": f'attachment; filename="{name}"'})
+                    headers={"Content-Disposition": _attachment(name)})
+
+
+def _attachment(name):
+    """A header that survives quotes and non-ASCII letters in the uploaded file's name."""
+    plain = "".join(c if c.isascii() and c not in '"\\' else "_" for c in name)
+    if plain == name:
+        return f'attachment; filename="{name}"'
+    return f'attachment; filename="{plain}"; filename*=UTF-8\'\'{quote(name)}'
 
 
 @app.post("/api/find")

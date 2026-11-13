@@ -82,3 +82,11 @@ def test_routes(client):
     assert v["matching"] == len(v["rows"]) - 1
     assert client.get("/api/files/f999/download").status_code == 404
     assert client.get("/api/files/f999/download?version=original").status_code == 404
+
+
+def test_attachment_header_handles_odd_names():
+    from backend.main import _attachment
+    h = _attachment('Schicht "Ü".csv')
+    assert h.startswith('attachment; filename="Schicht ___.csv"')
+    assert "filename*=UTF-8''Schicht%20%22%C3%9C%22.csv" in h
+    h.encode("latin-1")
