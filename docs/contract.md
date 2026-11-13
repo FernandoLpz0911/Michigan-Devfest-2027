@@ -93,8 +93,9 @@ the column, in column order. `distinct`: all distinct non-empty values in first-
   - `unsure`, `type_conflict`: field keys, last choice `{"value": "extra", "text": "Something else"}`.
     Titles: "What is this column?". For `type_conflict` the sentence states the conflict, for example
     "Granite says this is the time, but its values are numbers, not dates."
-  - `duplicate`: the column positions as text (`"3"`, `"4"`), `samples` filled, title "Which one is the time?"
-    (or the field's shown name). The column not chosen becomes `extra`.
+  - `duplicate`: the column positions as text (`"3"`, `"4"`), at most 3, `samples` filled, plus
+    `{"value": "none", "text": "None of these"}`. Title "Which one is the time?" (or the field's shown name).
+    The columns not chosen become `extra`; with `none`, every listed column becomes `extra`.
   - `missing`: column positions as text for the likeliest columns, plus `{"value": "none", "text": "None of these"}`.
     Title "Which column is the lot number?" (or "...the time?"). Sentence "None was found."
   - `merge`: `{"value": "yes", "text": "Yes, all are \"Press 3\""}` and `{"value": "no", "text": "No, keep them apart"}`.
