@@ -1,6 +1,6 @@
 openapi: 3.0.3
 info:
-  title: Data Wrapper records
+  title: LotTrail records
   version: 1.0.0
   description: >
     Read-only tools over a small shop's cleaned production records (lot, machine,

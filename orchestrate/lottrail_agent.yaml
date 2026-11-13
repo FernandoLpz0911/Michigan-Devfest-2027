@@ -1,6 +1,6 @@
 spec_version: v1
 kind: native
-name: data_wrapper_agent
+name: lottrail_agent
 description: >
   Answers questions about a small manufacturing shop's lots from its own cleaned
   production records: what happened to a lot, what else ran with it, and a draft

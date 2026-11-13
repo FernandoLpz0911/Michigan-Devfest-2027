@@ -1,7 +1,7 @@
-# Data Wrapper in watsonx Orchestrate
+# LotTrail in watsonx Orchestrate
 
-A watsonx Orchestrate agent, `data_wrapper_agent`, runs on IBM Granite and answers buyer
-questions about lots by calling Data Wrapper's own API as tools. It sees only the shop's
+A watsonx Orchestrate agent, `lottrail_agent`, runs on IBM Granite and answers buyer
+questions about lots by calling LotTrail's own API as tools. It sees only the shop's
 cleaned records, and every fact it gives comes from a stored row.
 
 | Tool | Endpoint | What it does |
@@ -12,7 +12,7 @@ cleaned records, and every fact it gives comes from a stored row.
 
 Files:
 - `openapi.yaml`: the tool definitions, imported with `orchestrate tools import -k openapi`.
-- `data_wrapper_agent.yaml`: the agent, its instructions and its model.
+- `lottrail_agent.yaml`: the agent, its instructions and its model.
 - `../scripts/orchestrate_setup.sh`: imports both against a live backend URL.
 
 ## Set up
@@ -34,7 +34,7 @@ Files:
    ```
    scripts/orchestrate_setup.sh https://<name>.trycloudflare.com
    ```
-4. In Orchestrate chat, pick `data_wrapper_agent` and ask:
+4. In Orchestrate chat, pick `lottrail_agent` and ask:
    *"A buyer says parts from lot A-101 cracked. What ran with it, and can you draft a reply?"*
 
 If `watsonx/ibm/granite-3-8b-instruct` is not offered on your instance, run

@@ -45,9 +45,9 @@ export default function App() {
 
   return (
     <Theme theme={shopFloor ? 'g100' : 'white'} className={shopFloor ? 'shop-floor' : ''}>
-      <Header aria-label="Data Wrapper" className="app-header">
+      <Header aria-label="LotTrail" className="app-header">
         <HeaderName prefix="" href="#" onClick={(e) => { e.preventDefault(); go('files') }}>
-          Data Wrapper
+          LotTrail
         </HeaderName>
         <HeaderGlobalBar>
           <ShopFloorToggle on={shopFloor} onChange={setShopFloor} />

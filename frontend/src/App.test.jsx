@@ -4,7 +4,7 @@ import canned from '../../fixtures/canned/file_result.json'
 
 test('app shell renders the header and the Files screen', () => {
   render(<App />)
-  expect(screen.getByText('Data Wrapper')).toBeInTheDocument()
+  expect(screen.getByText('LotTrail')).toBeInTheDocument()
   expect(screen.getByRole('heading', { level: 1 })).toBeInTheDocument()
 })
 
