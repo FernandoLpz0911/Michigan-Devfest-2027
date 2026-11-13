@@ -22,3 +22,9 @@ body:has(.shop-floor) { background: #161616; }
 .shop-floor .cds--data-table td, .shop-floor .cds--data-table th { font-size: 1.25rem; overflow-wrap: anywhere; }
 .shop-floor .cds--data-table td { height: auto; min-height: 3rem; }
 .shop-floor .sw-old { color: #c6c6c6; }
+
+/* Timeline blocks are drawn dark-on-light inline; flip them for the dark shop-floor screen. */
+.shop-floor .tl-block { border-color: #f4f4f4 !important; }
+.shop-floor .tl-block .tl-label { color: #f4f4f4 !important; }
+.shop-floor .tl-this { background: #f4f4f4 !important; }
+.shop-floor .tl-this:not(.tl-narrow) .tl-label { color: #161616 !important; }

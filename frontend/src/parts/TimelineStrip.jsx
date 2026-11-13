@@ -32,8 +32,8 @@ export default function TimelineStrip({ timeline }) {
           const width = pct(mins(l.end)) - left
           const dark = l.role === 'this'
           return (
-            <div key={l.lot} data-testid={`block-${l.lot}`} style={{ position: 'absolute', top: 36, height: 28, left: `${left}%`, width: `${width}%`, boxSizing: 'border-box', printColorAdjust: 'exact', WebkitPrintColorAdjust: 'exact', background: dark ? '#161616' : 'transparent', border: '2px solid #161616' }}>
-              <span style={{ position: 'absolute', top: dark ? 4 : 4, left: 2, whiteSpace: 'nowrap', fontSize: 12, color: dark && width > 12 ? '#fff' : '#161616', transform: dark && width <= 12 ? 'translateY(-34px)' : 'none' }}>
+            <div key={l.lot} data-testid={`block-${l.lot}`} className={`tl-block${dark ? ' tl-this' : ''}${dark && width <= 12 ? ' tl-narrow' : ''}`} style={{ position: 'absolute', top: 36, height: 28, left: `${left}%`, width: `${width}%`, boxSizing: 'border-box', printColorAdjust: 'exact', WebkitPrintColorAdjust: 'exact', background: dark ? '#161616' : 'transparent', border: '2px solid #161616' }}>
+              <span className="tl-label" style={{ position: 'absolute', top: 4, left: 2, whiteSpace: 'nowrap', fontSize: 12, color: dark && width > 12 ? '#fff' : '#161616', transform: dark && width <= 12 ? 'translateY(-34px)' : 'none' }}>
                 {l.lot}
               </span>
             </div>
