@@ -303,6 +303,24 @@ A recognized file has `status: "ready"` and no questions; its records are alread
 The first 50 lines of the file (header line included as `kind: "header"`). `kind` is `"skipped"`, `"header"`,
 `"entry"`, or `"held"`. `raw` and `clean` are lists aligned with `columns`; `clean` only for entries.
 
+Filters (query parameters on `GET /api/files/{file_id}/view`, all optional, added Nov 13 for Card L7):
+`q` (text; a row matches when any raw or clean cell contains it, ignoring case), `column` (a position; with `value`,
+the row matches when that column's raw or clean cell equals `value`, ignoring case), `kind` (`entry` or `held`).
+With any filter set, `rows` holds the header line plus the first 50 matching rows from the whole file, skipped
+lines are left out, and the response adds `"matching": <count of matching rows in the whole file>`.
+Without filters the response is unchanged.
+
+### File download (Card L7)
+`GET /api/files/{file_id}/download` with query parameters:
+- `version`: `original` (the uploaded file, byte for byte, its own name and type; other parameters ignored) or `cleaned`.
+- `format`: `csv` (default) or `xlsx`.
+- `dates`: `iso` (default, `2021-05-03 06:01`) or `us` (`05/03/2021 6:01 AM`).
+- `held`: `true` adds held-back rows with a last column "Held back because"; default leaves them out.
+- The same `q`, `column`, `value` and `kind` filters as the view; with filters, only matching rows are written.
+Cleaned columns: one per column of the file, headed with the field's plain name (Lot number, Part number, Time, ...)
+or, for extra details, the file's own header; values as cleaned. Name: `<file stem>_cleaned.csv` or `.xlsx`.
+Sent with `Content-Disposition: attachment`. 404 for an unknown file.
+
 ### RecordFilters and RecordPage (All records)
 Query parameters (all optional): `q` (text matched against lot, part, operator), `machine`, `shift`, `date_from`,
 `date_to` (`YYYY-MM-DD`, inclusive), `stop` (alarm code as stored, e.g. `A_101`), `only_cleaned` (`true`),
@@ -348,7 +366,8 @@ Nothing found: `found: false`, `filters: {}`.
 | `POST /api/files/{file_id}/answers` | `{"answers": [Answer to a question]}` | SaveResult |
 | `GET /api/files/{file_id}/detail` | | FileDetail |
 | `GET /api/files/{file_id}/granite` | | list of GraniteExchange |
-| `GET /api/files/{file_id}/view` | | FileView |
+| `GET /api/files/{file_id}/view` | FileView filters | FileView |
+| `GET /api/files/{file_id}/download` | see File download | the file |
 | `DELETE /api/files/{file_id}` | | `{"deleted": file_id}`. Removes the file, its entries, held rows, Granite exchanges and counters. Saved layouts stay. 404 if unknown. |
 | `POST /api/find` | `{"text": "message or lot number"}` | Answer |
 | `POST /api/draft` | `{"lot": "4417", "reading": RequestReading or null}` | Draft |
