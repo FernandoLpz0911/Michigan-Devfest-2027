@@ -41,6 +41,25 @@ function heldSummary(held) {
   return `${held.length} ${held.length === 1 ? 'row' : 'rows'} held back: ${parts}`
 }
 
+// Extra columns that hold seconds since 1970 (machine clocks) are shown as readable times.
+const SECONDS = /^1\d{9}(\.\d+)?$/
+function clockColumns(view) {
+  const data = view.rows.filter((r) => r.kind === 'entry' || r.kind === 'held')
+  return new Set(view.columns.map((c, i) => i).filter((i) => {
+    if (view.columns[i].field !== 'extra') return false
+    const vals = data.map((r) => (r.raw[i] || '').trim()).filter(Boolean)
+    return vals.length > 0 && vals.every((v) => SECONDS.test(v))
+  }))
+}
+const clockText = (v) => new Date(Number(v) * 1000).toLocaleString('en-US',
+  { dateStyle: 'medium', timeStyle: 'medium', timeZone: 'UTC' })
+function withClocks(row, clocks) {
+  if (!clocks.size || (row.kind !== 'entry' && row.kind !== 'held')) return row
+  const clean = row.raw.map((v, i) => (clocks.has(i) && SECONDS.test((v || '').trim())
+    ? clockText(v) : row.clean ? row.clean[i] : null))
+  return { ...row, clean }
+}
+
 function Line({ row, columns, cleaned, play, onCell }) {
   const n = <th scope="row" className="seefile-num">{row.source_row}</th>
   if (row.kind === 'skipped') {
@@ -140,6 +159,7 @@ export default function SeeFile({ go, params }) {
   const col = picked === null ? null : cols[picked]
   const headerRow = view.rows.find((r) => r.kind === 'header')
   const held = view.rows.filter((r) => r.kind === 'held')
+  const clocks = clockColumns(view)
 
   return (
     <div className="seefile">
@@ -191,7 +211,7 @@ export default function SeeFile({ go, params }) {
           <caption className="cds--visually-hidden">First 50 lines of {view.source_file}</caption>
           <tbody>
             {view.rows.map((row) => {
-              const line = <Line key={row.source_row} row={row} columns={cols} cleaned={cleaned} play={played}
+              const line = <Line key={row.source_row} row={withClocks(row, clocks)} columns={cols} cleaned={cleaned} play={played}
                 onCell={picked === null ? null : (i, v) => setCell({ column: i, value: v, header: headerRow.raw[i] })} />
               if (row.kind !== 'header') return line
               return [
@@ -200,7 +220,7 @@ export default function SeeFile({ go, params }) {
                   {cols.map((c) => (
                     <td key={c.position}>
                       <span className={`seefile-tag${c.field === 'extra' ? ' seefile-tag-extra' : ''}`}>
-                        {SHOWN[c.field]}
+                        {clocks.has(cols.indexOf(c)) ? 'Extra detail: a time' : SHOWN[c.field]}
                       </span>
                     </td>
                   ))}

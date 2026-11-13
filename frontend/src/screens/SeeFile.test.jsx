@@ -165,4 +165,18 @@ describe('SeeFile', () => {
     await userEvent.click(screen.getByLabelText('Only the rows that match your filter'))
     expect(screen.getByRole('link', { name: 'Download' }).getAttribute('href')).not.toMatch(/kind=held/)
   })
+
+  it('shows machine-clock seconds in an extra column as a readable time', async () => {
+    const view = structuredClone(canned)
+    const i = view.columns.findIndex((c) => c.field === 'extra')
+    view.rows.forEach((r) => {
+      if (r.kind === 'entry' || r.kind === 'held') { r.raw[i] = '1620000658.677'; if (r.clean) r.clean[i] = null }
+    })
+    api.fileView.mockImplementation(() => Promise.resolve(view))
+    const { container } = await open()
+    expect(screen.getByText('Extra detail: a time')).toBeTruthy()
+    expect(container.textContent).toContain('May 3, 2021, 12:10:58 AM')
+    expect(container.textContent).toContain('was 1620000658.677')
+    api.fileView.mockImplementation(() => Promise.resolve(canned))
+  })
 })
