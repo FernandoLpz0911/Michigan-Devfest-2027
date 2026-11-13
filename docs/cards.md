@@ -210,6 +210,11 @@ The judges will watch the app run live and may ask to try things. These cards ma
 - **Do:** cut about 300 rows from the raw PIADE file (`/home/fez/Documents/ProgrammingProjects/piade-raw/raw_data.csv`), unchanged, all ten columns, from the demo week (Mon May 3 to Sun May 9, 2021), across the five machines. It answers "does it work on real machine data?": the app asks, the presenter picks None of these for the lot, and rows are held because a machine export has no lot number. Add a NOTE.md section saying what the file is, that it is unmodified PIADE data (CC BY 4.0, cite as the note already does), and the 20-second answer to give a judge.
 - **Done when:** the file has a header plus 250 to 350 rows, every value matches the raw file, and uploading it with `MOCK_GRANITE=1` gives a Check screen with a lot question that offers None of these.
 
+### Card L5. Read machine-export times as dates (small tier, 20 minutes)
+
+- **Owns:** backend/types.py (the date patterns only), backend/build.py (`normalize_time` only), tests/test_types.py, tests/test_build.py
+- **Do:** PIADE writes times as `2020-01-01 11:21:28.907000+00:00`. The type detector reads that as text, so a plainly correct time column becomes a type-conflict question, which makes the app look like it can't read dates. Accept ISO dates with seconds, an optional fraction, and an optional zone (`Z`, `+00:00`, `-05:00`) in both the detector and `normalize_time`, as contract section 5 now lists. Keep the clock time as written: drop seconds, fraction and offset, never convert zones.
+- **Done when:** `normalize_time("2021-05-04 14:02:28.907000+00:00") == "2021-05-04T14:02"`, `"2021-05-04T14:02:28Z"` likewise; a column of such values is detected as `date`; Unix numbers like `1577877688.907` stay `number`; every existing test still passes.
 
 ## Lead's review checklist for every returned card
 

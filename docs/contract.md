@@ -387,7 +387,9 @@ One public function per file unless listed. All are plain functions: input in, o
 | `main.py` (S) | the routes in section 4 | | |
 
 Supported dates in `normalize_time`: `5/4/21 4:15p`, `5/4/21 4:15 PM`, `5/4/2021 16:15`, `2021-05-04 14:02`,
-`2021-05-04T14:02`, `2021-05-04` (date only), `04-May-2021 22:10`, `4-May-21 22:10`. Anything else returns `None` and
+`2021-05-04T14:02`, `2021-05-04` (date only), `04-May-2021 22:10`, `4-May-21 22:10`, and machine exports with seconds,
+fractions and a zone offset such as `2021-05-04 14:02:28.907000+00:00` or `2021-05-04T14:02:28Z` (the clock time as
+written is kept; seconds and the offset are dropped). Anything else returns `None` and
 the row is held back with `bad_time`.
 
 Building rules (Card C): a row whose `lot` is empty is held back `no_lot`; a row whose time does not normalize is held back
