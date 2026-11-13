@@ -16,10 +16,17 @@ def _choice(value, text, samples=(), guess=False):
     return {"value": value, "text": text, "samples": list(samples), "granite_guess": guess}
 
 
-def _field_choices(guess, alternatives, samples):
-    """Guess first, up to two alternatives, then 'Something else'. Never more than four."""
+def _field_choices(guess, alternatives, samples, detected_type="text"):
+    """Guess first, up to two alternatives, then 'Something else'. Never more than four.
+    With fewer than two real fields to pick from, likely fields for the column's type fill in,
+    so the person never gets a question with only one answer."""
     keys = [guess] if guess else []
     keys += [a for a in alternatives[:2] if a not in keys and a != "extra"]
+    for k in NO_GUESS.get(detected_type, NO_GUESS["text"]):
+        if len([x for x in keys if x != "extra"]) >= 2:
+            break
+        if k not in keys and k != "extra":
+            keys.append(k)
     keys = [k for k in keys if k != "extra"][:3] + ["extra"]
     return [_choice(k, SHOWN[k], samples if k == guess else [], k == guess) for k in keys]
 
@@ -94,7 +101,8 @@ def build_questions(profiles, labels, merges, fell_back):
             consumed.add(l["position"])
             questions.append({"kind": kind, "positions": [l["position"]], "title": "What is this column?",
                               "sentence": sentence,
-                              "choices": _field_choices(f, l["alternatives"], p["samples"]), "preselected": pre})
+                              "choices": _field_choices(f, l["alternatives"], p["samples"], t),
+                              "preselected": pre})
 
     # merge (the column stays out of matched too)
     merged = set()

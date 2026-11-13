@@ -1,0 +1,15 @@
+.question-card { border: 0; padding: 0; margin: 2rem 0; }
+.question-title { font-weight: 600; font-size: 1.25rem; }
+.choices { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; align-items: stretch; }
+.choice { display: flex; gap: 0.75rem; align-items: center; min-height: 3rem; padding: 0.5rem 1rem;
+  border: 1px solid #8d8d8d; cursor: pointer; min-width: 0; }
+.choice-checked { border: 2px solid #161616; }
+.choice-body { display: flex; flex-direction: column; gap: 0.25rem; min-width: 0; }
+.choice-samples { font-family: monospace; font-size: 0.875rem; color: #525252; overflow-wrap: anywhere; }
+.choice-guess { margin-left: auto; white-space: nowrap; font-size: 0.875rem; }
+
+.shop-floor .choice { border-color: #8d8d8d; }
+.shop-floor .choice-checked { border: 2px solid #f4f4f4; }
+.shop-floor .choice-samples { font-size: 1rem; color: #c6c6c6; }
+.shop-floor .choice-guess { font-size: 1rem; }
+@media (max-width: 40rem) { .choices { grid-template-columns: 1fr; } }

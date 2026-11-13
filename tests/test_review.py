@@ -44,6 +44,14 @@ def test_unsure():
     assert q["choices"][0]["granite_guess"] and q["choices"][-1]["text"] == "Something else"
 
 
+def test_unsure_extra_with_no_alternatives_still_offers_real_choices():
+    r = build_questions(profiles(["L", "T", "pi"], ["text", "date", "number"]),
+                        [lab(0, "lot"), lab(1, "time"), lab(2, "extra", False)], [], False)
+    q = r["questions"][0]
+    assert [c["value"] for c in q["choices"]] == ["lot", "quantity", "extra"]
+    assert q["preselected"] == "extra" and q["choices"][-1]["granite_guess"]
+
+
 def test_type_conflict_time_and_quantity():
     r = build_questions(profiles(["L", "T", "Q"], ["text", "number", "text"]),
                         [lab(0, "lot"), lab(1, "time", True, ["extra"]), lab(2, "quantity")], [], False)
