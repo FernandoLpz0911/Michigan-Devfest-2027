@@ -113,7 +113,7 @@ export default function Files({ go, params }) {
       )}
       {error && <p role="alert">{error.message} {error.fix}</p>}
       <p className="subtle">Only column names and a few sample values are sent to Granite.</p>
-      <Modal danger open={!!pending} modalHeading={`Remove ${pending?.source_file}?`}
+      <Modal danger size="xs" className="files-remove" open={!!pending} modalHeading={`Remove ${pending?.source_file}?`}
         primaryButtonText="Remove file" secondaryButtonText="Keep it"
         onRequestClose={() => setPending(null)} onRequestSubmit={confirmRemove}
         onSecondarySubmit={() => setPending(null)}>
