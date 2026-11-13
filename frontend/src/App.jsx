@@ -13,10 +13,33 @@ import ShopFloorToggle, { useShopFloor } from './theme/ShopFloorToggle.jsx'
 const WIDE = new Set(['seefile', 'records'])
 const SCREENS = { files: Files, check: Check, find: FindRecord, seefile: SeeFile, records: AllRecords }
 
+const VIEW_KEY = 'dw.view'
+
+function loadView() {
+  try {
+    const v = JSON.parse(sessionStorage.getItem(VIEW_KEY))
+    if (v && SCREENS[v.screen]) return { screen: v.screen, params: v.params || {} }
+  } catch { /* storage blocked or unreadable: start on Files */ }
+  return { screen: 'files', params: {} }
+}
+
+function saveView(view) {
+  try {
+    // A Check result is kept by api.js under its file id, so only the id is stored here.
+    const { result, ...params } = view.params
+    if (result?.file_id) params.fileId = result.file_id
+    sessionStorage.setItem(VIEW_KEY, JSON.stringify({ screen: view.screen, params }))
+  } catch { /* storage blocked: the app works as before */ }
+}
+
 export default function App() {
-  const [view, setView] = useState({ screen: 'files', params: {} })
+  const [view, setView] = useState(loadView)
   const [shopFloor, setShopFloor] = useShopFloor()
-  const go = (screen, params = {}) => setView({ screen, params })
+  const go = (screen, params = {}) => {
+    const next = { screen, params }
+    saveView(next)
+    setView(next)
+  }
   const Screen = SCREENS[view.screen]
   const onFind = view.screen === 'find'
 

@@ -31,19 +31,33 @@ function query(filters) {
 
 // Upload responses kept for this browser session, so Check can open from the file list.
 const uploadResults = new Map()
+const KEY = (id) => `dw.result.${id}`
+
+function store(fn) {
+  try { return fn() } catch { return null }
+}
 
 export const api = {
   async uploadFile(file) {
     const form = new FormData()
     form.append('file', file)
     const result = await call('POST', '/files', form)
-    if (result?.file_id) uploadResults.set(result.file_id, result)
+    if (result?.file_id) {
+      uploadResults.set(result.file_id, result)
+      store(() => sessionStorage.setItem(KEY(result.file_id), JSON.stringify(result)))
+    }
     return result
   },
-  uploadResult: (fileId) => uploadResults.get(fileId) || null,
+  uploadResult: (fileId) =>
+    uploadResults.get(fileId) || store(() => JSON.parse(sessionStorage.getItem(KEY(fileId)))) || null,
   listFiles: () => call('GET', '/files'),
   fileStatus: (fileId) => call('GET', `/files/${fileId}/status`),
-  sendAnswers: (fileId, answers) => call('POST', `/files/${fileId}/answers`, { answers }),
+  async sendAnswers(fileId, answers) {
+    const saved = await call('POST', `/files/${fileId}/answers`, { answers })
+    uploadResults.delete(fileId)
+    store(() => sessionStorage.removeItem(KEY(fileId)))
+    return saved
+  },
   fileDetail: (fileId) => call('GET', `/files/${fileId}/detail`),
   graniteExchanges: (fileId) => call('GET', `/files/${fileId}/granite`),
   fileView: (fileId) => call('GET', `/files/${fileId}/view`),
