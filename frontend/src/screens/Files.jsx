@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from 'react'
-import { Button } from '@carbon/react'
 import FileRow from '../parts/FileRow.jsx'
 import { api } from '../api.js'
 
@@ -23,21 +22,29 @@ export default function Files({ go, params }) {
     return () => clearInterval(timer)
   }, [working])
 
+  // Files go up one at a time (the server numbers them in order), but every file in the drop
+  // is sent. Only a single-file drop jumps straight to Check; with several, each file that
+  // needs a check keeps its own "Check" link in the list.
   async function upload(files) {
-    for (const file of files) {
-      setError(null)
-      setBusy({ source_file: file.name, status: 'working', sentence: 'Finding the header...', steps: [
+    setError(null)
+    const queue = files.map((file) => ({ file_id: `up-${file.name}`, source_file: file.name, status: 'working',
+      sentence: 'Waiting its turn...', steps: [] }))
+    for (const [i, file] of files.entries()) {
+      // The first row in the queue is the file being read now; the rest wait.
+      setBusy([{ ...queue[i], sentence: 'Finding the header...', steps: [
         { step: 'header', state: 'current' }, { step: 'granite', state: 'waiting' },
-        { step: 'cleaning', state: 'waiting' }, { step: 'records', state: 'waiting' }] })
+        { step: 'cleaning', state: 'waiting' }, { step: 'records', state: 'waiting' }] }, ...queue.slice(i + 1)])
       try {
         const result = await api.uploadFile(file)
-        if (result.status === 'needs_check') { setBusy(null); go('check', { fileId: result.file_id, result }); return }
+        if (result.status === 'needs_check' && files.length === 1) {
+          setBusy(null); go('check', { fileId: result.file_id, result }); return
+        }
         await load()
       } catch (err) {
         setRows((old) => [...old, { file_id: `err-${file.name}`, source_file: file.name, status: 'error', sentence: err.message, error: err, steps: [] }])
       }
-      setBusy(null)
     }
+    setBusy(null)
   }
 
   async function remove(r) {
@@ -48,7 +55,6 @@ export default function Files({ go, params }) {
     await load()
   }
 
-  const anyReady = rows.some((r) => r.status === 'ready')
   return (
     <div className="files-screen">
       <h1>Add your shift logs</h1>
@@ -69,11 +75,10 @@ export default function Files({ go, params }) {
             onSee={() => go('seefile', { fileId: r.file_id })}
             onDelete={remove} />
         ))}
-        {busy && <FileRow file={busy} />}
+        {busy && busy.map((b) => <FileRow key={b.file_id} file={b} />)}
       </ul>
       {error && <p role="alert">{error.message} {error.fix}</p>}
       <p className="subtle">Only column names and a few sample values are sent to Granite.</p>
-      <Button kind="primary" disabled={!anyReady} onClick={() => go('find')}>Find a record</Button>
     </div>
   )
 }

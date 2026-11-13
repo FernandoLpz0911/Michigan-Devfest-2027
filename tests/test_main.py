@@ -67,6 +67,14 @@ def test_full_demo_flow(client):
     miss = client.post("/api/find", json={"text": "4471x"}).json()
     assert miss["history"] is None and len(miss["closest"]) == 3
 
+    # Any value in the files works, not only a lot number: machine, part, alarm code.
+    for text in ("Press 3", "press 3", "B-220", "A_101"):
+        hit = client.post("/api/find", json={"text": text}).json()
+        assert hit["matches"]["total"] > 0 and hit["history"] is None, text
+        assert all(r["lot"] and r["where"] for r in hit["matches"]["rows"])
+    b220 = client.post("/api/find", json={"text": "B-220"}).json()["matches"]
+    assert "4417" in [r["lot"] for r in b220["rows"]] or b220["total"] > len(b220["rows"])
+
     tl = client.get("/api/timeline/4417").json()
     assert tl["machine"] == "Press 3" and len(tl["lots"]) == 6
     assert client.get("/api/timeline/9999").status_code == 404

@@ -85,6 +85,38 @@ function Reply({ draft }) {
   )
 }
 
+// Text found inside the records (a machine, part, operator, stop code, date...).
+function Matches({ m, go }) {
+  const rows = m.total === 1 ? 'row holds' : 'rows hold'
+  const lots = m.lots === 1 ? '1 lot' : `${m.lots} lots`
+  return (
+    <section aria-labelledby="matches-h">
+      <h2 id="matches-h">{m.total} {rows} "{m.text}"</h2>
+      <p className="subtle">
+        In {lots}.{m.total > m.rows.length ? ` Showing the first ${m.rows.length}.` : ''} Pick a lot to see its whole history.
+      </p>
+      <table className="match-table">
+        <thead><tr><th>Lot</th><th>When</th><th>Machine</th><th>Found in</th><th>From</th></tr></thead>
+        <tbody>
+          {m.rows.map((x) => {
+            const [day, clock] = whenText(x.time)
+            return (
+              <tr key={x.entry_id}>
+                <td><button type="button" className="link-btn" aria-label={`See lot ${x.lot}`}
+                  onClick={() => go('find', { lot: x.lot })}>{x.lot}</button></td>
+                <td>{day} {clock}</td>
+                <td>{x.machine || ''}</td>
+                <td>{x.where.join(', ')}</td>
+                <td className="subtle">{x.source_file}, row {x.source_row}</td>
+              </tr>
+            )
+          })}
+        </tbody>
+      </table>
+    </section>
+  )
+}
+
 export default function FindRecord({ go, params }) {
   const [text, setText] = useState(params?.lot || '')
   const [searched, setSearched] = useState(null)
@@ -129,17 +161,18 @@ export default function FindRecord({ go, params }) {
       <h1>Find a record</h1>
       {searched === null ? (
         <form className="find-form" onSubmit={(e) => { e.preventDefault(); search(text) }}>
-          <TextArea id="find-box" rows={5} labelText="Paste the message or type a lot number"
+          <TextArea id="find-box" rows={5} labelText="Paste the message, or type what you are looking for"
+            helperText="A lot number, or anything in your files: a machine, part, operator, stop code or date."
             value={text} onChange={(e) => setText(e.target.value)} />
           <Button type="submit" kind="primary">Find</Button>
         </form>
       ) : (
         <p className="find-searched">
-          <span>{/^\S+$/.test(searched) ? `Lot ${searched}` : `"${searched}"`}</span>
+          <span>{answer?.history && /^\S+$/.test(searched) ? `Lot ${searched}` : `"${searched}"`}</span>
           <button type="button" className="link-btn" onClick={reset}>New search</button>
         </p>
       )}
-      {busy && <p role="status">{/^\S+$/.test(searched) ? 'Looking up the lot...' : 'Sending this message to IBM Granite...'}</p>}
+      {busy && <p role="status">{searched.length <= 60 && !searched.includes('\n') ? 'Searching your records...' : 'Sending this message to IBM Granite...'}</p>}
       {error && <p role="alert">{error.message} {error.fix}</p>}
       {answer && !typed && (
         <p className="find-reading">
@@ -151,7 +184,8 @@ export default function FindRecord({ go, params }) {
           <button type="button" className="link-btn" onClick={reset}>Change</button>
         </p>
       )}
-      {answer && !answer.history && r?.found !== false && (
+      {answer?.matches && <Matches m={answer.matches} go={go} />}
+      {answer && !answer.matches && !answer.history && r?.found !== false && (
         <section>
           <h2>No matching lot</h2>
           <p>There is no lot {r?.lot ?? searched} in your records.</p>

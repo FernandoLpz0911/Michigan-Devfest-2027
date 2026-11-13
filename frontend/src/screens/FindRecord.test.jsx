@@ -59,3 +59,17 @@ test('fallback reply label', async () => {
   await search('4417')
   await waitFor(() => expect(screen.getByText(/could not write this reply/)).toBeTruthy())
 })
+
+test('a value found in the records lists the rows and links each lot', async () => {
+  api.find.mockResolvedValue({ reading: null, history: null, links: [], lots_in_week: 0, closest: [], matches: {
+    text: 'Press 3', total: 2, lots: 2, rows: [
+      { entry_id: 'e1', lot: '4417', time: '2021-05-04T16:15', machine: 'Press 3', part: 'B-220', source_file: 'shift1_log.csv', source_row: 7, where: ['Machine'] },
+      { entry_id: 'e2', lot: '4418', time: '2021-05-04T17:00', machine: 'Press 3', part: 'B-220', source_file: 'shift1_log.csv', source_row: 8, where: ['Machine'] }] } })
+  const go = vi.fn()
+  render(<FindRecord go={go} params={{}} />)
+  await search('Press 3')
+  expect(await screen.findByText('2 rows hold "Press 3"')).toBeTruthy()
+  expect(screen.queryByText(/No matching lot/)).toBeNull()
+  fireEvent.click(screen.getByRole('button', { name: 'See lot 4418' }))
+  expect(go).toHaveBeenCalledWith('find', { lot: '4418' })
+})

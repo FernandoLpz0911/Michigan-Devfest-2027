@@ -401,11 +401,57 @@ def file_parts(file_id):
 LOT_LIKE = re.compile(r"^[A-Za-z0-9-]{1,12}$")
 
 
+VALUE_SEARCH_MAX = 60   # longer text, or text with line breaks, is a message for Granite
+VALUE_SEARCH_LIMIT = 50
+_SKIP_KEYS = {"entry_id", "file_id", "source_row", "original_row", "extras"}
+
+
+def value_matches(text, entries):
+    """Rows where any cell holds the text (case does not matter). Whole-cell matches come first.
+
+    Looks at the original cell as written and at each cleaned value, so "Press 3", "B-220",
+    an operator, an alarm code or a date all work.
+    """
+    needle = text.casefold()
+    hits = []
+    for e in entries:
+        # Column names come from the file as written; cleaned values (a reformatted date)
+        # only name their field when no original cell matched.
+        where, exact = [], False
+        raw = list((e.get("original_row") or {}).items()) + list((e.get("extras") or {}).items())
+        clean = [(k, v) for k, v in e.items() if k not in _SKIP_KEYS]
+        for group in (raw, clean):
+            if where:
+                break
+            for name, value in group:
+                if value is None or isinstance(value, (dict, list)):
+                    continue
+                cell = str(value).strip().casefold()
+                if needle in cell:
+                    exact = exact or cell == needle
+                    if name not in where:
+                        where.append(name)
+        if where:
+            hits.append((not exact, {"entry_id": e.get("entry_id"), "lot": e.get("lot"), "time": e.get("time"),
+                                     "machine": e.get("machine"), "part": e.get("part"),
+                                     "source_file": e.get("source_file"), "source_row": e.get("source_row"),
+                                     "where": where}))
+    hits.sort(key=lambda h: h[0])
+    rows = [h[1] for h in hits]
+    return {"text": text, "total": len(rows), "lots": len({r["lot"] for r in rows}),
+            "rows": rows[:VALUE_SEARCH_LIMIT]}
+
+
 def find(text):
     text = (text or "").strip()
     if not text:
         raise UserError("Type a lot number or paste the buyer's message.", "Then press Find.")
     lots = store.lot_numbers(con())
+    if text not in lots and "\n" not in text and len(text) <= VALUE_SEARCH_MAX:
+        matches = value_matches(text, store.all_entries(con()))
+        if matches["total"]:
+            return {"reading": None, "history": None, "links": [], "lots_in_week": 0, "closest": [],
+                    "matches": matches}
     if " " not in text and (text in lots or LOT_LIKE.match(text)):
         reading = {"found": True, "lot": text, "part": None, "problem": None, "source": "typed"}
     else:
@@ -416,12 +462,13 @@ def find(text):
     history = store.lot_history(con(), lot) if lot else None
     if not history:
         closest = [m[0] for m in fuzz_process.extract(lot, lots, limit=3)] if lot and lots else []
-        return {"reading": reading, "history": None, "links": [], "lots_in_week": 0, "closest": closest}
+        return {"reading": reading, "history": None, "links": [], "lots_in_week": 0, "closest": closest,
+                "matches": None}
     if reading["source"] == "typed":
         reading["part"] = history.get("part")
     found = risk.find_links(lot, store.all_entries(con()), window_hours=settings()["window_hours"])
     return {"reading": reading, "history": history, "links": found["links"],
-            "lots_in_week": found["lots_in_week"], "closest": []}
+            "lots_in_week": found["lots_in_week"], "closest": [], "matches": None}
 
 
 def draft(lot, reading):

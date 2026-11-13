@@ -209,6 +209,15 @@ A typed lot number gives `"source": "typed"` and no Granite call. Fallback on Gr
 `reading` is a RequestReading or `null`; `history` a LotHistory or `null` when no lot matched (then `closest` lists up to
 3 lot numbers nearest by text, and `links` is empty).
 
+`matches` is `null` unless the text was found inside the records' cells (any column, original or cleaned, case
+ignored). Then `reading` and `history` are `null` and:
+```json
+{"text": "Press 3", "total": 64, "lots": 31,
+ "rows": [{"entry_id": "e12", "lot": "4417", "time": "2021-05-04T16:15", "machine": "Press 3", "part": "B-220",
+           "source_file": "shift1_log.csv", "source_row": 7, "where": ["Machine"]}]}
+```
+`rows` holds at most 50, whole-cell matches first; `where` names the columns that held the text.
+
 ### Draft (Granite job 4)
 ```json
 {"source": "granite",
@@ -379,8 +388,9 @@ Nothing found: `found: false`, `filters: {}`.
 | `GET /api/settings` | | Settings |
 | `PUT /api/settings` | Settings | Settings |
 
-`POST /api/find` treats the text as a lot number (no Granite call) when, trimmed, it has no spaces and matches a stored
-lot or is 1 to 12 letters, digits, or dashes. Otherwise it calls Granite job 3. The server runs on port 8000
+`POST /api/find` first returns a stored lot exactly. Next, text of one line and at most 60 characters is looked for in
+every cell of every record (Answer `matches`). If nothing holds it, the text is treated as a lot number (no Granite
+call) when, trimmed, it has no spaces and is 1 to 12 letters, digits, or dashes. Otherwise it calls Granite job 3. The server runs on port 8000
 (`PORT` overrides). The front end dev server proxies `/api` to it.
 
 ## 5. Back-end modules and their public functions

@@ -50,10 +50,22 @@ code, pre, .mono {
   color: var(--cds-text-primary);
   font-weight: 600;
 }
+// Carbon draws the bar 4px wider than the item and shifted left; pin it to the text instead.
 .app-header a.cds--header__menu-item[aria-current='page']::after,
 .app-header a.cds--header__menu-item--current::after {
-  border-bottom: 3px solid var(--cds-text-primary);
+  background-color: var(--cds-text-primary);
+  border: 0;
+  inline-size: auto;
   inset-inline: 1rem;
+  inset-block-end: 0.5rem;
+}
+
+// Buttons without an icon: Carbon keeps a wide right gap for an icon that is not there.
+// Center the label with even padding instead.
+.cds--btn:not(.cds--btn--icon-only):not(:has(.cds--btn__icon)) {
+  justify-content: center;
+  text-align: center;
+  padding-inline: 1.5rem;
 }
 .shopfloor-toggle {
   display: flex;
@@ -105,7 +117,18 @@ code, pre, .mono {
 .link-btn:focus { outline: 2px solid var(--cds-focus); outline-offset: 2px; }
 
 // Find a record (mockups 3a to 3c)
+.find-record > h1 { text-align: center; }
+.find-form { display: flex; flex-direction: column; align-items: center; }
+.find-form .cds--form-item { width: 100%; }
 .find-form .cds--text-area__wrapper { margin-bottom: 1.5rem; }
+.find-form .cds--btn { min-width: 10rem; max-width: none; }
+.match-table { width: 100%; border-collapse: collapse; font-size: 1rem; }
+.match-table th, .match-table td {
+  text-align: left;
+  padding: 0.75rem 0.5rem;
+  border-bottom: 1px solid var(--cds-border-subtle);
+}
+.match-table th { font-weight: 600; }
 .find-form .cds--label { font-size: 1rem; }
 .find-form textarea { font-size: 1.125rem; }
 .find-searched {
