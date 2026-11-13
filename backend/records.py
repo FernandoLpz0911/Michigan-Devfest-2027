@@ -30,7 +30,8 @@ def _where(filters):
         parts.append("substr(time,1,10) <= ?")
         args.append(filters["date_to"])
     if filters.get("only_cleaned"):
-        parts.append("json_array_length(json_extract(body,'$.changed')) > 0")
+        # Every date is rewritten to one format, so a date alone does not count as cleaned.
+        parts.append("EXISTS (SELECT 1 FROM json_each(json_extract(body,'$.changed')) WHERE value != 'time')")
     return (" WHERE " + " AND ".join(parts)) if parts else "", args
 
 

@@ -89,9 +89,9 @@ export default function AllRecords({ go, params }) {
       </div>
       <div className="records-checks">
         <Checkbox id="only-cleaned" labelText="Only rows that were cleaned" checked={filters.only_cleaned}
-          onChange={(_, { checked }) => change({ only_cleaned: checked })} />
+          onChange={(_, { checked }) => change({ only_cleaned: checked, ...(checked ? { only_held: false } : {}) })} />
         <Checkbox id="only-held" labelText="Only rows held back" checked={filters.only_held}
-          onChange={(_, { checked }) => change({ only_held: checked })} />
+          onChange={(_, { checked }) => change({ only_held: checked, ...(checked ? { only_cleaned: false } : {}) })} />
         <div className="records-chips">
           {chips.map(([key, text, patch]) => (
             <Tag key={key} type="gray" filter onClose={() => change(patch)} title={`Remove filter ${text}`}>{text}</Tag>
@@ -103,7 +103,13 @@ export default function AllRecords({ go, params }) {
           )}
         </div>
       </div>
-      {data && <p className="records-count" aria-live="polite"><strong>{data.matching}</strong> of {data.total} records match</p>}
+      {data && (
+        <p className="records-count" aria-live="polite">
+          {filters.only_held
+            ? <><strong>{data.matching}</strong> {data.matching === 1 ? 'row' : 'rows'} held back. Only the search box applies to these; they never became records.</>
+            : <><strong>{data.matching}</strong> of {data.total} records match</>}
+        </p>
+      )}
       {data && (
         <DataTable rows={rows} headers={headers}>
           {({ rows: tableRows, headers: heads, getTableProps, getHeaderProps, getRowProps }) => (

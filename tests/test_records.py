@@ -20,9 +20,9 @@ def con(tmp_path):
     c = store.connect(str(tmp_path / "t.db"))
     store.save_entries(c, [
         entry(1, "4417", "2021-05-04T16:15", alarm="A_101", changed=["machine"]),
-        entry(2, "4420", "2021-05-04T18:16", alarm="A_101"),
+        entry(2, "4420", "2021-05-04T18:16", alarm="A_101", changed=["time"]),
         entry(3, "4421", "2021-05-05T09:00", machine="Press 1", shift="2nd", part="D-040", op="OP-9"),
-        entry(4, "4422", "2021-05-06T09:00", alarm="A_007", changed=["time"]),
+        entry(4, "4422", "2021-05-06T09:00", alarm="A_007", changed=["time", "operator"]),
     ])
     store.save_held(c, [{"file_id": "f1", "source_file": "a.csv", "source_row": 31,
                          "original_row": {"Lot": ""}, "reason": "no_lot", "reason_text": "No lot number"}])
