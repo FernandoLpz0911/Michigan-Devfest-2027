@@ -216,6 +216,17 @@ The judges will watch the app run live and may ask to try things. These cards ma
 - **Do:** PIADE writes times as `2020-01-01 11:21:28.907000+00:00`. The type detector reads that as text, so a plainly correct time column becomes a type-conflict question, which makes the app look like it can't read dates. Accept ISO dates with seconds, an optional fraction, and an optional zone (`Z`, `+00:00`, `-05:00`) in both the detector and `normalize_time`, as contract section 5 now lists. Keep the clock time as written: drop seconds, fraction and offset, never convert zones.
 - **Done when:** `normalize_time("2021-05-04 14:02:28.907000+00:00") == "2021-05-04T14:02"`, `"2021-05-04T14:02:28Z"` likewise; a column of such values is detected as `date`; Unix numbers like `1577877688.907` stay `number`; every existing test still passes.
 
+### Card L6. Make See the file show what cleaning did (medium tier, 30 minutes)
+
+- **Owns:** frontend/src/screens/SeeFile.jsx, frontend/src/screens/SeeFile.css, frontend/src/screens/SeeFile.test.jsx
+- **Why:** in the live demo a judge looks at this screen for a few seconds. Today the Cleaned view looks almost the same as the file: `.seefile-changed` has no style, unchanged cells look the same as changed ones, and the "Changed in N rows" line shows only after a column is clicked.
+- **Do:**
+  1. Open in the Cleaned view.
+  2. In the Cleaned view, a changed cell gets a light tinted background (IBM blue 10, `#edf5ff`, with a darker pair under `.shop-floor`) and shows the old value struck through in small grey text above the new value in normal weight. Unchanged cells show only their value, with no strikethrough. Colour is never the only signal: the strikethrough old value stays.
+  3. Add a summary bar above the grid, always visible, built only from the view response the screen already gets (no new API calls, no contract change). Plain words, one line per item, items with a zero count left out, for example: "Times written one way: 46 rows", "Machine names made the same: 9 rows", "Title and blank rows skipped: 2", "Held back for you to check: 1". Per-column counts come from `columns[].rows_changed` grouped by field; skipped and held counts come from `rows[].kind`. Note that `rows` holds at most the first 50 lines, so say "in the first 50 lines" when `total_rows` is larger.
+  4. Keep the existing click-a-column summary and Change link.
+- **Done when:** tests cover the default Cleaned view, a changed cell having the class and both values, an unchanged cell having no strikethrough, and the summary bar text with a zero-count item left out; the whole frontend suite passes.
+
 ## Lead's review checklist for every returned card
 
 - Do the shapes match the contract, name for name?
