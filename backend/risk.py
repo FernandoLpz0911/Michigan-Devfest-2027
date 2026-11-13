@@ -53,7 +53,7 @@ def find_links(lot: str, entries: list[dict], window_hours: float = 4) -> dict:
                 note(o, "same_machine_window", gap, f"Same machine, {_minutes_text(gap)} {when}")
 
             if same_machine and _same(m["alarm"], o["alarm"]) and same_day:
-                note(o, "same_stop", gap, f"Same machine stop, code {m['alarm']}")
+                note(o, "same_stop", gap, f"Same machine stop, code {int(''.join(c for c in m['alarm'] if c.isdigit()) or 0)}")
 
             if (_same(m["operator"], o["operator"]) and _same(m["shift"], o["shift"])
                     and same_day):

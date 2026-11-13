@@ -33,7 +33,7 @@ def test_same_stop_links_and_does_not_link_other_codes_or_days():
                          E("5", "2021-05-04T15:00")])
     assert [l["lot"] for l in r["links"]] == ["2"]
     assert r["links"][0]["rules"] == ["same_stop"]
-    assert r["links"][0]["reasons"] == ["Same machine stop, code A_101"]
+    assert r["links"][0]["reasons"] == ["Same machine stop, code 101"]
     assert r["links"][0]["closeness_minutes"] == 300
 
 
@@ -55,7 +55,7 @@ def test_lot_linked_by_two_rules_appears_once_with_both_reasons():
     link = r["links"][0]
     assert link["rules"] == ["same_machine_window", "same_stop", "same_operator_shift"]
     assert link["reasons"] == ["Same machine, 30 minutes later",
-                               "Same machine stop, code A_101",
+                               "Same machine stop, code 101",
                                "Same operator and shift, same day"]
     assert link["closeness_minutes"] == 30
 
