@@ -29,12 +29,18 @@ function query(filters) {
   return text ? `?${text}` : ''
 }
 
+// Upload responses kept for this browser session, so Check can open from the file list.
+const uploadResults = new Map()
+
 export const api = {
-  uploadFile(file) {
+  async uploadFile(file) {
     const form = new FormData()
     form.append('file', file)
-    return call('POST', '/files', form)
+    const result = await call('POST', '/files', form)
+    if (result?.file_id) uploadResults.set(result.file_id, result)
+    return result
   },
+  uploadResult: (fileId) => uploadResults.get(fileId) || null,
   listFiles: () => call('GET', '/files'),
   fileStatus: (fileId) => call('GET', `/files/${fileId}/status`),
   sendAnswers: (fileId, answers) => call('POST', `/files/${fileId}/answers`, { answers }),

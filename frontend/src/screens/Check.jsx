@@ -8,7 +8,7 @@ const SHOWN = { lot: 'Lot number', part: 'Part number', quantity: 'Quantity', ti
 
 // params: { fileId, result } where result is the FileResult from the upload.
 export default function Check({ go, params }) {
-  const result = params?.result
+  const result = params?.result || (params?.fileId ? api.uploadResult(params.fileId) : null)
   const [answers, setAnswers] = useState(() =>
     Object.fromEntries((result?.questions || []).map((q) => [q.question_id, q.preselected])))
   const [showMatched, setShowMatched] = useState(false)

@@ -26,7 +26,9 @@ export default function Files({ go, params }) {
   async function upload(files) {
     for (const file of files) {
       setError(null)
-      setBusy({ source_file: file.name, status: 'working', sentence: 'Finding the header...', steps: [] })
+      setBusy({ source_file: file.name, status: 'working', sentence: 'Finding the header...', steps: [
+        { step: 'header', state: 'current' }, { step: 'granite', state: 'waiting' },
+        { step: 'cleaning', state: 'waiting' }, { step: 'records', state: 'waiting' }] })
       try {
         const result = await api.uploadFile(file)
         if (result.status === 'needs_check') { setBusy(null); go('check', { fileId: result.file_id, result }); return }

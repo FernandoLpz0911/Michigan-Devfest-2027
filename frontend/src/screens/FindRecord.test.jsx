@@ -5,7 +5,7 @@ import noMatch from '../../../fixtures/canned/answer_no_match.json'
 import draft from '../../../fixtures/canned/granite_job4.json'
 import FindRecord from './FindRecord.jsx'
 
-vi.mock('../api.js', () => ({ api: { find: vi.fn(), draft: vi.fn() } }))
+vi.mock('../api.js', () => ({ api: { find: vi.fn(), draft: vi.fn(), settings: vi.fn(() => Promise.resolve({ window_hours: 4, hand_time_minutes: 45 })) } }))
 import { api } from '../api.js'
 
 beforeEach(() => { vi.clearAllMocks(); api.draft.mockResolvedValue(draft) })
@@ -30,6 +30,8 @@ test('message search shows reading with Change, history, stop, worth checking, r
   expect(screen.getByText('REF')).toBeTruthy()
   expect(screen.getByRole('heading', { name: /Worth checking: \d+ of \d+ lots that week/ })).toBeTruthy()
   expect(await screen.findByText('Reply to the buyer')).toBeTruthy()
+  expect(await screen.findByText('by hand, timed on Friday')).toBeTruthy()
+  expect(screen.getByText('45 min')).toBeTruthy()
   expect(screen.getByText(/Drafted by IBM Granite/)).toBeTruthy()
   expect(screen.getByRole('button', { name: 'Copy reply' })).toBeTruthy()
 })

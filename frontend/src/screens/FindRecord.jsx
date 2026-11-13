@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { api } from '../api.js'
+import TimeSavedLine from '../parts/TimeSavedLine.jsx'
 
 function stopText(alarm) {
   const n = String(alarm).replace(/\D/g, '').replace(/^0+(?=\d)/, '')
@@ -69,22 +70,31 @@ export default function FindRecord({ go, params }) {
   const [answer, setAnswer] = useState(null)
   const [draft, setDraft] = useState(null)
   const [error, setError] = useState(null)
+  const [seconds, setSeconds] = useState(null)
+  const [handTime, setHandTime] = useState(null)
 
   async function search(value) {
     const q = value.trim()
     if (!q) return
-    setBusy(true); setError(null); setAnswer(null); setDraft(null); setSearched(q)
+    setBusy(true); setError(null); setAnswer(null); setDraft(null); setSearched(q); setSeconds(null)
+    const started = Date.now()
     try {
       const a = await api.find(q)
       setAnswer(a)
       setBusy(false)
-      if (a.history) api.draft(a.history.lot, a.reading).then(setDraft).catch(setError)
+      if (a.history) {
+        api.draft(a.history.lot, a.reading).then((d) => {
+          setDraft(d)
+          setSeconds(Math.max(1, Math.round((Date.now() - started) / 1000)))
+        }).catch(setError)
+      }
     } catch (err) {
       setError(err); setBusy(false)
     }
   }
 
   useEffect(() => { if (params?.lot) search(params.lot) }, [params?.lot])
+  useEffect(() => { api.settings().then((s) => setHandTime(s?.hand_time_minutes ?? null)).catch(() => {}) }, [])
 
   function reset() { setSearched(null); setAnswer(null); setDraft(null); setError(null) }
 
@@ -143,6 +153,7 @@ export default function FindRecord({ go, params }) {
             </ul>
           </section>
           {draft && <Reply draft={draft} />}
+          {draft && seconds !== null && <TimeSavedLine toolSeconds={seconds} handTimeMinutes={handTime} />}
         </>
       )}
     </div>

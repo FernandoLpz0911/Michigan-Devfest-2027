@@ -1,8 +1,6 @@
 import { InlineLoading } from '@carbon/react'
 import { ErrorFilled, CheckmarkFilled, WarningAltFilled } from '@carbon/icons-react'
-
-const NAMES = { header: 'Header', granite: 'Granite', cleaning: 'Cleaning', records: 'Records' }
-const MARK = { done: '✓', current: '●', waiting: '○', not_needed: '–' }
+import FileSteps from './FileSteps.jsx'
 
 // One row of the Files list. Props: file (FileStatus or FileRow), onCheck, onChooseAnother, onSee.
 export default function FileRow({ file, onCheck, onChooseAnother, onSee }) {
@@ -20,13 +18,7 @@ export default function FileRow({ file, onCheck, onChooseAnother, onSee }) {
         <div role={status === 'error' ? 'alert' : 'status'}>
           {status === 'error' && error ? `${error.message} ${error.fix}` : sentence}
         </div>
-        {status === 'working' && steps.length > 0 && (
-          <ul style={{ display: 'flex', gap: '1rem', listStyle: 'none', padding: 0 }}>
-            {steps.map((s) => (
-              <li key={s.step}>{MARK[s.state]} {NAMES[s.step]} <span className="visually-hidden">({s.state.replace('_', ' ')})</span></li>
-            ))}
-          </ul>
-        )}
+        {status === 'working' && steps.length > 0 && <FileSteps steps={steps} />}
       </div>
       {status === 'error' && <a href="#" onClick={(e) => { e.preventDefault(); onChooseAnother?.() }}>Choose another</a>}
       {status === 'needs_check' && <a href="#" onClick={(e) => { e.preventDefault(); onCheck?.(file) }}>Check {name}</a>}
