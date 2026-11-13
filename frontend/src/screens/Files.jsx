@@ -70,7 +70,7 @@ export default function Files({ go, params }) {
     <div className="files-screen">
       <p className="files-eyebrow">Messy shop files in, buyer answers out.</p>
       <h1>Add your shift logs</h1>
-      <p className="subtle">Any spreadsheet works, even a messy one.</p>
+      <p className="subtle">Any spreadsheet works, even a messy one. Your column names stay; the values inside are made consistent.</p>
       <ol className="files-steps" aria-label="How it works">
         <li><span>1</span>Add each shift's file</li>
         <li><span>2</span>Answer a few plain questions</li>

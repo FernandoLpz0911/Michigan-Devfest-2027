@@ -166,7 +166,7 @@ export default function SeeFile({ go, params }) {
       <div className="seefile-top">
         <div>
           <h1>{view.source_file}</h1>
-          <p className="subtle">Click a column name to see what it became.</p>
+          <p className="subtle">Your column names stay as they are. The tag above each one says what LotTrail reads it as; click a name to see what changed inside it.</p>
           <p className="subtle">Then click a cell to show only rows like it.</p>
         </div>
         <ContentSwitcher
