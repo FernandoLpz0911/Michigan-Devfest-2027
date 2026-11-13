@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { InlineNotification, Modal } from '@carbon/react'
+import { Upload } from '@carbon/icons-react'
 import FileRow from '../parts/FileRow.jsx'
 import { api } from '../api.js'
 import './Files.css'
@@ -67,8 +68,14 @@ export default function Files({ go, params }) {
 
   return (
     <div className="files-screen">
+      <p className="files-eyebrow">Messy shop files in, buyer answers out.</p>
       <h1>Add your shift logs</h1>
       <p className="subtle">Any spreadsheet works, even a messy one.</p>
+      <ol className="files-steps" aria-label="How it works">
+        <li><span>1</span>Add each shift's file</li>
+        <li><span>2</span>Answer a few plain questions</li>
+        <li><span>3</span>Find any lot's whole history</li>
+      </ol>
       {params?.saved && showSaved && (
         <InlineNotification kind="success" lowContrast title="Saved."
           subtitle={`Files like ${params.saved} are automatic from now on.`}
@@ -82,7 +89,9 @@ export default function Files({ go, params }) {
         onDragOver={(e) => e.preventDefault()}
         onDragLeave={() => setOver(false)}
         onDrop={(e) => { e.preventDefault(); setOver(false); upload([...e.dataTransfer.files]) }}>
-        Drop files here, or <span className="drop-zone-link">choose files</span>
+        <Upload size={32} aria-hidden="true" className="drop-zone-icon" />
+        <span className="drop-zone-text">Drop files here, or <span className="drop-zone-link">choose files</span></span>
+        <span className="drop-zone-hint">.csv, .xlsx or .xls</span>
         <input ref={input} type="file" multiple hidden aria-label="Choose files" accept=".csv,.xlsx,.xls"
           onClick={(e) => e.stopPropagation()} onChange={(e) => upload([...e.target.files])} />
       </div>

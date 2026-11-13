@@ -46,7 +46,13 @@ export default function App() {
     <Theme theme={shopFloor ? 'g100' : 'white'} className={shopFloor ? 'shop-floor' : ''}>
       <Header aria-label="LotTrail" className="app-header">
         <HeaderName prefix="" href="#" onClick={(e) => { e.preventDefault(); go('files') }}>
-          LotTrail
+          <svg className="brand-mark" viewBox="0 0 32 32" aria-hidden="true" focusable="false">
+            <path d="M5 25 C 11 25, 11 16, 16 16 S 21 7, 27 7" fill="none" stroke="currentColor" strokeWidth="2.5" strokeDasharray="3 3" />
+            <circle cx="5" cy="25" r="3.5" fill="currentColor" />
+            <circle cx="16" cy="16" r="3" fill="var(--cds-background)" stroke="currentColor" strokeWidth="2.5" />
+            <circle cx="27" cy="7" r="3.5" fill="#0f62fe" />
+          </svg>
+          <span className="brand-name">LotTrail</span>
         </HeaderName>
         <HeaderGlobalBar>
           <ShopFloorToggle on={shopFloor} onChange={setShopFloor} />

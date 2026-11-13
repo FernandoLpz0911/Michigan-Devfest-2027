@@ -16,16 +16,22 @@ code, pre, .mono {
 
 // Header, as in the mockups: name on the left; shop-floor switch, Files and Find a record on the right.
 .app-header.cds--header {
-  height: 3.5rem;
+  height: 4.5rem;
   background: var(--cds-background);
+  border-top: 3px solid #0f62fe;
   border-bottom: 1px solid var(--cds-border-subtle);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
 }
 .app-header .cds--header__name {
   padding: 0 2rem;
-  font-size: 1.125rem;
-  font-weight: 600;
+  gap: 0.75rem;
+  font-size: 1.875rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
   color: var(--cds-text-primary);
 }
+.app-header .brand-mark { width: 2.5rem; height: 2.5rem; color: var(--cds-text-primary); flex: none; }
+.app-header .brand-name { line-height: 1; }
 .app-header .cds--header__global {
   flex: 1 1 auto;
   justify-content: flex-end;
@@ -36,7 +42,7 @@ code, pre, .mono {
 }
 .app-header .cds--header__nav::before { display: none; }
 .app-header a.cds--header__menu-item {
-  height: 3.5rem;
+  height: 4.5rem;
   font-size: 1.125rem;
   color: var(--cds-text-secondary);
   background: transparent;
@@ -57,7 +63,8 @@ code, pre, .mono {
   border: 0;
   inline-size: auto;
   inset-inline: 1rem;
-  inset-block-end: 0.5rem;
+  inset-block-end: 1rem;
+  background-color: #0f62fe;
 }
 
 // Buttons without an icon: Carbon keeps a wide right gap for an icon that is not there.
@@ -82,11 +89,12 @@ code, pre, .mono {
 .app-main {
   max-width: 48rem;
   margin: 0 auto;
-  padding: 6rem 1rem 4rem;
+  padding: 7.5rem 1rem 4rem;
 }
 .app-main h1 {
   font-size: 2.625rem;
-  font-weight: 400;
+  font-weight: 300;
+  letter-spacing: -0.01em;
   line-height: 1.2;
   margin-bottom: 1.5rem;
 }
