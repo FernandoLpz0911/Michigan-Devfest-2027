@@ -5,6 +5,7 @@ import {
 } from '@carbon/react'
 import { Warning } from '@carbon/icons-react'
 import { api } from '../api.js'
+import { FadeCell } from '../parts/SwitchCell.jsx'
 import './AllRecords.css'
 
 const EMPTY = { q: null, machine: null, shift: null, date_from: null, date_to: null, stop: null, only_cleaned: false, only_held: false }
@@ -35,6 +36,7 @@ export default function AllRecords({ go, params }) {
   const [data, setData] = useState(null)
   const [error, setError] = useState(null)
   const [raw, setRaw] = useState(false)
+  const [played, setPlayed] = useState(false)
 
   useEffect(() => {
     let live = true
@@ -69,7 +71,7 @@ export default function AllRecords({ go, params }) {
     <div className="records">
       <h1>All records</h1>
       <ContentSwitcher size="lg" className="records-switch" selectedIndex={raw ? 0 : 1}
-        onChange={({ index }) => setRaw(index === 0)}>
+        onChange={({ index }) => { setPlayed(true); setRaw(index === 0) }}>
         <Switch name="raw" text="Your files" />
         <Switch name="clean" text="Cleaned" />
       </ContentSwitcher>
@@ -120,7 +122,7 @@ export default function AllRecords({ go, params }) {
                         <TableCell key={c}>
                           {c === 0 && entry.lot
                             ? <button type="button" className="link-button" onClick={(e) => { e.stopPropagation(); go('find', { lot: entry.lot }) }}>{v}</button>
-                            : v}
+                            : <FadeCell play={played && c > 0} index={c}>{v}</FadeCell>}
                         </TableCell>
                       ))}
                     </TableRow>

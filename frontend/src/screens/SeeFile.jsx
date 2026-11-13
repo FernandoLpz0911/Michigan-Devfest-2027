@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { ContentSwitcher, Switch, InlineLoading, Link } from '@carbon/react'
 import { WarningAltFilled } from '@carbon/icons-react'
 import { api } from '../api.js'
+import SwitchCell from '../parts/SwitchCell.jsx'
 import './SeeFile.css'
 
 const SHOWN = {
@@ -14,17 +15,7 @@ const WHO = {
   format: 'a saved layout matched it',
 }
 
-function Cell({ raw, clean, cleaned }) {
-  if (!cleaned || clean === null || clean === raw) return raw
-  return (
-    <>
-      <span>{clean}</span>
-      <s className="seefile-old"><span className="cds--visually-hidden">was </span>{raw}</s>
-    </>
-  )
-}
-
-function Line({ row, columns, cleaned }) {
+function Line({ row, columns, cleaned, play }) {
   const n = <th scope="row" className="seefile-num">{row.source_row}</th>
   if (row.kind === 'skipped') {
     const text = row.raw.find((v) => v) || ''
@@ -49,7 +40,7 @@ function Line({ row, columns, cleaned }) {
               <WarningAltFilled size={16} aria-hidden="true" /> Held back: {row.reason_text}
             </div>
           )}
-          <Cell raw={v} clean={row.clean ? row.clean[i] : null} cleaned={cleaned} />
+          <SwitchCell raw={v} clean={row.clean ? row.clean[i] : null} cleaned={cleaned} play={play} index={i} />
         </td>
       ))}
     </tr>
@@ -60,6 +51,7 @@ export default function SeeFile({ go, params }) {
   const [view, setView] = useState(null)
   const [error, setError] = useState(null)
   const [cleaned, setCleaned] = useState(true)
+  const [played, setPlayed] = useState(false)
   const [picked, setPicked] = useState(null)
 
   useEffect(() => {
@@ -84,7 +76,7 @@ export default function SeeFile({ go, params }) {
         <ContentSwitcher
           size="lg"
           selectedIndex={cleaned ? 1 : 0}
-          onChange={({ index }) => setCleaned(index === 1)}
+          onChange={({ index }) => { setPlayed(true); setCleaned(index === 1) }}
         >
           <Switch name="raw" text="Your file" />
           <Switch name="clean" text="Cleaned" />
@@ -96,7 +88,7 @@ export default function SeeFile({ go, params }) {
           <caption className="cds--visually-hidden">First 50 lines of {view.source_file}</caption>
           <tbody>
             {view.rows.map((row) => {
-              const line = <Line key={row.source_row} row={row} columns={cols} cleaned={cleaned} />
+              const line = <Line key={row.source_row} row={row} columns={cols} cleaned={cleaned} play={played} />
               if (row.kind !== 'header') return line
               return [
                 <tr key="tags" className="seefile-tags">

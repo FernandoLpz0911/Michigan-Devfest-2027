@@ -1,0 +1,10 @@
+/* Animated switch: new value fades in, old value slides under it. One column after another, about 1 second. */
+.sw-play .sw-new { animation: sw-fade 450ms ease both; animation-delay: calc(var(--col, 0) * 60ms); }
+.sw-play .sw-old { animation: sw-slide 450ms ease both; animation-delay: calc(var(--col, 0) * 60ms); }
+.sw-new { display: inline-block; }
+.sw-old { display: block; font-size: 0.875rem; color: var(--cds-text-secondary, #525252); text-decoration: line-through; }
+@keyframes sw-fade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes sw-slide { from { opacity: 0; transform: translateY(-100%); } to { opacity: 1; transform: translateY(0); } }
+@media (prefers-reduced-motion: reduce) {
+  .sw-play .sw-new, .sw-play .sw-old { animation: none; }
+}
