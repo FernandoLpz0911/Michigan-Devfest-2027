@@ -73,3 +73,12 @@ test('a value found in the records lists the rows and links each lot', async () 
   fireEvent.click(screen.getByRole('button', { name: 'See lot 4418' }))
   expect(go).toHaveBeenCalledWith('find', { lot: '4418' })
 })
+
+test('a typed lot asks before drafting a reply', async () => {
+  api.find.mockResolvedValue({ ...answer, reading: { ...answer.reading, source: 'typed' } })
+  render(<FindRecord go={vi.fn()} params={{}} />)
+  await search('4417')
+  fireEvent.click(await screen.findByRole('button', { name: 'Draft a reply' }))
+  expect(api.draft).toHaveBeenCalledTimes(1)
+  expect(await screen.findByRole('button', { name: 'Copy reply' })).toBeTruthy()
+})

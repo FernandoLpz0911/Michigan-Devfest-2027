@@ -181,6 +181,27 @@ code, pre, .mono {
   padding: 0.75rem 0;
   border-bottom: 1px solid var(--cds-border-subtle);
 }
+// Find a record results: clear gaps between the parts of the answer.
+.find-record .lot-steps { margin-bottom: 3rem; }
+.timeline-strip { margin: 0 0 3.5rem; }
+.timeline-strip h3 { font-weight: 400; margin-bottom: 1rem; }
+.timeline-list { margin-top: 1.5rem; font-size: 1rem; }
+.timeline-list summary { cursor: pointer; color: var(--cds-link-primary); }
+.timeline-list ul { margin-top: 0.75rem; padding-left: 1.25rem; list-style: disc; }
+.find-record section + section, .find-record .draft-ask { margin-top: 3.5rem; }
+.worth-list { margin-bottom: 0; }
+.draft-ask {
+  padding: 1.5rem;
+  border: 1px solid var(--cds-border-subtle);
+  background: var(--cds-layer-01);
+}
+.draft-ask h2 { margin-top: 0; }
+.reply-actions { display: flex; align-items: center; gap: 1rem; margin-bottom: 3rem; }
+.time-saved-line { margin-top: 1rem; }
+@media print {
+  .find-searched, .reply-actions, .draft-ask, .lot-head .link-btn, .app-header { display: none !important; }
+  .timeline-list { display: none; }
+}
 .reply-card {
   border: 1px solid var(--cds-border-subtle);
   padding: 1.5rem;

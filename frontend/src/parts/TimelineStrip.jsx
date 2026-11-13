@@ -14,8 +14,8 @@ export default function TimelineStrip({ timeline }) {
   for (let m = from; m <= to; m += 60) hours.push(m)
 
   return (
-    <section aria-label="Lot timeline">
-      <p>{machine}, {day}</p>
+    <section aria-label="Lot timeline" className="timeline-strip">
+      <h3>{machine}, {day}</h3>
       <div aria-hidden="true" style={{ position: 'relative', height: 96, margin: '0 24px' }}>
         {hours.map((m) => (
           <span key={m} style={{ position: 'absolute', left: `${pct(m)}%`, bottom: 0, fontSize: 12, transform: 'translateX(-50%)' }}>
@@ -32,7 +32,7 @@ export default function TimelineStrip({ timeline }) {
           const width = pct(mins(l.end)) - left
           const dark = l.role === 'this'
           return (
-            <div key={l.lot} data-testid={`block-${l.lot}`} style={{ position: 'absolute', top: 36, height: 28, left: `${left}%`, width: `${width}%`, boxSizing: 'border-box', background: dark ? '#161616' : 'transparent', border: '2px solid #161616' }}>
+            <div key={l.lot} data-testid={`block-${l.lot}`} style={{ position: 'absolute', top: 36, height: 28, left: `${left}%`, width: `${width}%`, boxSizing: 'border-box', printColorAdjust: 'exact', WebkitPrintColorAdjust: 'exact', background: dark ? '#161616' : 'transparent', border: '2px solid #161616' }}>
               <span style={{ position: 'absolute', top: dark ? 4 : 4, left: 2, whiteSpace: 'nowrap', fontSize: 12, color: dark && width > 12 ? '#fff' : '#161616', transform: dark && width <= 12 ? 'translateY(-34px)' : 'none' }}>
                 {l.lot}
               </span>
@@ -40,14 +40,17 @@ export default function TimelineStrip({ timeline }) {
           )
         })}
       </div>
-      <ul>
+      <details className="timeline-list">
+        <summary>Read this as a list</summary>
+        <ul>
         {lots.map((l) => (
           <li key={l.lot}>Lot {l.lot}: {hhmm(l.start)} to {hhmm(l.end)}, {ROLE_WORDS[l.role]}</li>
         ))}
         {stops.map((s, i) => (
           <li key={`s${i}`}>Machine stop {stopNumber(s.code)} at {hhmm(s.time)}</li>
         ))}
-      </ul>
+        </ul>
+      </details>
     </section>
   )
 }

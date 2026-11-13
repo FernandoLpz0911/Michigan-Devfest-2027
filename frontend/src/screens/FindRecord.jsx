@@ -51,7 +51,9 @@ function Step({ e }) {
 }
 
 function Reply({ draft }) {
-  const [sections, setSections] = useState(draft.sections)
+  // Granite joins the other lots with semicolons; put each lot on its own line.
+  const [sections, setSections] = useState(() => draft.sections.map((x) => ({
+    ...x, text: (x.text || '').replace(/;\s*(?=Lot \S)/g, '\n') })))
   const [editing, setEditing] = useState(false)
   const [copied, setCopied] = useState(false)
   const plain = sections.map((s) => `${s.heading}\n${s.text}`).join('\n\n')
@@ -78,9 +80,11 @@ function Reply({ draft }) {
         ))}
       </div>
       <p className="subtle">{label}</p>
-      <Button kind="primary" onClick={copy}>Copy reply</Button>{' '}
-      <Button kind="ghost" onClick={() => setEditing(!editing)}>{editing ? 'Done editing' : 'Edit'}</Button>
-      {copied && <span role="status"> Copied.</span>}
+      <div className="reply-actions">
+        <Button kind="primary" onClick={copy}>Copy reply</Button>
+        <Button kind="ghost" onClick={() => setEditing(!editing)}>{editing ? 'Done editing' : 'Edit'}</Button>
+        {copied && <span role="status">Copied.</span>}
+      </div>
     </section>
   )
 }
@@ -127,6 +131,7 @@ export default function FindRecord({ go, params }) {
   const [seconds, setSeconds] = useState(null)
   const [handTime, setHandTime] = useState(null)
   const [timeline, setTimeline] = useState(null)
+  const [drafting, setDrafting] = useState(false)
 
   async function search(value) {
     const q = value.trim()
@@ -139,14 +144,21 @@ export default function FindRecord({ go, params }) {
       setBusy(false)
       if (a.history) {
         api.timeline(a.history.lot).then(setTimeline).catch(() => setTimeline(null))
-        api.draft(a.history.lot, a.reading).then((d) => {
-          setDraft(d)
-          setSeconds(Math.max(1, Math.round((Date.now() - started) / 1000)))
-        }).catch(setError)
+        // A pasted buyer message gets its reply drafted right away. A plain lookup
+        // (typed lot, or a lot picked from a list) only drafts when asked.
+        if (a.reading?.source !== 'typed') makeDraft(a, started)
       }
     } catch (err) {
       setError(err); setBusy(false)
     }
+  }
+
+  function makeDraft(a, started = Date.now()) {
+    setDrafting(true)
+    api.draft(a.history.lot, a.reading).then((d) => {
+      setDraft(d)
+      setSeconds(Math.max(1, Math.round((Date.now() - started) / 1000)))
+    }).catch(setError).finally(() => setDrafting(false))
   }
 
   useEffect(() => { if (params?.lot) search(params.lot) }, [params?.lot])
@@ -220,6 +232,15 @@ export default function FindRecord({ go, params }) {
               ))}
             </ul>
           </section>
+          {!draft && (
+            <section className="draft-ask" aria-labelledby="draft-ask-h">
+              <h2 id="draft-ask-h">Answering a buyer about this lot?</h2>
+              <p className="subtle">IBM Granite can write a reply from these records only. You read and edit it before sending.</p>
+              <Button kind="secondary" disabled={drafting} onClick={() => makeDraft(answer)}>
+                {drafting ? 'Writing the reply...' : 'Draft a reply'}
+              </Button>
+            </section>
+          )}
           {draft && <Reply draft={draft} />}
           {draft && seconds !== null && <TimeSavedLine toolSeconds={seconds} handTimeMinutes={handTime} />}
         </>
