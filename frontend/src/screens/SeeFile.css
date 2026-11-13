@@ -22,3 +22,14 @@
 .seefile-changed > span { display: flex; flex-direction: column-reverse; }
 .shop-floor .seefile-did { background: #262626; border-left-color: #78a9ff; }
 .shop-floor .seefile-grid td.seefile-changed { background: #001d6c; }
+
+.seefile-tools { display: flex; flex-wrap: wrap; gap: 1rem; align-items: flex-end; margin-bottom: 1rem; }
+.seefile-tools .cds--search { min-width: 16rem; flex: 1; }
+.seefile-filters { display: flex; gap: 1rem; align-items: center; margin-bottom: 1rem; }
+.seefile-chip { display: inline-flex; align-items: center; gap: 0.5rem; background: #e0e0e0; border-radius: 1rem; padding: 0.25rem 0.5rem 0.25rem 0.75rem; }
+.seefile-chip button { background: none; border: 0; font-size: 1.25rem; line-height: 1; cursor: pointer; min-width: 1.5rem; min-height: 1.5rem; }
+.seefile-dl { margin-top: 1.5rem; text-decoration: none; }
+.seefile-modal .cds--radio-button-group, .seefile-modal .cds--form-item { margin-bottom: 1rem; }
+.shop-floor .seefile-chip { background: #393939; color: #f4f4f4; }
+.shop-floor .seefile-chip button { color: #f4f4f4; }
+.shop-floor .seefile-filters, .shop-floor .seefile-tools label { color: #f4f4f4; }

@@ -10,7 +10,22 @@ def _clean_cell(entry, field, header):
     return "" if value is None else str(value)
 
 
-def file_view(table, fmt, matched, entries, held, file_id):
+def _matches(raw, clean, filters):
+    cells = [c.lower() for c in raw + (clean or [])]
+    if filters.get("q") and not any(filters["q"].lower() in c for c in cells):
+        return False
+    col, value = filters.get("column"), filters.get("value")
+    if col is not None and value is not None:
+        i = int(col)
+        both = [raw[i] if i < len(raw) else "", clean[i] if clean and i < len(clean) else None]
+        if value.lower() not in [str(c).lower() for c in both if c is not None]:
+            return False
+    return True
+
+
+def file_view(table, fmt, matched, entries, held, file_id, filters=None, limit=LIMIT):
+    """With filters (q, column, value, kind) rows are the header plus matching lines and `matching` is added."""
+    filters = {k: v for k, v in (filters or {}).items() if v not in (None, "")}
     headers = table["headers"]
     fields = [fmt["mapping"].get(h, "extra") for h in headers]
     by_row = {m["position"]: m["decided_by"] for m in matched}
@@ -38,7 +53,15 @@ def file_view(table, fmt, matched, entries, held, file_id):
             lines.append((n, "held", by_held[n]["reason_text"], raw, None))
     lines.sort(key=lambda x: x[0])
 
+    total = len(lines)
+    if filters:
+        lines = [l for l in lines if l[1] == "header" or (
+            l[1] in ("entry", "held") and filters.get("kind") in (None, l[1]) and _matches(l[3], l[4], filters))]
+        matching = sum(1 for l in lines if l[1] != "header")
     rows = [{"source_row": n, "kind": k, "reason_text": r, "raw": raw, "clean": c}
-            for n, k, r, raw, c in lines[:LIMIT]]
-    return {"file_id": file_id, "source_file": table["source_file"], "columns": columns,
-            "rows": rows, "total_rows": len(lines)}
+            for n, k, r, raw, c in (lines if limit is None else lines[:limit + (1 if filters else 0)])]
+    out = {"file_id": file_id, "source_file": table["source_file"], "columns": columns,
+           "rows": rows, "total_rows": total}
+    if filters:
+        out["matching"] = matching
+    return out

@@ -4,12 +4,13 @@ Ask your records still returns a canned shape (card G3 is cut).
 """
 import json
 import os
+import mimetypes
 from pathlib import Path
 
 from fastapi import FastAPI, File, Request, UploadFile
 from fastapi.responses import JSONResponse, Response
 
-from backend import fileview, pipeline, records
+from backend import export, fileview, pipeline, records
 from backend.pipeline import UserError
 from backend.timeline import lot_timeline
 
@@ -86,9 +87,27 @@ def granite(file_id: str):
 
 
 @app.get("/api/files/{file_id}/view")
-def view(file_id: str):
+def view(file_id: str, q: str = None, column: int = None, value: str = None, kind: str = None):
     table, fmt, matched, entries, held = pipeline.file_parts(file_id)
-    return fileview.file_view(table, fmt, matched, entries, held, file_id)
+    filters = {"q": q, "column": column, "value": value, "kind": kind}
+    return fileview.file_view(table, fmt, matched, entries, held, file_id, filters)
+
+
+@app.get("/api/files/{file_id}/download")
+def download(file_id: str, version: str = "cleaned", format: str = "csv", dates: str = "iso",
+             held: bool = False, q: str = None, column: int = None, value: str = None, kind: str = None):
+    rec = pipeline._load(file_id)
+    if version == "original":
+        path = Path(rec["path"])
+        data, name = path.read_bytes(), rec["source_file"]
+        kind_ = mimetypes.guess_type(name)[0] or "application/octet-stream"
+    else:
+        table, fmt, matched, entries, held_rows = pipeline.file_parts(file_id)
+        options = {"format": format, "dates": dates, "held": held, "q": q, "column": column,
+                   "value": value, "kind": kind}
+        data, name, kind_ = export.cleaned_file(table, fmt, matched, entries, held_rows, file_id, options)
+    return Response(data, media_type=kind_,
+                    headers={"Content-Disposition": f'attachment; filename="{name}"'})
 
 
 @app.post("/api/find")

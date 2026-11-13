@@ -42,3 +42,36 @@ def test_only_50_lines():
     t = dict(TABLE, rows=[["1", "x", "y", "z"]] * 80, source_rows=list(range(4, 84)))
     v = file_view(t, FMT, MATCHED, [], [{"source_row": n, "reason_text": "Empty"} for n in range(4, 84)], "f1")
     assert len(v["rows"]) == 50 and v["total_rows"] == 83
+
+
+def filtered(**f):
+    return file_view(TABLE, FMT, MATCHED, ENTRIES, HELD, "f1", f)
+
+
+def test_no_filters_has_no_matching():
+    assert "matching" not in view() and "matching" not in filtered(q="")
+
+
+def test_q_matches_raw_or_clean_ignoring_case():
+    v = filtered(q="press 3")
+    assert v["matching"] == 1 and [r["kind"] for r in v["rows"]] == ["header", "entry"]
+    assert filtered(q="P3")["matching"] == 2 and filtered(q="zzz")["matching"] == 0
+
+
+def test_column_and_value():
+    assert filtered(column=2, value="PRESS 3")["matching"] == 1
+    assert filtered(column=2, value="p3")["matching"] == 2
+    assert filtered(column=2, value="Press")["matching"] == 0
+
+
+def test_kind_and_skipped_left_out():
+    v = filtered(kind="held")
+    assert v["matching"] == 1 and v["rows"][1]["kind"] == "held" and v["total_rows"] == 5
+    assert all(r["kind"] != "skipped" for r in filtered(q="DEMO")["rows"]) and filtered(q="DEMO")["matching"] == 0
+
+
+def test_matching_counts_whole_file():
+    t = dict(TABLE, rows=[["1", "x", "y", "z"]] * 80, source_rows=list(range(4, 84)))
+    held = [{"source_row": n, "reason_text": "Empty"} for n in range(4, 84)]
+    v = file_view(t, FMT, MATCHED, [], held, "f1", {"q": "x"})
+    assert v["matching"] == 80 and len(v["rows"]) == 51
