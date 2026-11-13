@@ -12,6 +12,7 @@ const EMPTY = { q: null, machine: null, shift: null, date_from: null, date_to: n
 const stopText = (code) => `Machine stop, code ${String(code).replace(/\D/g, '').replace(/^0+(?=\d)/, '')}`
 const shortStop = (code) => `Stop code ${String(code).replace(/\D/g, '').replace(/^0+(?=\d)/, '')}`
 const when = (t) => {
+  if (!t) return ''
   const [d, h] = t.split('T')
   const [y, m, day] = d.split('-').map(Number)
   const [hh, mm] = (h || '00:00').split(':').map(Number)

@@ -62,8 +62,9 @@ def build_entries(table, fmt, file_id):
             if "lot" in col and not vals.get("lot"):
                 reason = "no_lot"
             else:
+                # A file with no time column keeps its rows untimed; only an unreadable time cell holds one back.
                 vals["time"] = normalize_time(cells[col["time"]]) if "time" in col else None
-                if vals["time"] is None:
+                if "time" in col and vals["time"] is None:
                     reason = "bad_time"
         if reason:
             held.append({"file_id": file_id, "source_file": table["source_file"], "source_row": src,

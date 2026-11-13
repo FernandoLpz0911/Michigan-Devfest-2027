@@ -58,3 +58,10 @@ def test_machine_log_without_lot_column_keeps_rows():
     assert [e["lot"] for e in r["entries"]] == [None]
     assert r["entries"][0]["alarm"] == "A_074"
     assert [h["reason"] for h in r["held"]] == ["bad_time"]
+
+
+def test_file_without_time_column_keeps_rows():
+    fmt = {**FMT, "mapping": {**FMT["mapping"], "Ref": "extra", "Prod Dt": "extra"}}
+    r = build_entries(table([["", "B-118", "1", "whenever", "Press 3", "A_074", ""]]), fmt, "f1")
+    assert r["held"] == [] and r["entries"][0]["time"] is None
+    assert r["entries"][0]["extra"]["Prod Dt"] == "whenever"
