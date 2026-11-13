@@ -7,9 +7,10 @@
 - Shift 1 asks 3 questions (Ref unsure, two time columns, Press 3 merge). Shifts 2 and 3 are recognized.
 - Lot 4417: 8 lots worth checking out of 140 that week.
 
-## In progress
-- Card T: lot timeline (backend and strip).
-- Card M: animated switch and shop-floor mode.
+## Done since
+- Card T: lot timeline strip on Find a record (real data, matches the canned example for lot 4417).
+- Card M: animated switch on See the file and All records; shop-floor mode toggle (g100, 20 px text).
+  - Colour pairs checked by hand: all at least 6.4:1. Not yet checked by eye in a real browser.
 
 ## Known gaps
 - Check screen after a page reload shows "Nothing to check" (questions are kept in the browser only).
