@@ -37,6 +37,17 @@ def test_three_date_styles_detected():
         assert p["detected_type"] == "date", style
 
 
+def test_machine_export_times_are_date():
+    vals = ["2020-01-01 11:21:28.907000+00:00", "2020-01-02 09:00:01.000000+00:00", "2021-05-04T14:02:28Z"]
+    p = types.profile_columns(["T"], [[v] for v in vals])[0]
+    assert p["detected_type"] == "date"
+
+
+def test_unix_numbers_stay_number():
+    p = types.profile_columns(["U"], [["1577877688.907"], ["1577877700.112"]])[0]
+    assert p["detected_type"] == "number"
+
+
 def test_empty_column_is_text_with_no_samples():
     rows = [["x", ""], ["y", ""]]
     p = types.profile_columns(["A", "B"], rows)[1]

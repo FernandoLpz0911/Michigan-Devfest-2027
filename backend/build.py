@@ -11,6 +11,7 @@ _MERGED = ("machine", "step", "part")
 def normalize_time(text):
     """Return YYYY-MM-DDTHH:MM, or None when the style is not supported."""
     t = re.sub(r"\s+", " ", (text or "").strip())
+    t = re.sub(r"(\d{2}:\d{2}):\d{2}(\.\d+)?(Z|[+-]\d{2}:?\d{2})?$", r"\1", t)
     t = re.sub(r"(?<=\d)\s*([AP])M?$", r"\1M", t, flags=re.I).upper()
     t = re.sub(r"(?<=\d) (AM|PM)$", r"\1", t)
     for f in _TIME_FORMATS:
