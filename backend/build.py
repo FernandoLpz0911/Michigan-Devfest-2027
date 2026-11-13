@@ -54,7 +54,9 @@ def build_entries(table, fmt, file_id):
                     elif f in _MERGED and v and v not in r.values():
                         unseen[(f, v)] = unseen.get((f, v), 0) + 1
                 vals[f] = v
-            if not vals.get("lot"):
+            # A file with no lot column (a machine log) keeps its rows as lot-less entries;
+            # only a blank cell in a lot column holds the row back.
+            if "lot" in col and not vals.get("lot"):
                 reason = "no_lot"
             else:
                 vals["time"] = normalize_time(cells[col["time"]]) if "time" in col else None

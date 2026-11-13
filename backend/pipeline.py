@@ -438,7 +438,7 @@ def value_matches(text, entries):
                                      "where": where}))
     hits.sort(key=lambda h: h[0])
     rows = [h[1] for h in hits]
-    return {"text": text, "total": len(rows), "lots": len({r["lot"] for r in rows}),
+    return {"text": text, "total": len(rows), "lots": len({r["lot"] for r in rows if r["lot"]}),
             "rows": rows[:VALUE_SEARCH_LIMIT]}
 
 

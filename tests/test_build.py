@@ -48,3 +48,13 @@ def test_build_merge_hold_and_unseen():
     assert e2["quantity"] is None and e2["original_row"]["Qty"] == "x" and e2["alarm"] is None
     assert r["values_cleaned"] == 1
     assert r["unseen_values"] == [{"field": "machine", "value": "Press1", "count": 2}]
+
+
+def test_machine_log_without_lot_column_keeps_rows():
+    fmt = {**FMT, "mapping": {**FMT["mapping"], "Ref": "extra"}}
+    rows = [["", "B-118", "1", "5/3/21 6:08a", "Press 3", "A_074", ""],
+            ["", "B-118", "1", "??", "Press 3", "", ""]]
+    r = build_entries(table(rows), fmt, "f1")
+    assert [e["lot"] for e in r["entries"]] == [None]
+    assert r["entries"][0]["alarm"] == "A_074"
+    assert [h["reason"] for h in r["held"]] == ["bad_time"]

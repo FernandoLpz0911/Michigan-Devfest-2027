@@ -34,5 +34,8 @@ def lot_timeline(con, lot, window_hours):
     lots = [{"lot": n, "start": s.strftime(fmt), "end": en.strftime(fmt),
              "role": "this" if n == lot else "worth_checking" if n in worth else "other"}
             for n, (s, en) in sorted(blocks.items(), key=lambda kv: (kv[1][0], kv[0]))]
-    stops = [{"time": e["time"], "code": e["alarm"]} for e in same if e.get("alarm")]
+    # Stops also come from machine logs, whose rows carry no lot.
+    stops = sorted(({"time": e["time"], "code": e["alarm"]} for e in entries
+                    if e.get("alarm") and e.get("time") and e.get("machine") == machine and e["time"][:10] == day),
+                   key=lambda s: s["time"])
     return {"lot": lot, "machine": machine, "day": day, "lots": lots, "stops": stops}
