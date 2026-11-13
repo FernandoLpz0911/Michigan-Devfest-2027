@@ -66,4 +66,28 @@ describe('SeeFile', () => {
     const { container } = await open()
     expect((await axe(container)).violations).toEqual([])
   })
+
+  it('opens in the Cleaned view with changed cells marked, both values shown', async () => {
+    const { container } = await open()
+    expect(screen.getByRole('tab', { name: 'Cleaned' }).getAttribute('aria-selected')).toBe('true')
+    const cell = container.querySelector('td.seefile-changed')
+    expect(cell.querySelector('s').textContent).toMatch(/\S/)
+    expect(cell.querySelector('.sw-new').textContent).toMatch(/\S/)
+  })
+
+  it('shows no strikethrough in unchanged cells', async () => {
+    const { container } = await open()
+    const plain = [...container.querySelectorAll('tbody td:not(.seefile-changed)')]
+    expect(plain.some((td) => td.querySelector('s'))).toBe(false)
+  })
+
+  it('shows the summary bar and leaves out zero counts', async () => {
+    await open()
+    const bar = screen.getByRole('list', { name: 'What cleaning did' }).textContent
+    expect(bar).toMatch(/Times written one way: 82 rows/)
+    expect(bar).toMatch(/Machine names made the same: 15 rows/)
+    expect(bar).toMatch(/Title and blank rows skipped: 3 \(in the first/)
+    expect(bar).toMatch(/Held back for you to check: 1/)
+    expect(bar).not.toMatch(/Operator|: 0/)
+  })
 })

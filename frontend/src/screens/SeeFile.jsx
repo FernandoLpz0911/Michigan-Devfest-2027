@@ -15,6 +15,25 @@ const WHO = {
   format: 'a saved layout matched it',
 }
 
+const DID = {
+  time: 'Times written one way', machine: 'Machine names made the same', lot: 'Lot numbers made the same',
+  part: 'Part names made the same', quantity: 'Quantities made the same', operator: 'Operator names made the same',
+  shift: 'Shifts made the same', step: 'Steps made the same', alarm: 'Machine stops made the same',
+  extra: 'Extra details tidied',
+}
+
+function whatCleaningDid(view) {
+  const sums = {}
+  view.columns.forEach((c) => { sums[c.field] = (sums[c.field] || 0) + c.rows_changed })
+  const items = Object.keys(sums).filter((f) => sums[f] > 0).map((f) => `${DID[f]}: ${sums[f]} ${sums[f] === 1 ? 'row' : 'rows'}`)
+  const first = view.total_rows > view.rows.length ? ` (in the first ${view.rows.length} lines)` : ''
+  const skipped = view.rows.filter((r) => r.kind === 'skipped').length
+  const held = view.rows.filter((r) => r.kind === 'held').length
+  if (skipped) items.push(`Title and blank rows skipped: ${skipped}${first}`)
+  if (held) items.push(`Held back for you to check: ${held}${first}`)
+  return items
+}
+
 function Line({ row, columns, cleaned, play }) {
   const n = <th scope="row" className="seefile-num">{row.source_row}</th>
   if (row.kind === 'skipped') {
@@ -34,7 +53,7 @@ function Line({ row, columns, cleaned, play }) {
     <tr className={held ? 'seefile-held' : ''}>
       {n}
       {row.raw.map((v, i) => (
-        <td key={i} className={cleaned && row.clean && row.clean[i] !== v ? 'seefile-changed' : ''}>
+        <td key={i} className={cleaned && row.clean && row.clean[i] !== null && row.clean[i] !== undefined && row.clean[i] !== v ? 'seefile-changed' : ''}>
           {held && i === 0 && (
             <div className="seefile-reason">
               <WarningAltFilled size={16} aria-hidden="true" /> Held back: {row.reason_text}
@@ -82,6 +101,10 @@ export default function SeeFile({ go, params }) {
           <Switch name="clean" text="Cleaned" />
         </ContentSwitcher>
       </div>
+
+      <ul className="seefile-did" aria-label="What cleaning did">
+        {whatCleaningDid(view).map((t) => <li key={t}>{t}</li>)}
+      </ul>
 
       <div className="seefile-scroll">
         <table className="seefile-grid">

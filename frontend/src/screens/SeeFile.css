@@ -16,3 +16,9 @@
 .seefile-old { display: block; font-size: 0.875rem; color: #525252; }
 .seefile-summary { display: flex; justify-content: space-between; gap: 1rem; margin-top: 1rem; padding: 1rem; background: #edf5ff; border-left: 4px solid #0f62fe; }
 .seefile-foot { display: flex; justify-content: space-between; margin-top: 1rem; }
+.seefile-did { list-style: none; margin: 0 0 1rem; padding: 0.75rem 1rem; background: #f4f4f4; border-left: 4px solid #0f62fe; }
+.seefile-grid td.seefile-changed { background: #edf5ff; }
+.seefile-changed .sw-new { font-weight: 400; }
+.seefile-changed > span { display: flex; flex-direction: column-reverse; }
+.shop-floor .seefile-did { background: #262626; border-left-color: #78a9ff; }
+.shop-floor .seefile-grid td.seefile-changed { background: #001d6c; }
