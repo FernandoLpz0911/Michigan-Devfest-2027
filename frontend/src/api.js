@@ -51,6 +51,12 @@ export const api = {
   uploadResult: (fileId) =>
     uploadResults.get(fileId) || store(() => JSON.parse(sessionStorage.getItem(KEY(fileId)))) || null,
   listFiles: () => call('GET', '/files'),
+  async deleteFile(fileId) {
+    const done = await call('DELETE', `/files/${fileId}`)
+    uploadResults.delete(fileId)
+    store(() => sessionStorage.removeItem(KEY(fileId)))
+    return done
+  },
   fileStatus: (fileId) => call('GET', `/files/${fileId}/status`),
   async sendAnswers(fileId, answers) {
     const saved = await call('POST', `/files/${fileId}/answers`, { answers })

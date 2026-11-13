@@ -65,6 +65,17 @@ def _save(rec):
     _record_path(rec["file_id"]).write_text(json.dumps(rec))
 
 
+def delete_file(file_id):
+    """Remove one file and everything saved from it. Saved layouts stay, so its look-alikes stay automatic."""
+    rec = _load(file_id)
+    store.delete_file(con(), file_id)
+    upload = Path(rec.get("path") or "")
+    if upload.is_file() and upload.parent == data_dir() / "uploads":
+        upload.unlink()
+    _record_path(file_id).unlink()
+    return {"deleted": file_id}
+
+
 def _all_records():
     recs = [json.loads(p.read_text()) for p in (data_dir() / "files").glob("f*.json")]
     return sorted(recs, key=lambda r: int(r["file_id"][1:]))

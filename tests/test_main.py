@@ -86,6 +86,13 @@ def test_full_demo_flow(client):
     assert client.get(f"/api/files/{r['file_id']}/status").json()["status"] == "ready"
     assert client.get(f"/api/files/{r['file_id']}/granite").json()
 
+    # Deleting one file removes its rows and records, and only those.
+    assert client.delete(f"/api/files/{r3['file_id']}").json() == {"deleted": r3["file_id"]}
+    rows = client.get("/api/files").json()
+    assert r3["file_id"] not in [x["file_id"] for x in rows] and len(rows) == 2
+    assert client.get("/api/records").json()["total"] == sum(x["entries"] for x in rows) < 217
+    assert client.delete(f"/api/files/{r3['file_id']}").status_code == 404
+
 
 def test_errors_have_message_and_fix(client):
     bad = client.post("/api/files", files={"file": ("notes.txt", b"hello")})

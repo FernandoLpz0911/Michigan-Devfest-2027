@@ -40,6 +40,14 @@ export default function Files({ go, params }) {
     }
   }
 
+  async function remove(r) {
+    if (r.file_id.startsWith('err-')) { setRows((old) => old.filter((x) => x !== r)); return }
+    if (!window.confirm(`Remove ${r.source_file} and the records saved from it?`)) return
+    setError(null)
+    try { await api.deleteFile(r.file_id) } catch (err) { setError(err) }
+    await load()
+  }
+
   const anyReady = rows.some((r) => r.status === 'ready')
   return (
     <div className="files-screen">
@@ -58,7 +66,8 @@ export default function Files({ go, params }) {
           <FileRow key={r.file_id} file={r}
             onChooseAnother={() => { setRows(rows.filter((x) => x !== r)); input.current.click() }}
             onCheck={() => go('check', { fileId: r.file_id })}
-            onSee={() => go('seefile', { fileId: r.file_id })} />
+            onSee={() => go('seefile', { fileId: r.file_id })}
+            onDelete={remove} />
         ))}
         {busy && <FileRow file={busy} />}
       </ul>

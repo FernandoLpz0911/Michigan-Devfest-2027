@@ -59,6 +59,11 @@ def list_files():
     return pipeline.file_rows()
 
 
+@app.delete("/api/files/{file_id}")
+def delete_file(file_id: str):
+    return pipeline.delete_file(file_id)
+
+
 @app.get("/api/files/{file_id}/status")
 def status(file_id: str):
     return pipeline.file_status(file_id)

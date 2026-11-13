@@ -1,0 +1,10 @@
+.file-row-delete { display: inline-flex; align-items: center; justify-content: center; width: 2rem; height: 2rem;
+  padding: 0; border: 0; background: none; color: inherit; cursor: pointer; }
+.file-row-delete svg { fill: currentColor; }
+.file-row-delete .file-row-x { display: none; }
+.file-row-delete:hover .file-row-status, .file-row-delete:focus-visible .file-row-status { display: none; }
+.file-row-delete:hover .file-row-x, .file-row-delete:focus-visible .file-row-x { display: inline; }
+.file-row-delete:hover, .file-row-delete:focus-visible { color: #da1e28; }
+.file-row-delete:focus-visible { outline: 2px solid #0f62fe; outline-offset: 2px; }
+.shop-floor .file-row-delete:hover, .shop-floor .file-row-delete:focus-visible { color: #ff8389; }
+.shop-floor .file-row-delete:focus-visible { outline-color: #ffffff; }

@@ -22,3 +22,11 @@ it('error state shows message and fix on the same row, no violations', async () 
   expect(screen.getByText('Choose another')).toBeTruthy()
   expect((await axe(container)).violations).toEqual([])
 })
+
+it('with onDelete the icon is a labelled remove button', async () => {
+  const { fireEvent } = await import('@testing-library/react')
+  let removed = null
+  render(<ul><FileRow file={{ ...status, status: 'ready', sentence: 'Done.' }} onDelete={(f) => { removed = f }} /></ul>)
+  fireEvent.click(screen.getByRole('button', { name: `Remove ${status.source_file}` }))
+  expect(removed.source_file).toBe(status.source_file)
+})

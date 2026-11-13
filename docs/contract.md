@@ -349,6 +349,7 @@ Nothing found: `found: false`, `filters: {}`.
 | `GET /api/files/{file_id}/detail` | | FileDetail |
 | `GET /api/files/{file_id}/granite` | | list of GraniteExchange |
 | `GET /api/files/{file_id}/view` | | FileView |
+| `DELETE /api/files/{file_id}` | | `{"deleted": file_id}`. Removes the file, its entries, held rows, Granite exchanges and counters. Saved layouts stay. 404 if unknown. |
 | `POST /api/find` | `{"text": "message or lot number"}` | Answer |
 | `POST /api/draft` | `{"lot": "4417", "reading": RequestReading or null}` | Draft |
 | `GET /api/held` | | list of HeldRow |

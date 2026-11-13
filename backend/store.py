@@ -55,6 +55,13 @@ def lot_numbers(con):
     return [r[0] for r in con.execute("SELECT DISTINCT lot FROM entries ORDER BY lot")]
 
 
+def delete_file(con, file_id):
+    con.execute("DELETE FROM entries WHERE json_extract(body, '$.file_id') = ?", (file_id,))
+    for table in ("held", "exchanges", "counters"):
+        con.execute(f"DELETE FROM {table} WHERE file_id = ?", (file_id,))
+    con.commit()
+
+
 def save_exchange(con, exchange):
     con.execute("INSERT INTO exchanges (file_id, body) VALUES (?,?)", (exchange.get("file_id"), json.dumps(exchange)))
     con.commit()
