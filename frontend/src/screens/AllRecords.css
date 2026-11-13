@@ -1,0 +1,10 @@
+.records-filters { display: flex; flex-wrap: wrap; gap: 1rem; align-items: flex-end; margin: 1.5rem 0 1rem; }
+.records-dropdown { min-width: 12rem; }
+.records-checks { display: flex; flex-wrap: wrap; gap: 1.5rem; align-items: center; margin-bottom: 1rem; }
+.records-chips { display: flex; gap: .5rem; align-items: center; margin-left: auto; }
+.records-switch { max-width: 20rem; margin: 1rem 0; }
+.records-count { font-size: 1.25rem; margin: 1rem 0; }
+.records-row { cursor: pointer; }
+.records-foot { display: flex; justify-content: space-between; margin-top: 1rem; }
+.records-error { margin: 1rem 0; }
+.link-button { background: none; border: 0; padding: .5rem 0; color: #0043ce; text-decoration: underline; cursor: pointer; font: inherit; min-height: 2.75rem; }
