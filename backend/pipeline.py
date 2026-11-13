@@ -377,6 +377,9 @@ def file_parts(file_id):
     if rec.get("format_id"):
         fmt = next((f for f in formats.load_formats(str(data_dir() / "formats"))
                     if f["format_id"] == rec["format_id"]), None)
+    if fmt and rec.get("recognized"):
+        # The saved format is keyed by the first file's headers; this file may spell them differently.
+        fmt = dict(fmt, mapping={m["header"]: m["field"] for m in rec.get("matched", [])})
     entries = [e for e in store.all_entries(con()) if e["file_id"] == file_id]
     held = [h for h in store.held_rows(con()) if h["file_id"] == file_id]
     return table, fmt, rec.get("matched", []), entries, held

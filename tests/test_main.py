@@ -77,6 +77,12 @@ def test_full_demo_flow(client):
     assert client.get("/api/records.csv").headers["content-type"].startswith("text/csv")
     view = client.get(f"/api/files/{r['file_id']}/view").json()
     assert view["rows"] and view["columns"]
+    # A recognized file with different header spelling still shows what each column became.
+    v2 = client.get(f"/api/files/{r2['file_id']}/view").json()
+    fields2 = {c["header"]: c["field"] for c in v2["columns"]}
+    assert fields2["REF"] == "lot" and fields2["MACH"] == "machine"
+    first = next(x for x in v2["rows"] if x["kind"] == "entry")
+    assert first["clean"][0] == first["raw"][0]
     assert client.get(f"/api/files/{r['file_id']}/status").json()["status"] == "ready"
     assert client.get(f"/api/files/{r['file_id']}/granite").json()
 
