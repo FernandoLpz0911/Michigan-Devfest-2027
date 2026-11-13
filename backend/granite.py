@@ -137,8 +137,12 @@ LABEL_SYSTEM = (
     + "\n".join(f"- {k}: {v}" for k, v in FIELD_HELP.items())
     + "\nRules: lot, part, quantity, time, machine, operator, shift, step and alarm each fit at most one "
     "column; when two columns could hold the same field, label both and say so in the reason. "
-    "Give up to two alternative fields. Set sure to false when the header or samples could mean "
-    "something else. Keep each reason under 15 words, in plain words. Answer only with JSON."
+    "Alternatives are other fields the column could hold; never repeat the chosen field. "
+    "Set sure to false when the header is a short or generic word that could name more than one "
+    "field: for example a header Ref, ID, No, Code or Number with number samples could be the lot "
+    "or the part, so it is not sure, with the other as an alternative. Also set sure to false when "
+    "the samples could fit another field. Free-text columns such as Notes or Comments are surely "
+    "extra. Keep each reason under 15 words, in plain words. Answer only with JSON."
 )
 
 LABEL_SCHEMA = {
