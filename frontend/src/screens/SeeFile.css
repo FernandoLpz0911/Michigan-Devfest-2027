@@ -28,8 +28,38 @@
 .seefile-filters { display: flex; gap: 1rem; align-items: center; margin-bottom: 1rem; }
 .seefile-chip { display: inline-flex; align-items: center; gap: 0.5rem; background: #e0e0e0; border-radius: 1rem; padding: 0.25rem 0.5rem 0.25rem 0.75rem; }
 .seefile-chip button { background: none; border: 0; font-size: 1.25rem; line-height: 1; cursor: pointer; min-width: 1.5rem; min-height: 1.5rem; }
-.seefile-dl { margin-top: 1.5rem; text-decoration: none; }
-.seefile-modal .cds--radio-button-group, .seefile-modal .cds--form-item { margin-bottom: 1rem; }
+/* Download dialog: small, everything on one centre line, even padding on both sides. */
+.seefile-modal .cds--modal-container {
+  inline-size: min(30rem, calc(100vw - 2rem));
+  max-inline-size: none;
+  block-size: auto;
+}
+.seefile-modal .cds--modal-header {
+  padding: 2rem 3rem 0;
+  margin-bottom: 1.25rem;
+  text-align: center;
+}
+.seefile-modal .cds--modal-header__heading { font-size: 1.75rem; }
+.seefile-modal .cds--modal-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+  padding: 0 2rem 2rem;
+  margin-bottom: 0;
+}
+.seefile-modal fieldset.cds--fieldset,
+.seefile-modal .cds--radio-button-group--vertical,
+.seefile-modal .cds--form-item { margin: 0; width: 100%; }
+.seefile-modal legend.cds--label {
+  display: block;
+  width: 100%;
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+.seefile-modal .cds--radio-button-group { justify-content: center; }
+.seefile-modal .cds--checkbox-wrapper { justify-content: center; display: flex; width: auto; }
+.seefile-dl { margin-top: 0.5rem; text-decoration: none; min-width: 10rem; }
 .shop-floor .seefile-chip { background: #393939; color: #f4f4f4; }
 .shop-floor .seefile-chip button { color: #f4f4f4; }
 .shop-floor .seefile-filters, .shop-floor .seefile-tools label { color: #f4f4f4; }
