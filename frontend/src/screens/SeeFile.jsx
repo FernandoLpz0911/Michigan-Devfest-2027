@@ -206,6 +206,16 @@ export default function SeeFile({ go, params }) {
         {whatCleaningDid(view).map((t) => <li key={t}>{t}</li>)}
       </ul>
 
+      {col && (
+        <div className="seefile-summary" role="status">
+          <p>
+            <strong>{col.header} became {SHOWN[col.field]}.</strong> {WHO[col.decided_by]}.
+            {' '}Changed in {col.rows_changed} {col.rows_changed === 1 ? 'row' : 'rows'}.
+          </p>
+          <button type="button" className="link-btn" onClick={() => go('check', { fileId: view.file_id })}>Change</button>
+        </div>
+      )}
+
       <div className="seefile-scroll">
         <table className="seefile-grid">
           <caption className="cds--visually-hidden">First 50 lines of {view.source_file}</caption>
@@ -241,16 +251,6 @@ export default function SeeFile({ go, params }) {
         </table>
       </div>
 
-      {col && (
-        <div className="seefile-summary" role="status">
-          <p>
-            <strong>{col.header} became {SHOWN[col.field]}.</strong> {WHO[col.decided_by]}.
-            {' '}Changed in {col.rows_changed} {col.rows_changed === 1 ? 'row' : 'rows'}.
-          </p>
-          <button type="button" className="link-btn" onClick={() => go('check', { fileId: view.file_id })}>Change</button>
-        </div>
-      )}
-
       <div className="seefile-foot">
         <span>
           {held.length > 0 && (
@@ -261,7 +261,7 @@ export default function SeeFile({ go, params }) {
               </button>
             </span>
           )}
-          <span>Struck-through text is what the file said before</span>
+          <span>Grey "was" text is what the file said before</span>
         </span>
         <button type="button" className="link-btn" onClick={() => go('files')}>Back to files</button>
       </div>

@@ -1,6 +1,6 @@
 """Apply a format to a RawTable: clean values, normalize times, build entries, hold back bad rows."""
 import re
-from datetime import datetime
+from datetime import datetime, timezone
 
 _TIME_FORMATS = ["%m/%d/%y %I:%M%p", "%m/%d/%Y %I:%M%p", "%m/%d/%Y %H:%M", "%m/%d/%y %H:%M",
                  "%Y-%m-%d %H:%M", "%Y-%m-%dT%H:%M", "%Y-%m-%d", "%d-%b-%Y %H:%M", "%d-%b-%y %H:%M"]
@@ -11,6 +11,9 @@ _MERGED = ("machine", "step", "part")
 def normalize_time(text):
     """Return YYYY-MM-DDTHH:MM, or None when the style is not supported."""
     t = re.sub(r"\s+", " ", (text or "").strip())
+    if re.fullmatch(r"1\d{9}(\.\d+)?", t):
+        # Machine clocks count seconds since 1970 (UTC), read as wall clock like +00:00 times.
+        return datetime.fromtimestamp(float(t), timezone.utc).strftime("%Y-%m-%dT%H:%M")
     t = re.sub(r"(\d{2}:\d{2}):\d{2}(\.\d+)?(Z|[+-]\d{2}:?\d{2})?$", r"\1", t)
     t = re.sub(r"(?<=\d)\s*([AP])M?$", r"\1M", t, flags=re.I).upper()
     t = re.sub(r"(?<=\d) (AM|PM)$", r"\1", t)
