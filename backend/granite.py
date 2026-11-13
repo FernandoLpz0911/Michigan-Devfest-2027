@@ -20,15 +20,15 @@ CANNED = Path(__file__).resolve().parent.parent / "fixtures" / "canned"
 FIELDS = ["lot", "part", "quantity", "time", "machine", "operator", "shift", "step", "alarm", "extra"]
 FIELD_HELP = {
     "lot": "lot number: the batch ID that follows parts through the plant",
-    "part": "part number: which product, such as B-220",
-    "quantity": "quantity: how many pieces were made",
-    "time": "time: when the work was done (date and time of production)",
+    "part": "part number: which product, such as B-220; never a large number that keeps rising",
+    "quantity": "quantity: how many pieces were made in that row; never a duration, speed or counter",
+    "time": "time: when the work was done, written as a date and time; never a Unix number",
     "machine": "machine: the press, bench or cell that did the work",
     "operator": "operator: the person's ID",
     "shift": "shift: which shift (1st, 2nd, 3, ...)",
     "step": "process step: stamping, deburring, welding, ...",
     "alarm": "machine stop: an alarm or stop code from the machine",
-    "extra": "extra detail: anything else (notes, a second date, a log date)",
+    "extra": "extra detail: anything else (notes, a second date, a log date, machine readings)",
 }
 SHOWN = {"lot": "Lot number", "part": "Part number", "quantity": "Quantity", "time": "Time",
          "machine": "Machine", "operator": "Operator", "shift": "Shift", "step": "Process step",
@@ -142,8 +142,15 @@ LABEL_SYSTEM = (
     "field: for example a header Ref, ID, No, Code or Number with number samples could be the lot "
     "or the part, so it is not sure, with the other as an alternative. Also set sure to false when "
     "the samples could fit another field. Free-text columns such as Notes or Comments are surely "
-    "extra. Keep each reason under 15 words, in plain words. Answer only with JSON."
+    "extra. Machine readings (durations, speeds, rates, running counters, Unix timestamps) are "
+    "extra, never quantity, part or time. "
+    "Keep each reason under 15 words, in plain words. Answer only with JSON."
 )
+
+LABEL_REMINDER = ("Remember: a duration, speed, rate, running counter (like pi or po, packages in and "
+                  "out) or Unix timestamp (like 1577877688) is a machine reading. Its field is extra, never quantity, part or "
+                  "time; set sure to false and put quantity, part or time, whichever it resembles, in "
+                  "alternatives.")
 
 LABEL_SCHEMA = {
     "type": "object",
@@ -166,7 +173,7 @@ def _label_user(profiles):
         lines.append(json.dumps({"position": p["position"], "header": p["header"],
                                  "type": p["detected_type"], "samples": p["samples"][:5]}))
     lines.append('Answer as {"columns": [{"position", "field", "alternatives", "reason", "sure"}]}, '
-                 "one item per column, in the same order.")
+                 "one item per column, in the same order. " + LABEL_REMINDER)
     return "\n".join(lines)
 
 
@@ -204,18 +211,37 @@ def label_columns(profiles, file_id, log=None):
 
 
 _MOCK_WORDS = [("lot", ("ref", "lot", "batch")), ("part", ("part", "item")), ("quantity", ("qty", "quant", "count")),
-               ("time", ("prod", "time", "date", "dt")), ("machine", ("mach", "press", "equip")),
+               ("time", ("prod", "time", "date", "dt", "interval")),
+               ("machine", ("mach", "press", "equip", "equipment")),
                ("operator", ("op", "oper")), ("shift", ("shift",)), ("step", ("step", "process")),
                ("alarm", ("alarm", "stop", "code"))]
 
 
+_MACHINE_WORDS = {"elapsed", "duration", "speed", "rate", "rpm", "pi", "po", "counter"}
+
+
+def _machine_style(p):
+    """Durations, speeds, rates, running counters and Unix timestamps."""
+    if set(re.sub(r"[^a-z]", " ", p["header"].lower()).split()) & _MACHINE_WORDS:
+        return True
+    try:
+        n = [float(s) for s in p["samples"]] if p["detected_type"] == "number" else []
+    except ValueError:
+        return False
+    unix = bool(n) and all(1e9 <= v < 1e10 or 1e12 <= v < 1e13 for v in n)
+    counter = len(n) >= 3 and n == sorted(set(n)) and n[0] > 1e5
+    return unix or counter
+
+
 def _mock_guess(p):
     h = re.sub(r"[^a-z]", " ", p["header"].lower()).split()
-    for field, words in _MOCK_WORDS:
-        if any(w in words for w in h):
-            return {"position": p["position"], "field": field, "alternatives": [],
-                    "reason": "Header and samples fit.", "sure": True}
-    return {"position": p["position"], "field": "extra", "alternatives": [], "reason": "Other detail.", "sure": True}
+    field = next((f for f, words in _MOCK_WORDS if any(w in words for w in h)), "extra")
+    odd = _machine_style(p) or (field == "time" and p["detected_type"] == "number")
+    if field in ("quantity", "part", "time") and odd:
+        return {"position": p["position"], "field": "extra", "alternatives": [field],
+                "reason": "Looks like a machine reading.", "sure": False}
+    reason = "Other detail." if field == "extra" else "Header and samples fit."
+    return {"position": p["position"], "field": field, "alternatives": [], "reason": reason, "sure": True}
 
 
 # ---------- Job 2: values that mean the same thing ----------
