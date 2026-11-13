@@ -62,6 +62,10 @@
 .drop-zone-link { color: var(--cds-link-primary); text-decoration: underline; }
 .files-next { margin: 1rem 0; display: flex; gap: 1rem; align-items: center; }
 
-/* Remove-file dialog: compact, with button labels centered. */
-.files-remove .cds--modal-content { margin-bottom: 1.5rem; }
-.files-remove .cds--modal-footer .cds--btn { justify-content: center; align-items: center; padding-inline: 1rem; }
+/* Remove-file dialog: compact, rounded, button labels centered both ways. */
+.files-remove .cds--modal-container { border-radius: 12px; overflow: hidden; min-block-size: 0; }
+.files-remove .cds--modal-content { margin-bottom: 1.5rem; min-block-size: 0; }
+.files-remove .cds--modal-footer { block-size: 3.5rem; }
+.files-remove .cds--modal-footer .cds--btn {
+  justify-content: center; align-items: center; padding: 0 1rem; block-size: 100%; max-inline-size: none;
+}
