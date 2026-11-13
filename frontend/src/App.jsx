@@ -41,7 +41,6 @@ export default function App() {
     setView(next)
   }
   const Screen = SCREENS[view.screen]
-  const onFind = view.screen === 'find'
 
   return (
     <Theme theme={shopFloor ? 'g100' : 'white'} className={shopFloor ? 'shop-floor' : ''}>
@@ -53,10 +52,13 @@ export default function App() {
           <ShopFloorToggle on={shopFloor} onChange={setShopFloor} />
         </HeaderGlobalBar>
         <HeaderNavigation aria-label="Screens">
-          <HeaderMenuItem href="#" isActive={!onFind} onClick={(e) => { e.preventDefault(); go('files') }}>
+          <HeaderMenuItem href="#" isActive={['files', 'check', 'seefile'].includes(view.screen)} onClick={(e) => { e.preventDefault(); go('files') }}>
             Files
           </HeaderMenuItem>
-          <HeaderMenuItem href="#" isActive={onFind} onClick={(e) => { e.preventDefault(); go('find') }}>
+          <HeaderMenuItem href="#" isActive={view.screen === 'records'} onClick={(e) => { e.preventDefault(); go('records') }}>
+            All records
+          </HeaderMenuItem>
+          <HeaderMenuItem href="#" isActive={view.screen === 'find'} onClick={(e) => { e.preventDefault(); go('find') }}>
             Find a record
           </HeaderMenuItem>
         </HeaderNavigation>

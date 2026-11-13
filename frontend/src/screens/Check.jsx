@@ -14,7 +14,7 @@ export default function Check({ go, params }) {
   const [showMatched, setShowMatched] = useState(false)
   const [error, setError] = useState(null)
   const [saving, setSaving] = useState(false)
-  if (!result) return <p>Nothing to check. <a href="#" onClick={(e) => { e.preventDefault(); go('files') }}>Back to files</a></p>
+  if (!result) return <p>Nothing to check. <button type="button" className="link-btn" onClick={() => go('files')}>Back to files</button></p>
 
   const { questions, matched, source_file: name, fell_back } = result
   const ready = questions.every((q) => answers[q.question_id])
@@ -47,12 +47,12 @@ export default function Check({ go, params }) {
       ))}
       {error && <p role="alert">{error.message} {error.fix}</p>}
       <div style={{ display: 'flex', gap: '1.5rem', alignItems: 'center' }}>
-        <Button type="submit" kind="primary" disabled={!ready || saving}>Save</Button>
-        <a href="#" onClick={(e) => { e.preventDefault(); go('files') }}>Back to files</a>
-        <a href="#" style={{ marginLeft: 'auto' }} aria-expanded={showMatched}
-          onClick={(e) => { e.preventDefault(); setShowMatched(!showMatched) }}>
+        <Button type="submit" kind="primary" disabled={!ready || saving}>Save these answers</Button>
+        <button type="button" className="link-btn" onClick={() => go('files')}>Back to files</button>
+        <button type="button" className="link-btn" style={{ marginLeft: 'auto' }} aria-expanded={showMatched}
+          onClick={() => setShowMatched(!showMatched)}>
           See the {matched.length} matched columns
-        </a>
+        </button>
       </div>
       {showMatched && (
         <ul aria-label="Matched columns">

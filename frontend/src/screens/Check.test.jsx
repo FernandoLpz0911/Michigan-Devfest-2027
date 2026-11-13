@@ -21,7 +21,7 @@ it('renders questions, matched list, one primary button, no banned words', async
 it('save stays disabled until the unanswered card is answered, then sends answers', async () => {
   const go = vi.fn()
   render(<Check go={go} params={{ result }} />)
-  const save = screen.getByRole('button', { name: 'Save' })
+  const save = screen.getByRole('button', { name: 'Save these answers' })
   expect(save.disabled).toBe(true)
   await userEvent.click(screen.getByRole('radio', { name: /Prod Dt/ }))
   expect(save.disabled).toBe(false)

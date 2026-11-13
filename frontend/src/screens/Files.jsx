@@ -1,8 +1,13 @@
 import { useEffect, useRef, useState } from 'react'
+import { InlineNotification, Modal } from '@carbon/react'
 import FileRow from '../parts/FileRow.jsx'
 import { api } from '../api.js'
+import './Files.css'
 
 export default function Files({ go, params }) {
+  const [over, setOver] = useState(false)
+  const [showSaved, setShowSaved] = useState(true)
+  const [pending, setPending] = useState(null)
   const [rows, setRows] = useState([])
   const [busy, setBusy] = useState(null)
   const [error, setError] = useState(null)
@@ -47,9 +52,14 @@ export default function Files({ go, params }) {
     setBusy(null)
   }
 
-  async function remove(r) {
+  function remove(r) {
     if (r.file_id.startsWith('err-')) { setRows((old) => old.filter((x) => x !== r)); return }
-    if (!window.confirm(`Remove ${r.source_file} and the records saved from it?`)) return
+    setPending(r)
+  }
+
+  async function confirmRemove() {
+    const r = pending
+    setPending(null)
     setError(null)
     try { await api.deleteFile(r.file_id) } catch (err) { setError(err) }
     await load()
@@ -59,13 +69,22 @@ export default function Files({ go, params }) {
     <div className="files-screen">
       <h1>Add your shift logs</h1>
       <p className="subtle">Any spreadsheet works, even a messy one.</p>
-      {params?.saved && <div role="status">Saved. Files like {params.saved} are automatic from now on.</div>}
-      <div onDragOver={(e) => e.preventDefault()} onDrop={(e) => { e.preventDefault(); upload([...e.dataTransfer.files]) }}
-        style={{ border: '1px dashed var(--cds-border-strong)', padding: '3rem', textAlign: 'center', margin: '2rem 0' }}>
-        Drop files here, or{' '}
-        <a href="#" onClick={(e) => { e.preventDefault(); input.current.click() }}>choose files</a>
+      {params?.saved && showSaved && (
+        <InlineNotification kind="success" lowContrast title="Saved."
+          subtitle={`Files like ${params.saved} are automatic from now on.`}
+          onCloseButtonClick={() => setShowSaved(false)} />
+      )}
+      <div role="button" tabIndex={0} aria-label="Add files"
+        className={`drop-zone${over ? ' drop-zone-over' : ''}`}
+        onClick={() => input.current.click()}
+        onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); input.current.click() } }}
+        onDragEnter={(e) => { e.preventDefault(); setOver(true) }}
+        onDragOver={(e) => e.preventDefault()}
+        onDragLeave={() => setOver(false)}
+        onDrop={(e) => { e.preventDefault(); setOver(false); upload([...e.dataTransfer.files]) }}>
+        Drop files here, or <span className="drop-zone-link">choose files</span>
         <input ref={input} type="file" multiple hidden aria-label="Choose files" accept=".csv,.xlsx,.xls"
-          onChange={(e) => upload([...e.target.files])} />
+          onClick={(e) => e.stopPropagation()} onChange={(e) => upload([...e.target.files])} />
       </div>
       <ul style={{ listStyle: 'none', padding: 0 }}>
         {rows.map((r) => (
@@ -77,8 +96,20 @@ export default function Files({ go, params }) {
         ))}
         {busy && busy.map((b) => <FileRow key={b.file_id} file={b} />)}
       </ul>
+      {rows.some((r) => r.status === 'ready') && (
+        <p className="files-next">Your records are ready.{' '}
+          <button type="button" className="link-btn" onClick={() => go('find')}>Find a lot</button>
+          <button type="button" className="link-btn" onClick={() => go('records')}>See all records</button>
+        </p>
+      )}
       {error && <p role="alert">{error.message} {error.fix}</p>}
       <p className="subtle">Only column names and a few sample values are sent to Granite.</p>
+      <Modal danger open={!!pending} modalHeading={`Remove ${pending?.source_file}?`}
+        primaryButtonText="Remove file" secondaryButtonText="Keep it"
+        onRequestClose={() => setPending(null)} onRequestSubmit={confirmRemove}
+        onSecondarySubmit={() => setPending(null)}>
+        <p>The records saved from this file are removed too. You can add the file again later.</p>
+      </Modal>
     </div>
   )
 }

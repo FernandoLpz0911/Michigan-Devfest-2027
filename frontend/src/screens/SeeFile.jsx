@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { ContentSwitcher, Switch, InlineLoading, Link, Search, Select, SelectItem, Button, Modal, RadioButtonGroup, RadioButton, Checkbox } from '@carbon/react'
+import { ContentSwitcher, Switch, InlineLoading, Search, Select, SelectItem, Button, Modal, RadioButtonGroup, RadioButton, Checkbox } from '@carbon/react'
 import { WarningAltFilled } from '@carbon/icons-react'
 import { api } from '../api.js'
 import SwitchCell from '../parts/SwitchCell.jsx'
@@ -32,6 +32,13 @@ function whatCleaningDid(view) {
   if (skipped) items.push(`Title and blank rows skipped: ${skipped}${first}`)
   if (held) items.push(`Held back for you to check: ${held}${first}`)
   return items
+}
+
+function heldSummary(held) {
+  const by = {}
+  held.forEach((r) => { by[r.reason_text] = (by[r.reason_text] || 0) + 1 })
+  const parts = Object.keys(by).map((k) => `${by[k]} ${k}`).join(', ')
+  return `${held.length} ${held.length === 1 ? 'row' : 'rows'} held back: ${parts}`
 }
 
 function Line({ row, columns, cleaned, play, onCell }) {
@@ -139,7 +146,8 @@ export default function SeeFile({ go, params }) {
       <div className="seefile-top">
         <div>
           <h1>{view.source_file}</h1>
-          <p>Click any column to see what it became and why. With a column picked, click a cell to show only rows with that value.</p>
+          <p className="subtle">Click a column name to see what it became.</p>
+          <p className="subtle">Then click a cell to show only rows like it.</p>
         </div>
         <ContentSwitcher
           size="lg"
@@ -219,22 +227,23 @@ export default function SeeFile({ go, params }) {
             <strong>{col.header} became {SHOWN[col.field]}.</strong> {WHO[col.decided_by]}.
             {' '}Changed in {col.rows_changed} {col.rows_changed === 1 ? 'row' : 'rows'}.
           </p>
-          <Link href="#" onClick={(e) => { e.preventDefault(); go('check', { fileId: view.file_id }) }}>
-            Change
-          </Link>
+          <button type="button" className="link-btn" onClick={() => go('check', { fileId: view.file_id })}>Change</button>
         </div>
       )}
 
       <div className="seefile-foot">
         <span>
-          {held.map((r) => (
-            <span key={r.source_row} className="seefile-reason">
-              <WarningAltFilled size={16} aria-hidden="true" /> Row {r.source_row} held back: {r.reason_text}
+          {held.length > 0 && (
+            <span className="seefile-reason">
+              <WarningAltFilled size={16} aria-hidden="true" /> {heldSummary(held)}{' '}
+              <button type="button" className="link-btn" onClick={() => setKind(kind === 'held' ? '' : 'held')}>
+                {kind === 'held' ? 'Show all rows' : 'Show them'}
+              </button>
             </span>
-          ))}
+          )}
           <span>Struck-through text is what the file said before</span>
         </span>
-        <Link href="#" onClick={(e) => { e.preventDefault(); go('files') }}>Back to files</Link>
+        <button type="button" className="link-btn" onClick={() => go('files')}>Back to files</button>
       </div>
     </div>
   )

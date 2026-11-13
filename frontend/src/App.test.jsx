@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react'
+import { render, screen, fireEvent } from '@testing-library/react'
 import App from './App.jsx'
 import canned from '../../fixtures/canned/file_result.json'
 
@@ -28,4 +28,12 @@ describe('reload', () => {
     render(<App />)
     expect(screen.getByRole('heading', { level: 1 })).toBeInTheDocument()
   })
+})
+
+test('All records is reachable from the header', async () => {
+  sessionStorage.clear()
+  globalThis.fetch = vi.fn(async () => ({ ok: true, json: async () => ({ records: [], rows: [], total: 0 }) }))
+  render(<App />)
+  fireEvent.click(screen.getByText('All records'))
+  expect(await screen.findByRole('heading', { name: 'All records' })).toBeInTheDocument()
 })

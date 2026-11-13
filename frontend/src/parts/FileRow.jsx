@@ -35,9 +35,9 @@ export default function FileRow({ file, onCheck, onChooseAnother, onSee, onDelet
         </div>
         {status === 'working' && steps.length > 0 && <FileSteps steps={steps} />}
       </div>
-      {status === 'error' && <a href="#" onClick={(e) => { e.preventDefault(); onChooseAnother?.() }}>Choose another</a>}
-      {status === 'needs_check' && <a href="#" onClick={(e) => { e.preventDefault(); onCheck?.(file) }}>Check {name}</a>}
-      {status === 'ready' && onSee && <a href="#" onClick={(e) => { e.preventDefault(); onSee(file) }}>See the file</a>}
+      {status === 'error' && <button type="button" className="link-btn" onClick={() => onChooseAnother?.()}>Choose another</button>}
+      {status === 'needs_check' && <button type="button" className="link-btn" aria-label={`Answer questions about ${name}`} onClick={() => onCheck?.(file)}>Answer questions</button>}
+      {status === 'ready' && onSee && <button type="button" className="link-btn" onClick={() => onSee(file)}>See the file</button>}
     </li>
   )
 }

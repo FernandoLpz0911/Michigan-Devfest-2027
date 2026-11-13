@@ -47,12 +47,21 @@ describe('SeeFile', () => {
 
   it('shows the summary and Change on header click', async () => {
     const { go } = await open()
-    expect(screen.queryByRole('link', { name: 'Change' })).toBeNull()
+    expect(screen.queryByRole('button', { name: 'Change' })).toBeNull()
     await userEvent.click(screen.getByRole('button', { name: 'Mach' }))
     expect(screen.getByRole('status').textContent).toMatch(/Mach became Machine/)
     expect(screen.getByRole('status').textContent).toMatch(/15 rows/)
-    await userEvent.click(screen.getByRole('link', { name: 'Change' }))
+    await userEvent.click(screen.getByRole('button', { name: 'Change' }))
     expect(go).toHaveBeenCalledWith('check', { fileId: 'f1' })
+  })
+
+  it('sums up held rows in one line and Show them filters to them', async () => {
+    await open()
+    const n = canned.rows.filter((r) => r.kind === 'held').length
+    expect(screen.getByText(new RegExp(`${n} ${n === 1 ? 'row' : 'rows'} held back: ${n} No lot number`))).toBeTruthy()
+    await userEvent.click(screen.getByRole('button', { name: 'Show them' }))
+    expect(api.fileView).toHaveBeenLastCalledWith('f1', { kind: 'held' })
+    expect(await screen.findByRole('button', { name: 'Show all rows' })).toBeTruthy()
   })
 
   it('shows held rows with the reason', async () => {

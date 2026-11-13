@@ -1,0 +1,14 @@
+.drop-zone {
+  border: 1px dashed var(--cds-border-strong);
+  padding: 3rem;
+  text-align: center;
+  margin: 2rem 0;
+  cursor: pointer;
+}
+.drop-zone:focus-visible { outline: 2px solid var(--cds-focus); outline-offset: -2px; }
+.drop-zone-over {
+  border: 2px solid var(--cds-border-interactive);
+  background: var(--cds-layer-selected-01);
+}
+.drop-zone-link { color: var(--cds-link-primary); text-decoration: underline; }
+.files-next { margin: 1rem 0; display: flex; gap: 1rem; align-items: center; }

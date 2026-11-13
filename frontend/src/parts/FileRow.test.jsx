@@ -23,6 +23,10 @@ it('error state shows message and fix on the same row, no violations', async () 
   expect((await axe(container)).violations).toEqual([])
 })
 
+it('needs_check link says Answer questions and keeps the name in its label', () => {
+  wrap({ ...status, status: 'needs_check', sentence: 'Needs a look.' })
+  expect(screen.getByRole('button', { name: `Answer questions about ${status.source_file}` }).textContent).toBe('Answer questions')
+})
 it('with onDelete the icon is a labelled remove button', async () => {
   const { fireEvent } = await import('@testing-library/react')
   let removed = null
