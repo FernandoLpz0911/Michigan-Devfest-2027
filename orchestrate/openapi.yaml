@@ -1,0 +1,90 @@
+openapi: 3.0.3
+info:
+  title: Data Wrapper records
+  version: 1.0.0
+  description: >
+    Read-only tools over a small shop's cleaned production records (lot, machine,
+    time, operator, stop codes). Each answer cites the source file and row.
+servers:
+  # Replaced by scripts/orchestrate_setup.sh with the public tunnel URL of the backend.
+  - url: https://REPLACE-WITH-TUNNEL-URL
+paths:
+  /api/find:
+    post:
+      operationId: find_record
+      summary: Find a lot, or any value, in the shop's records
+      description: >
+        Send a lot number (for example A-101), any value from the files (a machine
+        such as "Press 3", a part, an operator, a stop code), or a whole buyer message.
+        For a lot it returns the lot's history (every step with machine, time, operator,
+        stop code, source file and row) and "links": other lots worth checking that shared
+        a machine, operator or time window. For a plain value it returns "matches": the
+        rows holding that value and their lots. For a buyer message, IBM Granite reads
+        the lot number out of it first ("reading").
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [text]
+              properties:
+                text:
+                  type: string
+                  description: A lot number, a value to look for, or the buyer's message.
+      responses:
+        '200':
+          description: The answer, built only from the stored records.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+  /api/draft:
+    post:
+      operationId: draft_reply
+      summary: Draft a reply to a buyer about one lot
+      description: >
+        IBM Granite writes a reply to the buyer from this lot's records only, with
+        sections such as what happened and which other lots are worth checking.
+        The shop owner must read and edit it before sending.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [lot]
+              properties:
+                lot:
+                  type: string
+                  description: The lot number, exactly as find_record returned it.
+      responses:
+        '200':
+          description: The drafted reply, as headed sections.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+  /api/timeline/{lot}:
+    get:
+      operationId: lot_timeline
+      summary: What ran on the same machine around a lot
+      description: >
+        The machine and day the lot ran on, every lot that ran on that machine that
+        day in order, and the machine stops with their times.
+      parameters:
+        - name: lot
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The machine's day around this lot.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
