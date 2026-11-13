@@ -27,7 +27,7 @@ The story: three shifts keep the same log in three different layouts. A buyer em
 
 ## If a judge asks "does it work on real machine data?"
 
-Drop `fixtures/piade_machine_sample.csv` (300 unmodified rows from the PIADE dataset). It asks about the machine-style columns instead of quietly guessing. Choose None of these for the lot: a machine export has no lot number, so all rows are held back rather than made up. See `fixtures/NOTE.md` for the 20-second answer.
+Drop `fixtures/piade_machine_sample.csv` (300 unmodified rows from the PIADE dataset). It asks about the machine-style columns instead of quietly guessing. Choose None of these for the lot and part, and interval_start for the time. A machine export has no lot number, so its rows are kept without one (never made up), and their stop codes show on that machine's timeline. See `fixtures/NOTE.md` for the 20-second answer.
 
 ## If something breaks
 
