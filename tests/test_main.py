@@ -1,54 +1,89 @@
-import json
+"""End-to-end: the three shift files go through the real routes (Granite mocked)."""
+import importlib
 from pathlib import Path
 
+import pytest
 from fastapi.testclient import TestClient
 
-from backend.main import app
-
-C = Path(__file__).resolve().parent.parent / "fixtures" / "canned"
-client = TestClient(app)
+FIX = Path(__file__).resolve().parent.parent / "fixtures"
 
 
-def canned(name):
-    return json.loads((C / name).read_text())
+@pytest.fixture(scope="module")
+def client(tmp_path_factory):
+    mp = pytest.MonkeyPatch()
+    mp.setenv("DATA_DIR", str(tmp_path_factory.mktemp("data")))
+    mp.setenv("MOCK_GRANITE", "1")
+    from backend import pipeline, main
+    pipeline._con = None
+    importlib.reload(main)
+    yield TestClient(main.app)
+    pipeline._con = None
+    mp.undo()
 
 
-def test_get_routes():
-    for path, name in [
-        ("/api/files", "file_rows.json"),
-        ("/api/files/f1/status", "file_status.json"),
-        ("/api/files/f1/detail", "file_detail.json"),
-        ("/api/files/f1/granite", "granite_exchanges.json"),
-        ("/api/files/f1/view", "file_view.json"),
-        ("/api/held", "held_rows.json"),
-        ("/api/records", "record_page.json"),
-        ("/api/timeline/4417", "timeline.json"),
-        ("/api/settings", "settings.json"),
-    ]:
-        r = client.get(path)
-        assert r.status_code == 200, path
-        assert r.json() == canned(name), path
+def upload(client, name):
+    with open(FIX / name, "rb") as f:
+        return client.post("/api/files", files={"file": (name, f)})
 
 
-def test_upload():
-    r = client.post("/api/files", files={"file": ("shift1_log.csv", b"x")})
-    assert r.json() == canned("file_result.json")
-    r = client.post("/api/files", files={"file": ("shift2_export.csv", b"y")})
-    assert r.json() == canned("file_result_recognized.json")
+def test_full_demo_flow(client):
+    r = upload(client, "shift1_log.csv").json()
+    assert r["status"] == "needs_check" and not r["recognized"]
+    kinds = [q["kind"] for q in r["questions"]]
+    assert sorted(kinds) == ["duplicate", "merge", "unsure"]
+    answers = []
+    for q in r["questions"]:
+        value = q["preselected"] or ("3" if q["kind"] == "duplicate" else "yes")
+        answers.append({"question_id": q["question_id"], "value": value})
+    saved = client.post(f"/api/files/{r['file_id']}/answers", json={"answers": answers}).json()
+    assert saved["entries"] + saved["held"] == saved["data_rows"] == 83
+    assert saved["held"] == 1
+
+    r2 = upload(client, "shift2_export.csv").json()
+    assert r2["recognized"] and r2["status"] == "ready" and r2["questions"] == []
+    r3 = upload(client, "shift3.xlsx").json()
+    assert r3["recognized"] and r3["new_columns"] == ["Comments"]
+
+    detail = client.get(f"/api/files/{r3['file_id']}/detail").json()
+    assert detail["counters"]["unseen_values"] == [{"field": "machine", "value": "Press1", "count": 1}]
+
+    rows = client.get("/api/files").json()
+    assert [x["status"] for x in rows] == ["ready"] * 3
+    assert sum(x["entries"] for x in rows) == 217 and sum(x["held"] for x in rows) == 2
+
+    ans = client.post("/api/find", json={"text": "4417"}).json()
+    assert ans["reading"]["source"] == "typed"
+    assert ans["history"]["part"] == "B-220"
+    assert [e["machine"] for e in ans["history"]["entries"]][0] == "Press 3"
+    assert len(ans["links"]) == 8 and ans["lots_in_week"] == 140
+
+    msg = (FIX / "buyer_message.txt").read_text()
+    ans = client.post("/api/find", json={"text": msg}).json()
+    assert ans["reading"]["lot"] == "4417" and ans["history"]
+
+    draft = client.post("/api/draft", json={"lot": "4417", "reading": ans["reading"]}).json()
+    assert [s["heading"] for s in draft["sections"]][2] == "What we are doing now"
+
+    miss = client.post("/api/find", json={"text": "4471x"}).json()
+    assert miss["history"] is None and len(miss["closest"]) == 3
+
+    assert len(client.get("/api/held").json()) == 2
+    page = client.get("/api/records", params={"machine": "Press 3", "stop": "A_101"}).json()
+    assert page["matching"] >= 2
+    assert client.get("/api/records.csv").headers["content-type"].startswith("text/csv")
+    view = client.get(f"/api/files/{r['file_id']}/view").json()
+    assert view["rows"] and view["columns"]
+    assert client.get(f"/api/files/{r['file_id']}/status").json()["status"] == "ready"
+    assert client.get(f"/api/files/{r['file_id']}/granite").json()
 
 
-def test_posts():
-    body = {"answers": [{"question_id": "q1", "value": "lot"}]}
-    assert client.post("/api/files/f1/answers", json=body).json() == canned("save_result.json")
-    assert client.post("/api/find", json={"text": "4417"}).json() == canned("answer.json")
-    assert client.post("/api/find", json={"text": "9999"}).json() == canned("answer_no_match.json")
-    assert client.post("/api/draft", json={"lot": "4417", "reading": None}).json() == canned("granite_job4.json")
-    assert client.post("/api/records/ask", json={"question": "q"}).json() == canned("records_question.json")
-    assert client.put("/api/settings", json=canned("settings.json")).json() == canned("settings.json")
+def test_errors_have_message_and_fix(client):
+    bad = client.post("/api/files", files={"file": ("notes.txt", b"hello")})
+    assert bad.status_code == 400 and set(bad.json()["error"]) == {"message", "fix"}
+    gone = client.get("/api/files/f999/status")
+    assert gone.status_code == 404 and "fix" in gone.json()["error"]
 
 
-def test_csv():
-    r = client.get("/api/records.csv")
-    assert r.status_code == 200
-    assert r.headers["content-type"].startswith("text/csv")
-    assert r.text.splitlines()[0]
+def test_settings_round_trip(client):
+    assert client.get("/api/settings").json() == {"window_hours": 4, "hand_time_minutes": None}
+    assert client.put("/api/settings", json={"hand_time_minutes": 45}).json()["hand_time_minutes"] == 45
